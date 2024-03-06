@@ -89,6 +89,7 @@ statement instead the previous block.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.7.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.58.1, <2.0.0 |
 
 ### Modules
 
@@ -96,15 +97,29 @@ No modules.
 
 ### Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_code_engine_app.ce_app](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_app) | resource |
+| [ibm_code_engine_config_map.ce_config_map](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_config_map) | resource |
+| [ibm_code_engine_job.ce_job](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_job) | resource |
+| [ibm_code_engine_project.ce_project](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_project) | resource |
 
 ### Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_apps"></a> [apps](#input\_apps) | n/a | <pre>map(object({<br>    test = string<br>  }))</pre> | <pre>{<br>  "ap_1": {<br>    "test": "asas"<br>  },<br>  "ap_2": {<br>    "test": "asas"<br>  }<br>}</pre> | no |
+| <a name="input_code_engine"></a> [code\_engine](#input\_code\_engine) | n/a | <pre>map(object({<br>    apps = optional(list(object({<br>      name            = string<br>      image_reference = string<br>    }))),<br>    jobs = optional(list(object({<br>      name            = string<br>      image_reference = string<br><br>    })))<br>  }))</pre> | <pre>{<br>  "project_11": {<br>    "apps": [<br>      {<br>        "image_reference": "icr.io/codeengine/helloworld",<br>        "name": "app-name1"<br>      },<br>      {<br>        "image_reference": "icr.io/codeengine/helloworld",<br>        "name": "app-name2"<br>      }<br>    ],<br>    "jobs": [<br>      {<br>        "image_reference": "icr.io/codeengine/helloworld",<br>        "name": "jobs-1"<br>      }<br>    ]<br>  },<br>  "project_22": {<br>    "apps": [<br>      {<br>        "image_reference": "icr.io/codeengine/helloworld",<br>        "name": "app-name1"<br>      }<br>    ]<br>  }<br>}</pre> | no |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | ce-pro-and | `string` | `"ce-pro-and"` | no |
+| <a name="input_region"></a> [region](#input\_region) | IBM Cloud region where all resources will be deployed | `string` | `"us-south"` | no |
+| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | ID of resource group to use when creating the VPC and PAG | `string` | n/a | yes |
 
 ### Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_myoutput"></a> [myoutput](#output\_myoutput) | Description of my output |
+| <a name="output_test"></a> [test](#output\_test) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set up steps for contributors to follow -->
