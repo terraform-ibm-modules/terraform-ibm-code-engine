@@ -33,7 +33,7 @@ output "bindings" {
 }
 
 output "domain_mappings" {
-  description = "Created code engine domain_mappings."
+  description = "Created code engine domain mappings."
   value       = resource.ibm_code_engine_domain_mapping.ce_domain_mapping
 }
 

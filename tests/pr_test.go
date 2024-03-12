@@ -36,20 +36,20 @@ func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.
 func TestRunBasicExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "code-engine-basic", basicExampleDir)
+	options := setupOptions(t, "ce-basic", basicExampleDir)
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")
 }
 
-// func TestRunUpgradeBasicExample(t *testing.T) {
-// 	t.Parallel()
+func TestRunUpgradeBasicExample(t *testing.T) {
+	t.Parallel()
 
-// 	options := setupOptions(t, "code-engine-upg", basicExampleDir)
+	options := setupOptions(t, "ce-upg", basicExampleDir)
 
-// 	output, err := options.RunTestUpgrade()
-// 	if !options.UpgradeTestSkipped {
-// 		assert.Nil(t, err, "This should not have errored")
-// 		assert.NotNil(t, output, "Expected some output")
-// 	}
-// }
+	output, err := options.RunTestUpgrade()
+	if !options.UpgradeTestSkipped {
+		assert.Nil(t, err, "This should not have errored")
+		assert.NotNil(t, output, "Expected some output")
+	}
+}

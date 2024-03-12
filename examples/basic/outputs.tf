@@ -33,7 +33,7 @@ output "bindings" {
 }
 
 output "domain_mappings" {
-  description = "Created code engine domain_mappings."
+  description = "Created code engine domain mappings."
   value       = module.code_engine.domain_mappings
 }
 

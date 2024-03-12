@@ -158,7 +158,7 @@ No modules.
 | <a name="output_bindings"></a> [bindings](#output\_bindings) | Created code engine bindings. |
 | <a name="output_builds"></a> [builds](#output\_builds) | Created code engine builds. |
 | <a name="output_config_maps"></a> [config\_maps](#output\_config\_maps) | Created code engine config\_maps. |
-| <a name="output_domain_mappings"></a> [domain\_mappings](#output\_domain\_mappings) | Created code engine domain\_mappings. |
+| <a name="output_domain_mappings"></a> [domain\_mappings](#output\_domain\_mappings) | Created code engine domain mappings. |
 | <a name="output_jobs"></a> [jobs](#output\_jobs) | Created code engine jobs. |
 | <a name="output_projects"></a> [projects](#output\_projects) | Created code engine projects. |
 | <a name="output_secrets"></a> [secrets](#output\_secrets) | Created code engine secrets. |
