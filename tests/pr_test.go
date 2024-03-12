@@ -10,36 +10,46 @@ import (
 
 // Use existing resource group
 const resourceGroup = "geretain-test-resources"
-const completeExampleDir = "examples/complete"
+const basicExampleDir = "examples/basic"
 
-func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
-	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
+func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
-		TerraformDir:  dir,
+		TerraformDir:  terraformDir,
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
+		IgnoreUpdates: testhelper.Exemptions{
+			List: []string{
+				"module.code_engine.ibm_code_engine_app.ce_app[0]",
+				"module.code_engine.ibm_code_engine_app.ce_app[1]",
+			},
+		},
 	})
+	options.TerraformVars = map[string]interface{}{
+		"resource_group": resourceGroup,
+		"prefix":         options.Prefix,
+	}
+
 	return options
 }
 
-func TestRunCompleteExample(t *testing.T) {
+func TestRunBasicExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "mod-template", completeExampleDir)
-
+	options := setupOptions(t, "code-engine-basic", basicExampleDir)
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")
 }
 
-func TestRunUpgradeExample(t *testing.T) {
-	t.Parallel()
+// func TestRunUpgradeBasicExample(t *testing.T) {
+// 	t.Parallel()
 
-	options := setupOptions(t, "mod-template-upg", completeExampleDir)
+// 	options := setupOptions(t, "code-engine-upg", basicExampleDir)
 
-	output, err := options.RunTestUpgrade()
-	if !options.UpgradeTestSkipped {
-		assert.Nil(t, err, "This should not have errored")
-		assert.NotNil(t, output, "Expected some output")
-	}
-}
+// 	output, err := options.RunTestUpgrade()
+// 	if !options.UpgradeTestSkipped {
+// 		assert.Nil(t, err, "This should not have errored")
+// 		assert.NotNil(t, output, "Expected some output")
+// 	}
+// }

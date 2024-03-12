@@ -47,54 +47,68 @@ resource "ibm_code_engine_project" "ce_project" {
   resource_group_id = var.resource_group_id
 }
 
+##############################################################################
+# Code Engine App
+##############################################################################
 resource "ibm_code_engine_app" "ce_app" {
   count           = length(local.apps)
   project_id      = local.apps[count.index].project_id
   name            = local.apps[count.index].name
   image_reference = local.apps[count.index].image_reference
 
-  run_env_variables {
-    type  = "literal"
-    name  = "name"
-    value = "value"
+  dynamic "run_env_variables" {
+    for_each = local.apps[count.index].run_env_variables != null ? local.apps[count.index].run_env_variables : []
+    content {
+      type  = run_env_variables.value["type"]
+      name  = run_env_variables.value["name"]
+      value = run_env_variables.value["value"]
+    }
   }
 }
 
+##############################################################################
+# Code Engine Job
+##############################################################################
 resource "ibm_code_engine_job" "ce_job" {
   count           = length(local.jobs)
   project_id      = local.jobs[count.index].project_id
   name            = local.jobs[count.index].name
   image_reference = local.jobs[count.index].image_reference
 
-  run_env_variables {
-    type  = "literal"
-    name  = "name"
-    value = "value"
+  dynamic "run_env_variables" {
+    for_each = local.jobs[count.index].run_env_variables != null ? local.jobs[count.index].run_env_variables : []
+    content {
+      type  = run_env_variables.value["type"]
+      name  = run_env_variables.value["name"]
+      value = run_env_variables.value["value"]
+    }
   }
 }
 
+##############################################################################
+# Code Engine Config Map
+##############################################################################
 resource "ibm_code_engine_config_map" "ce_config_map" {
   count      = length(local.config_maps)
   project_id = local.config_maps[count.index].project_id
   name       = local.config_maps[count.index].name
-  data = {
-    key1 = "value1"
-    key2 = "value2"
-  }
+  data       = local.config_maps[count.index].data
 }
 
+##############################################################################
+# Code Engine Secret
+##############################################################################
 resource "ibm_code_engine_secret" "code_engine_secret_instance" {
   count      = length(local.secrets)
   project_id = local.secrets[count.index].project_id
   name       = local.secrets[count.index].name
   format     = local.secrets[count.index].format
-
-  data = {
-    key1 = "value1"
-    key2 = "value2"
-  }
+  data       = local.secrets[count.index].data
 }
 
+##############################################################################
+# Code Engine Build
+##############################################################################
 resource "ibm_code_engine_build" "ce_build" {
   count         = length(local.builds)
   project_id    = local.builds[count.index].project_id
@@ -105,27 +119,36 @@ resource "ibm_code_engine_build" "ce_build" {
   strategy_type = local.builds[count.index].strategy_type
 }
 
-# resource "ibm_code_engine_domain_mapping" "ce_domain_mapping" {
-#     count         = length(local.domain_mappings)
-#     project_id    = local.domain_mappings[count.index].project_id
-#     name          = local.domain_mappings[count.index].name
-#     tls_secret          = local.domain_mappings[count.index].tls_secret
-#   component {
-#     for_each = local.domain_mappings[count.index].component
-#         name = each.value.name
-#         resource_type = each.value.resource_type
-#   }
+##############################################################################
+# Code Engine Domain Mapping
+##############################################################################
+resource "ibm_code_engine_domain_mapping" "ce_domain_mapping" {
+  count      = length(local.domain_mappings)
+  project_id = local.domain_mappings[count.index].project_id
+  name       = local.domain_mappings[count.index].name
+  tls_secret = local.domain_mappings[count.index].tls_secret
+  dynamic "component" {
+    for_each = local.domain_mappings[count.index].components != null ? local.domain_mappings[count.index].components : []
+    content {
+      name          = component.value["name"]
+      resource_type = component.value["resource_type"]
+    }
+  }
+}
 
-# }
-
+##############################################################################
+# Code Engine Binding
+##############################################################################
 resource "ibm_code_engine_binding" "ce_binding" {
   count       = length(local.bindings)
   project_id  = local.bindings[count.index].project_id
   prefix      = local.bindings[count.index].prefix
   secret_name = local.bindings[count.index].secret_name
-  component {
-    name          = "my-app-1"
-    resource_type = "app_v2"
+  dynamic "component" {
+    for_each = local.bindings[count.index].components != null ? local.bindings[count.index].components : []
+    content {
+      name          = component.value["name"]
+      resource_type = component.value["resource_type"]
+    }
   }
-
 }
