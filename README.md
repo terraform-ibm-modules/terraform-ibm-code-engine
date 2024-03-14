@@ -55,44 +55,104 @@ Add an example of the use of the module in the following code block.
 Use real values instead of "var.<var_name>" or other placeholder values
 unless real values don't help users know what to change.
 -->
-
-```hcl
-module "code_engine" {
-  source      = "terraform-ibm-modules/code-engine/ibm"
-  version     = "X.X.X" # Replace "X.X.X" with a release version to lock into a specific release
-  code_engine = {
-    "project-name" = {
-      apps = [{
-        name            = "app-name"
-        image_reference = "container_registry_url"
-      }],
-      jobs = [{
-        name              = "job-name"
-        image_reference   = "container_registry_url"
-        run_env_variables = [{
+source            = "../.."
+  resource_group_id = module.resource_group.resource_group_id
+  project_name      = "${var.prefix}-project"
+  apps = {
+    "${var.prefix}-app" = {
+      image_reference = "icr.io/codeengine/helloworld"
+      run_env_variables = [{
+        type  = "literal"
+        name  = "name_1"
+        value = "value_1"
+        },
+        {
           type  = "literal"
-          name  = "env_name"
-          value = "env_value"
-        }]
-      }],
-      config_maps = [{
-        name = "config-map-name"
-        data = { "key" : "value" }
-      }],
-      secrets = [{
-        name   = "secret-name"
-        format = "generic"
-        data   = { "key" : "value" }
-      }],
-      builds = [{
-        name          = "BUILD-NAME"
-        output_image  = "container_registry_url"
-        output_secret = "output-secret-name" # pragma: allowlist secret
-        source_url    = "domain"
-        strategy_type = "dockerfile"
+          name  = "name_2"
+          value = "value_2"
+      }]
+    },
+    "${var.prefix}-app2" = {
+      image_reference = "icr.io/codeengine/helloworld"
+    }
+  }
+  jobs = {
+    "${var.prefix}-job" = {
+      image_reference = "icr.io/codeengine/helloworld"
+      run_env_variables = [{
+        type  = "literal"
+        name  = "name_1"
+        value = "value_1"
       }]
     }
   }
+  config_maps = {
+    "${var.prefix}-cm" = {
+      data = { "key_1" : "value_1", "key_2" : "value_2" }
+    }
+  }
+  secrets = {
+    "${var.prefix}-s" = {
+      format = "generic"
+      data   = { "key_1" : "value_1", "key_2" : "value_2" }
+    }
+  }
+  builds = {
+    "${var.prefix}-build" = {
+      output_image  = "private.de.icr.io/icr_namespace/image-name"
+      output_secret = "icr-private" # pragma: allowlist secret
+      source_url    = "https://github.com/IBM/CodeEngine"
+      strategy_type = "dockerfile"
+    }
+  }
+
+```hcl
+module "code_engine" {
+  source       = "terraform-ibm-modules/code-engine/ibm"
+  version      = "X.X.X" # Replace "X.X.X" with a release version to lock into a specific release
+  project_name = "your-project-name"
+  apps         = {
+                  "your-app-name-1" = {
+                    image_reference = "container_registry_url"
+                    run_env_variables = [{
+                      type  = "literal"
+                      name  = "env_name"
+                      value = "env_value"
+                      }]
+                  },
+                  "your-app-name-2" = {
+                    image_reference = "container_registry_url"
+                  }
+                }
+  jobs         = {
+                  "your-job-name" = {
+                    image_reference = "container_registry_url"
+                    run_env_variables = [{
+                      type  = "literal"
+                      name  = "env_name"
+                      value = "env_value"
+                    }]
+                  }
+                }
+  config_maps  = {
+                  "your-config-name" = {
+                    data = { "key_1" : "value_1", "key_2" : "value_2" }
+                  }
+                }
+  secrets      = {
+                  "your-secret-name" = {
+                    format = "generic"
+                    data   = { "key_1" : "value_1", "key_2" : "value_2" }
+                  }
+                }
+  builds       = {
+                  "your-build-name" = {
+                    output_image  = "container_registry_url"
+                    output_secret = "secret-name" # pragma: allowlist secret
+                    source_url    = "https://github.com/IBM/CodeEngine"
+                    strategy_type = "dockerfile"
+                  }
+                }
 }
 ```
 
