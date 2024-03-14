@@ -8,6 +8,9 @@ The text below should describe exactly what resources are provisioned / configur
 
 An end-to-end basic example that will provision the following:
 - A new resource group if one is not passed in.
-- 2 Code Engine projects, where:
-    - Project #1 includes: Code Engine Job, App, Config Map, Secret, Build
-    - Project #2 includes: Code Engine App
+- Code Engine project
+- Code Engine Job
+- Code Engine App
+- Code Engine Config Map
+- Code Engine Secret
+- Code Engine Build

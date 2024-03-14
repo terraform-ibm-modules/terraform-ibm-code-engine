@@ -1,5 +1,5 @@
 <!-- Update the title -->
-# Terraform Modules Template Project
+# Terraform Code Engine Module
 
 <!--
 Update status and "latest release" badges:
@@ -20,6 +20,15 @@ This module provisions the IBM Cloud Code Engine fully managed and serverless pl
 <!-- BEGIN OVERVIEW HOOK -->
 ## Overview
 * [terraform-ibm-code-engine](#terraform-ibm-code-engine)
+* [Submodules](./modules)
+    * [app](./modules/app)
+    * [binding](./modules/binding)
+    * [build](./modules/build)
+    * [config_map](./modules/config_map)
+    * [domain_mapping](./modules/domain_mapping)
+    * [job](./modules/job)
+    * [project](./modules/project)
+    * [secret](./modules/secret)
 * [Examples](./examples)
     * [Basic example](./examples/basic)
 * [Contributing](#contributing)
@@ -128,40 +137,47 @@ statement instead the previous block.
 
 ### Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_app"></a> [app](#module\_app) | ./modules/app | n/a |
+| <a name="module_binding"></a> [binding](#module\_binding) | ./modules/binding | n/a |
+| <a name="module_build"></a> [build](#module\_build) | ./modules/build | n/a |
+| <a name="module_config_map"></a> [config\_map](#module\_config\_map) | ./modules/config_map | n/a |
+| <a name="module_domain_mapping"></a> [domain\_mapping](#module\_domain\_mapping) | ./modules/domain_mapping | n/a |
+| <a name="module_job"></a> [job](#module\_job) | ./modules/job | n/a |
+| <a name="module_project"></a> [project](#module\_project) | ./modules/project | n/a |
+| <a name="module_secret"></a> [secret](#module\_secret) | ./modules/secret | n/a |
 
 ### Resources
 
-| Name | Type |
-|------|------|
-| [ibm_code_engine_app.ce_app](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_app) | resource |
-| [ibm_code_engine_binding.ce_binding](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_binding) | resource |
-| [ibm_code_engine_build.ce_build](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_build) | resource |
-| [ibm_code_engine_config_map.ce_config_map](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_config_map) | resource |
-| [ibm_code_engine_domain_mapping.ce_domain_mapping](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_domain_mapping) | resource |
-| [ibm_code_engine_job.ce_job](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_job) | resource |
-| [ibm_code_engine_project.ce_project](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_project) | resource |
-| [ibm_code_engine_secret.code_engine_secret_instance](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_secret) | resource |
+No resources.
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_code_engine"></a> [code\_engine](#input\_code\_engine) | A map describing code engine resources to be created. | <pre>map(object({<br>    apps = optional(list(object({<br>      name            = string<br>      image_reference = string<br>      run_env_variables = optional(list(object({<br>        type  = string<br>        name  = string<br>        value = string<br>      })))<br>    }))),<br>    jobs = optional(list(object({<br>      name            = string<br>      image_reference = string<br>      run_env_variables = optional(list(object({<br>        type  = string<br>        name  = string<br>        value = string<br>      })))<br>    }))),<br>    config_maps = optional(list(object({<br>      name = string<br>      data = optional(map(string))<br>    }))),<br>    secrets = optional(list(object({<br>      name   = string<br>      format = string<br>      data   = optional(map(string))<br>    }))),<br>    builds = optional(list(object({<br>      name          = string<br>      output_image  = string<br>      output_secret = string # pragma: allowlist secret<br>      source_url    = string<br>      strategy_type = string<br>    })))<br>    bindings = optional(list(object({<br>      prefix      = string<br>      secret_name = string # pragma: allowlist secret<br>      components = list(object({<br>        name          = string<br>        resource_type = string<br>      }))<br>    })))<br>    domain_mappings = optional(list(object({<br>      name = string<br>      components = list(object({<br>        name          = string<br>        resource_type = string<br>      }))<br>      tls_secret = string<br>    })))<br>  }))</pre> | n/a | yes |
-| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | ID of resource group to use when creating resources | `string` | n/a | yes |
+| <a name="input_apps"></a> [apps](#input\_apps) | A map of code engine apps to be created. | <pre>map(object({<br>    image_reference = string<br>    run_env_variables = optional(list(object({<br>      type  = string<br>      name  = string<br>      value = string<br>    })))<br>  }))</pre> | `{}` | no |
+| <a name="input_bindings"></a> [bindings](#input\_bindings) | A map of code engine bindings to be created. | <pre>map(object({<br>    secret_name = string<br>    components = list(object({<br>      name          = string<br>      resource_type = string<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_builds"></a> [builds](#input\_builds) | A map of code engine builds to be created. | <pre>map(object({<br>    output_image  = string<br>    output_secret = string # pragma: allowlist secret<br>    source_url    = string<br>    strategy_type = string<br>  }))</pre> | `{}` | no |
+| <a name="input_config_maps"></a> [config\_maps](#input\_config\_maps) | A map of code engine config maps to be created. | <pre>map(object({<br>    data = map(string)<br>  }))</pre> | `{}` | no |
+| <a name="input_domain_mappings"></a> [domain\_mappings](#input\_domain\_mappings) | A map of code engine domain mappings to be created. | <pre>map(object({<br>    tls_secret = string # pragma: allowlist secret<br>    components = list(object({<br>      name          = string<br>      resource_type = string<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_jobs"></a> [jobs](#input\_jobs) | A map of code engine jobs to be created. | <pre>map(object({<br>    image_reference = string<br>    run_env_variables = optional(list(object({<br>      type  = string<br>      name  = string<br>      value = string<br>    })))<br>  }))</pre> | `{}` | no |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The name of the project to which code engine resources will be added. | `string` | n/a | yes |
+| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | ID of the resource group to use when creating resources. | `string` | n/a | yes |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | A map of code engine secrets to be created. | <pre>map(object({<br>    format = string<br>    data   = map(string)<br>  }))</pre> | `{}` | no |
 
 ### Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_apps"></a> [apps](#output\_apps) | Created code engine apps. |
-| <a name="output_bindings"></a> [bindings](#output\_bindings) | Created code engine bindings. |
-| <a name="output_builds"></a> [builds](#output\_builds) | Created code engine builds. |
-| <a name="output_config_maps"></a> [config\_maps](#output\_config\_maps) | Created code engine config\_maps. |
-| <a name="output_domain_mappings"></a> [domain\_mappings](#output\_domain\_mappings) | Created code engine domain mappings. |
-| <a name="output_jobs"></a> [jobs](#output\_jobs) | Created code engine jobs. |
-| <a name="output_projects"></a> [projects](#output\_projects) | Created code engine projects. |
-| <a name="output_secrets"></a> [secrets](#output\_secrets) | Created code engine secrets. |
+| <a name="output_app"></a> [app](#output\_app) | Configuration of the created code engine app. |
+| <a name="output_binding"></a> [binding](#output\_binding) | Configuration of the created code engine binding. |
+| <a name="output_build"></a> [build](#output\_build) | Configuration of the created code engine build. |
+| <a name="output_config_map"></a> [config\_map](#output\_config\_map) | Configuration of the created code engine config map. |
+| <a name="output_domain_mapping"></a> [domain\_mapping](#output\_domain\_mapping) | Configuration of the created code engine domain maping. |
+| <a name="output_job"></a> [job](#output\_job) | Configuration of the created code engine job. |
+| <a name="output_project_id"></a> [project\_id](#output\_project\_id) | ID of the created code engine project. |
+| <a name="output_secret"></a> [secret](#output\_secret) | Configuration of the created code engine secret. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set up steps for contributors to follow -->

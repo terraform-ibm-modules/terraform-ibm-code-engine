@@ -2,43 +2,42 @@
 # Outputs
 ########################################################################################################################
 
-output "projects" {
-  description = "Created code engine projects."
-  value       = module.code_engine.projects
+output "project_id" {
+  description = "ID of the created code engine project."
+  value       = module.code_engine.project_id
 }
 
-output "apps" {
-  description = "Created code engine apps."
-  value       = module.code_engine.apps
+output "app" {
+  description = "Configuration of the created code engine app."
+  value       = module.code_engine.app
 }
 
-output "jobs" {
-  description = "Created code engine jobs."
-  value       = module.code_engine.jobs
+output "job" {
+  description = "Configuration of the created code engine job."
+  value       = module.code_engine.job
 }
 
-output "config_maps" {
-  description = "Created code engine config_maps."
-  value       = module.code_engine.config_maps
+output "config_map" {
+  description = "Configuration of the created code engine config map."
+  value       = module.code_engine.config_map
 }
 
-output "builds" {
-  description = "Created code engine builds."
-  value       = module.code_engine.builds
+output "secret" {
+  description = "Configuration of the created code engine secret."
+  value       = module.code_engine.secret
 }
 
-output "bindings" {
-  description = "Created code engine bindings."
-  value       = module.code_engine.bindings
+output "build" {
+  description = "Configuration of the created code engine build."
+  value       = module.code_engine.build
 }
 
-output "domain_mappings" {
-  description = "Created code engine domain mappings."
-  value       = module.code_engine.domain_mappings
+output "binding" {
+  description = "Configuration of the created code engine binding."
+  value       = module.code_engine.binding
 }
 
-output "secrets" {
-  description = "Created code engine secrets."
-  value       = module.code_engine.secrets
-  sensitive   = true
+output "domain_mapping" {
+  description = "Configuration of the created code engine domain maping."
+  value       = module.code_engine.domain_mapping
 }

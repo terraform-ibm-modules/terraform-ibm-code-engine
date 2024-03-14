@@ -2,43 +2,42 @@
 # Outputs
 ########################################################################################################################
 
-output "projects" {
-  description = "Created code engine projects."
-  value       = resource.ibm_code_engine_project.ce_project
+output "project_id" {
+  description = "ID of the created code engine project."
+  value       = module.project.id
 }
 
-output "apps" {
-  description = "Created code engine apps."
-  value       = resource.ibm_code_engine_app.ce_app
+output "app" {
+  description = "Configuration of the created code engine app."
+  value       = module.app
 }
 
-output "config_maps" {
-  description = "Created code engine config_maps."
-  value       = resource.ibm_code_engine_config_map.ce_config_map
+output "job" {
+  description = "Configuration of the created code engine job."
+  value       = module.job
 }
 
-output "jobs" {
-  description = "Created code engine jobs."
-  value       = resource.ibm_code_engine_job.ce_job
+output "config_map" {
+  description = "Configuration of the created code engine config map."
+  value       = module.config_map
 }
 
-output "builds" {
-  description = "Created code engine builds."
-  value       = resource.ibm_code_engine_build.ce_build
+output "secret" {
+  description = "Configuration of the created code engine secret."
+  value       = module.secret
 }
 
-output "bindings" {
-  description = "Created code engine bindings."
-  value       = resource.ibm_code_engine_binding.ce_binding
+output "build" {
+  description = "Configuration of the created code engine build."
+  value       = module.build
 }
 
-output "domain_mappings" {
-  description = "Created code engine domain mappings."
-  value       = resource.ibm_code_engine_domain_mapping.ce_domain_mapping
+output "binding" {
+  description = "Configuration of the created code engine binding."
+  value       = module.binding
 }
 
-output "secrets" {
-  description = "Created code engine secrets."
-  value       = resource.ibm_code_engine_secret.code_engine_secret_instance
-  sensitive   = true
+output "domain_mapping" {
+  description = "Configuration of the created code engine domain maping."
+  value       = module.domain_mapping
 }
