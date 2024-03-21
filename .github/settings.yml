@@ -20,4 +20,4 @@ repository:
   description: "Creates IBM Cloud Code Engine resources."
 
   # Use a comma-separated list of topics to set on the repo (ensure not to use any caps in the topic string).
-  topics: terraform, ibm-cloud, terraform-module
+  topics: terraform, ibm-cloud, terraform-module, code-engine, core-team, stable, supported
