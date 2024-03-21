@@ -51,14 +51,12 @@ module "code_engine" {
       data = { "key_1" : "value_1", "key_2" : "value_2" }
     }
   }
-
   secrets = {
     "${var.prefix}-s" = {
       format = "generic"
       data   = { "key_1" : "value_1", "key_2" : "value_2" }
     }
   }
-
   builds = {
     "${var.prefix}-build" = {
       output_image  = "private.de.icr.io/icr_namespace/image-name"

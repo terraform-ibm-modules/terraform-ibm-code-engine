@@ -65,5 +65,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_app_id"></a> [app\_id](#output\_app\_id) | The ID of the created code engine app. |
+| <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | URL to application. Depending on visibility this is accessible publicly or in the private network only. |
+| <a name="output_endpoint_internal"></a> [endpoint\_internal](#output\_endpoint\_internal) | URL to application that is only visible within the project. |
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine app. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

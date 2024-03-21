@@ -18,13 +18,15 @@ func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.
 		TerraformDir:  terraformDir,
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
-		IgnoreUpdates: testhelper.Exemptions{
-			List: []string{
-				"module.code_engine.ibm_code_engine_app.ce_app[0]",
-				"module.code_engine.ibm_code_engine_app.ce_app[1]",
-			},
-		},
 	})
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
+			"module.code_engine.module.app[\"" + options.Prefix + "-app2\"].ibm_code_engine_app.ce_app",
+			"module.ce_app[\"" + options.Prefix + "-app-1\"].ibm_code_engine_app.ce_app",
+			"module.ce_app[\"" + options.Prefix + "-app-2\"].ibm_code_engine_app.ce_app",
+		},
+	}
 	options.TerraformVars = map[string]interface{}{
 		"resource_group": resourceGroup,
 		"prefix":         options.Prefix,

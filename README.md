@@ -31,6 +31,7 @@ This module provisions the IBM Cloud Code Engine fully managed and serverless pl
     * [secret](./modules/secret)
 * [Examples](./examples)
     * [Basic example](./examples/basic)
+    * [Submodule use example](./examples/use-submodule)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
@@ -46,6 +47,17 @@ https://terraform-ibm-modules.github.io/documentation/#/implementation-guideline
 
 <!-- This heading should always match the name of the root level module (aka the repo name) -->
 ## terraform-ibm-module-template
+
+### Known limitations
+
+Currently, IBM provider supports basic functionalities, such as create/delete/update code engine projects, apps, jobs, builds and etc.
+
+Known limitations are:
+- No support to create/delete/update code engine functions.
+- No support to create/delete/update code engine subscriptions.
+- Apply twice keeps on showing changes for `ibm_code_engine_app` terraform resource https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
+- CLI/API service binding implementation/interface is different from terraform implementation. For example, CLI or UI code engine has a support to create access secret, service credential and all bindings automatically, while `code_engine_binding_instance` terraform resource requires that access secret exists before the binding is created. The second discrepancy between implementations is that terraform `code_engine_binding_instance` terraform resource requires `prefix` while using CLI or UI `prefix` is an optional parameter.
+- Visibility for application can not be set. While CLI uses `--visibility=private` flag to set the visibility, terraform provider doesn't support it.
 
 ### Usage
 
