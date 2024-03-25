@@ -53,6 +53,7 @@ Known limitations are:
 - Apply twice keeps on showing changes for `ibm_code_engine_app` terraform resource https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
 - CLI/API service binding implementation/interface is different from terraform implementation. For example, CLI or UI code engine has a support to create access secret, service credential and all bindings automatically, while `code_engine_binding_instance` terraform resource requires that access secret exists before the binding is created. The second discrepancy between implementations is that terraform `code_engine_binding_instance` terraform resource requires `prefix` while using CLI or UI `prefix` is an optional parameter. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5229
 - Visibility for application can not be set. While CLI uses `--visibility=private` flag to set the visibility, terraform provider doesn't support it. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5228
+- Apply twice throwns an error for `ibm_code_engine_secret` terraform resource https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
 
 ### Usage
 
