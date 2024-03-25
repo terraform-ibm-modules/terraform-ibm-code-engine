@@ -4,7 +4,7 @@
 
 output "project_id" {
   description = "ID of the created code engine project."
-  value       = module.project.id
+  value       = local.project_id
 }
 
 output "app" {

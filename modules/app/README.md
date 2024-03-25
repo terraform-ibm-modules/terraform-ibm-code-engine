@@ -55,10 +55,27 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_image_port"></a> [image\_port](#input\_image\_port) | The port which is used to connect to the port that is exposed by the container image. | `number` | `8080` | no |
 | <a name="input_image_reference"></a> [image\_reference](#input\_image\_reference) | The name of the image that is used for the app. | `string` | n/a | yes |
+| <a name="input_image_secret"></a> [image\_secret](#input\_image\_secret) | The name of the image registry access secret. | `string` | `null` | no |
+| <a name="input_managed_domain_mappings"></a> [managed\_domain\_mappings](#input\_managed\_domain\_mappings) | Define which of the system managed domain mappings will be setup for the application. Valid values are 'local\_public', 'local\_private' and 'local'. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the app. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where app will be created. | `string` | n/a | yes |
-| <a name="input_run_env_variables"></a> [run\_env\_variables](#input\_run\_env\_variables) | Optional references to config maps, secrets or a literal values that are exposed as environment variables within the running application. | <pre>list(object({<br>    type = string<br>    name = string<br>  value = string }))</pre> | `[]` | no |
+| <a name="input_run_arguments"></a> [run\_arguments](#input\_run\_arguments) | Arguments for the app that are passed to start the container. | `list(string)` | `[]` | no |
+| <a name="input_run_as_user"></a> [run\_as\_user](#input\_run\_as\_user) | The user ID (UID) to run the app. | `number` | `null` | no |
+| <a name="input_run_commands"></a> [run\_commands](#input\_run\_commands) | Commands for the app that are passed to start the container. | `list(string)` | `[]` | no |
+| <a name="input_run_env_variables"></a> [run\_env\_variables](#input\_run\_env\_variables) | References to config maps, secrets or a literal values that are exposed as environment variables within the running application. | <pre>list(object({<br>    type      = optional(string)<br>    name      = optional(string)<br>    value     = optional(string)<br>    prefix    = optional(string)<br>    key       = optional(string)<br>    reference = optional(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_run_service_account"></a> [run\_service\_account](#input\_run\_service\_account) | The name of the service account. | `string` | `"default"` | no |
+| <a name="input_run_volume_mounts"></a> [run\_volume\_mounts](#input\_run\_volume\_mounts) | Optional mounts of config maps or a secrets. | <pre>list(object({<br>    mount_path = string<br>    reference  = string<br>    name       = optional(string)<br>    value      = optional(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_scale_concurrency"></a> [scale\_concurrency](#input\_scale\_concurrency) | The maximum number of requests that can be processed concurrently per instance. | `number` | `100` | no |
+| <a name="input_scale_concurrency_target"></a> [scale\_concurrency\_target](#input\_scale\_concurrency\_target) | The threshold of concurrent requests per instance at which one or more additional instances are created. | `number` | `null` | no |
+| <a name="input_scale_cpu_limit"></a> [scale\_cpu\_limit](#input\_scale\_cpu\_limit) | The number of CPU set for the instance of the app. | `string` | `"1"` | no |
+| <a name="input_scale_ephemeral_storage_limit"></a> [scale\_ephemeral\_storage\_limit](#input\_scale\_ephemeral\_storage\_limit) | The amount of ephemeral storage to set for the instance of the app. | `string` | `"400M"` | no |
+| <a name="input_scale_initial_instances"></a> [scale\_initial\_instances](#input\_scale\_initial\_instances) | The initial number of instances that are created upon app creation or app update. | `number` | `1` | no |
+| <a name="input_scale_max_instances"></a> [scale\_max\_instances](#input\_scale\_max\_instances) | The maximum number of instances for this app. | `number` | `10` | no |
+| <a name="input_scale_memory_limit"></a> [scale\_memory\_limit](#input\_scale\_memory\_limit) | The amount of memory set for the instance of the app. | `string` | `"4G"` | no |
+| <a name="input_scale_min_instances"></a> [scale\_min\_instances](#input\_scale\_min\_instances) | The minimum number of instances for this app.  If you set this value to 0, the app will scale down to zero, if not hit by any request for some time. | `number` | `0` | no |
+| <a name="input_scale_request_timeout"></a> [scale\_request\_timeout](#input\_scale\_request\_timeout) | The amount of time in seconds that is allowed for a running app to respond to a request. | `number` | `300` | no |
 
 ### Outputs
 

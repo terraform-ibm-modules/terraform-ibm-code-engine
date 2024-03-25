@@ -56,8 +56,15 @@ No modules.
 | <a name="input_output_image"></a> [output\_image](#input\_output\_image) | The name of the image. | `string` | n/a | yes |
 | <a name="input_output_secret"></a> [output\_secret](#input\_output\_secret) | The secret that is required to access the image registry. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where build will be created. | `string` | n/a | yes |
+| <a name="input_source_context_dir"></a> [source\_context\_dir](#input\_source\_context\_dir) | The directory in the repository that contains the buildpacks file or the Dockerfile. | `string` | `null` | no |
+| <a name="input_source_revision"></a> [source\_revision](#input\_source\_revision) | Commit, tag, or branch in the source repository to pull. | `string` | `null` | no |
+| <a name="input_source_secret"></a> [source\_secret](#input\_source\_secret) | The name of the secret that is used access the repository source. If the var.source\_type value is `local`, this field must be omitted. | `string` | `null` | no |
+| <a name="input_source_type"></a> [source\_type](#input\_source\_type) | Specifies the type of source to determine if your build source is in a repository or based on local source code. | `string` | `null` | no |
 | <a name="input_source_url"></a> [source\_url](#input\_source\_url) | The URL of the code repository. | `string` | n/a | yes |
-| <a name="input_strategy_type"></a> [strategy\_type](#input\_strategy\_type) | Specifies the type of source to determine if your build source is in a repository or based on local source code. | `string` | n/a | yes |
+| <a name="input_strategy_size"></a> [strategy\_size](#input\_strategy\_size) | The size for the build, which determines the amount of resources used. | `string` | `null` | no |
+| <a name="input_strategy_spec_file"></a> [strategy\_spec\_file](#input\_strategy\_spec\_file) | The path to the specification file that is used for build strategies for building an image. | `string` | `null` | no |
+| <a name="input_strategy_type"></a> [strategy\_type](#input\_strategy\_type) | The strategy to use for building the image. | `string` | n/a | yes |
+| <a name="input_timeout"></a> [timeout](#input\_timeout) | The maximum amount of time, in seconds, that can pass before the build must succeed or fail. | `number` | `600` | no |
 
 ### Outputs
 
