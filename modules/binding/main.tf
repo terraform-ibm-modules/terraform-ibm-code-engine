@@ -10,7 +10,7 @@ resource "ibm_code_engine_binding" "ce_binding" {
   secret_name = var.secret_name
 
   dynamic "component" {
-    for_each = var.components != null ? var.components : []
+    for_each = var.components
     content {
       name          = component.value["name"]
       resource_type = component.value["resource_type"]

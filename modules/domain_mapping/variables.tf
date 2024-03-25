@@ -12,16 +12,13 @@ variable "name" {
   type        = string
 }
 
-
 variable "components" {
   description = "A reference to another component."
   type = list(object({
     name          = string
     resource_type = string
   }))
-  default = []
 }
-
 
 variable "tls_secret" {
   description = "The name of the TLS secret that holds the certificate and private key of this domain mapping."

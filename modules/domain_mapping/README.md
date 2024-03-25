@@ -54,7 +54,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_components"></a> [components](#input\_components) | A reference to another component. | <pre>list(object({<br>    name          = string<br>    resource_type = string<br>  }))</pre> | `[]` | no |
+| <a name="input_components"></a> [components](#input\_components) | A reference to another component. | <pre>list(object({<br>    name          = string<br>    resource_type = string<br>  }))</pre> | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the domain mapping. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where domain mapping will be created. | `string` | n/a | yes |
 | <a name="input_tls_secret"></a> [tls\_secret](#input\_tls\_secret) | The name of the TLS secret that holds the certificate and private key of this domain mapping. | `string` | n/a | yes |

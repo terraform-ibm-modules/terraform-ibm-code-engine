@@ -54,7 +54,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_components"></a> [components](#input\_components) | A reference to another component. | <pre>list(object({<br>    name          = string<br>    resource_type = string<br>  }))</pre> | `[]` | no |
+| <a name="input_components"></a> [components](#input\_components) | A reference to another component. | <pre>list(object({<br>    name          = string<br>    resource_type = string<br>  }))</pre> | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Value that is set as prefix in the component that is bound. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where binding will be created. | `string` | n/a | yes |
 | <a name="input_secret_name"></a> [secret\_name](#input\_secret\_name) | The service access secret that is binding to a component. | `string` | n/a | yes |

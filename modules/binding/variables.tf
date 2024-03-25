@@ -23,5 +23,4 @@ variable "components" {
     name          = string
     resource_type = string
   }))
-  default = []
 }

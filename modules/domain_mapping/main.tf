@@ -9,7 +9,7 @@ resource "ibm_code_engine_domain_mapping" "ce_domain_mapping" {
   name       = var.name
   tls_secret = var.tls_secret
   dynamic "component" {
-    for_each = var.components != null ? var.components : []
+    for_each = var.components
     content {
       name          = component.value["name"]
       resource_type = component.value["resource_type"]
