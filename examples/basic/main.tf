@@ -11,6 +11,16 @@ module "resource_group" {
 }
 
 ########################################################################################################################
+# Public cert used for secret
+########################################################################################################################
+
+data "ibm_sm_public_certificate" "public_certificate" {
+  instance_id = var.secret_manager_id
+  region      = var.secret_manager_region
+  secret_id   = var.public_cert_id
+}
+
+########################################################################################################################
 # Code Engine instance
 ########################################################################################################################
 
@@ -55,6 +65,13 @@ module "code_engine" {
     "${var.prefix}-s" = {
       format = "generic"
       data   = { "key_1" : "value_1", "key_2" : "value_2" }
+    },
+    "${var.prefix}-tls" = {
+      format = "tls"
+      data = {
+        "tls_cert" = format("%s%s", data.ibm_sm_public_certificate.public_certificate.certificate, data.ibm_sm_public_certificate.public_certificate.intermediate)
+        "tls_key"  = data.ibm_sm_public_certificate.public_certificate.private_key
+      }
     }
   }
   builds = {
@@ -63,6 +80,15 @@ module "code_engine" {
       output_secret = "icr-private" # pragma: allowlist secret
       source_url    = "https://github.com/IBM/CodeEngine"
       strategy_type = "dockerfile"
+    }
+  }
+  domain_mappings = {
+    "goldeneye.dev.cloud.ibm.com" = {
+      components = [{
+        name          = "${var.prefix}-app"
+        resource_type = "app_v2"
+      }]
+      tls_secret = "${var.prefix}-tls"
     }
   }
 }

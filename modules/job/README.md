@@ -79,4 +79,5 @@ No modules.
 |------|-------------|
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine job. |
 | <a name="output_job_id"></a> [job\_id](#output\_job\_id) | The ID of the created code engine job. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the created code engine job. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

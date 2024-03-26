@@ -11,3 +11,8 @@ output "id" {
   description = "The unique identifier of the created code engine secret."
   value       = resource.ibm_code_engine_secret.ce_secret.id
 }
+
+output "name" {
+  description = "The name of created code engine secret."
+  value       = resource.ibm_code_engine_secret.ce_secret.name
+}

@@ -23,3 +23,8 @@ output "endpoint_internal" {
   description = "URL to application that is only visible within the project."
   value       = resource.ibm_code_engine_app.ce_app.endpoint_internal
 }
+
+output "name" {
+  description = "The name of the created code engine app."
+  value       = resource.ibm_code_engine_app.ce_app.name
+}

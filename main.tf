@@ -83,6 +83,7 @@ module "config_map" {
 # Code Engine Secret
 ##############################################################################
 module "secret" {
+  depends_on = [module.app, module.job]
   source     = "./modules/secret"
   for_each   = var.secrets
   project_id = local.project_id
@@ -119,6 +120,7 @@ module "build" {
 # Code Engine Domain Mapping
 ##############################################################################
 module "domain_mapping" {
+  depends_on = [module.secret]
   source     = "./modules/domain_mapping"
   for_each   = var.domain_mappings
   project_id = local.project_id
@@ -131,6 +133,7 @@ module "domain_mapping" {
 # Code Engine Binding
 ##############################################################################
 module "binding" {
+  depends_on  = [module.app, module.job]
   source      = "./modules/binding"
   for_each    = var.bindings
   project_id  = local.project_id

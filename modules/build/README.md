@@ -72,4 +72,5 @@ No modules.
 |------|-------------|
 | <a name="output_build_id"></a> [build\_id](#output\_build\_id) | The ID of the created code engine build. |
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine build. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the created code engine build. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

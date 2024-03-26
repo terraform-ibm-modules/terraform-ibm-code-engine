@@ -61,4 +61,5 @@ No modules.
 | <a name="output_config_map_id"></a> [config\_map\_id](#output\_config\_map\_id) | The ID of the created code engine config map. |
 | <a name="output_data"></a> [data](#output\_data) | The code engine config map's data. |
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine config map. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the created code engine config map. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

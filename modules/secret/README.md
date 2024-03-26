@@ -61,5 +61,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine secret. |
+| <a name="output_name"></a> [name](#output\_name) | The name of created code engine secret. |
 | <a name="output_secret_id"></a> [secret\_id](#output\_secret\_id) | The ID of the created code engine secret. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

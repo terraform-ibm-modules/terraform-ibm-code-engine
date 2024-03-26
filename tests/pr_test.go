@@ -2,15 +2,34 @@
 package test
 
 import (
+	"log"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 )
 
 // Use existing resource group
 const resourceGroup = "geretain-test-resources"
 const basicExampleDir = "examples/basic"
+
+// Define a struct with fields that match the structure of the YAML data
+const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
+
+var permanentResources map[string]interface{}
+
+// TestMain will be run before any parallel tests, used to read data from yaml for use with tests
+func TestMain(m *testing.M) {
+	var err error
+	permanentResources, err = common.LoadMapFromYaml(yamlLocation)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	os.Exit(m.Run())
+}
 
 func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
@@ -23,13 +42,14 @@ func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.
 		List: []string{
 			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
 			"module.code_engine.module.app[\"" + options.Prefix + "-app2\"].ibm_code_engine_app.ce_app",
-			"module.ce_app[\"" + options.Prefix + "-app-1\"].ibm_code_engine_app.ce_app",
-			"module.ce_app[\"" + options.Prefix + "-app-2\"].ibm_code_engine_app.ce_app",
 		},
 	}
 	options.TerraformVars = map[string]interface{}{
-		"resource_group": resourceGroup,
-		"prefix":         options.Prefix,
+		"resource_group":        resourceGroup,
+		"prefix":                options.Prefix,
+		"secret_manager_id":     permanentResources["secretsManagerGuid"],
+		"secret_manager_region": permanentResources["secretsManagerRegion"],
+		"public_cert_id":        permanentResources["cePublicCertId"],
 	}
 
 	return options
