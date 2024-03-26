@@ -45,11 +45,12 @@ func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.
 		},
 	}
 	options.TerraformVars = map[string]interface{}{
-		"resource_group":        resourceGroup,
-		"prefix":                options.Prefix,
-		"secret_manager_id":     permanentResources["secretsManagerGuid"],
-		"secret_manager_region": permanentResources["secretsManagerRegion"],
-		"public_cert_id":        permanentResources["cePublicCertId"],
+		"resource_group":              resourceGroup,
+		"prefix":                      options.Prefix,
+		"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
+		"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
+		"existing_cert_secret_id":     permanentResources["cePublicCertId"],
+		"existing_cert_common_name":   permanentResources["cePublicCertCommonName"],
 	}
 
 	return options
