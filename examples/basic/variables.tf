@@ -29,14 +29,17 @@ variable "resource_group" {
 variable "secret_manager_id" {
   type        = string
   description = "The ID of secret manager."
+  default     = null
 }
 
 variable "secret_manager_region" {
   type        = string
   description = "The region where secret manager is provisioned."
+  default     = null
 }
 
 variable "public_cert_id" {
   type        = string
   description = "The ID of public certificate."
+  default     = null
 }
