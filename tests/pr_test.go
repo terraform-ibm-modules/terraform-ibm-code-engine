@@ -13,7 +13,8 @@ import (
 
 // Use existing resource group
 const resourceGroup = "geretain-test-resources"
-const basicExampleDir = "examples/basic"
+const appsExampleDir = "examples/apps"
+const jobsExampleDir = "examples/jobs"
 
 // Define a struct with fields that match the structure of the YAML data
 const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
@@ -31,7 +32,7 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
+func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
 		TerraformDir:  terraformDir,
@@ -56,10 +57,25 @@ func setupOptions(t *testing.T, prefix string, terraformDir string) *testhelper.
 	return options
 }
 
-func TestRunBasicExample(t *testing.T) {
+func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  terraformDir,
+		Prefix:        prefix,
+		ResourceGroup: resourceGroup,
+	})
+	options.TerraformVars = map[string]interface{}{
+		"resource_group": resourceGroup,
+		"prefix":         options.Prefix,
+	}
+
+	return options
+}
+
+func TestRunAppsExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "ce-basic", basicExampleDir)
+	options := setupAppsExampleOptions(t, "ce-apps", appsExampleDir)
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")
@@ -68,11 +84,20 @@ func TestRunBasicExample(t *testing.T) {
 func TestRunUpgradeBasicExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "ce-upg", basicExampleDir)
+	options := setupAppsExampleOptions(t, "ce-apps-upg", appsExampleDir)
 
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
 	}
+}
+
+func TestRunJobsExample(t *testing.T) {
+	t.Parallel()
+
+	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
+	output, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
 }

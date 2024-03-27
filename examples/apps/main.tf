@@ -74,7 +74,8 @@ module "secrets_manager_group" {
 }
 
 resource "ibm_sm_public_certificate" "secrets_manager_public_certificate" {
-  count = var.existing_cert_secret_id == null ? 1 : 0
+  depends_on = [module.secrets_manager_public_cert_engine]
+  count      = var.existing_cert_secret_id == null ? 1 : 0
 
   instance_id     = local.sm_guid
   region          = local.sm_region
@@ -118,19 +119,13 @@ module "code_engine" {
           name  = "name_2"
           value = "value_2"
       }]
-    },
+      scale_cpu_limit               = "4",
+      scale_memory_limit            = "32G"
+      scale_ephemeral_storage_limit = "300M"
+      managed_domain_mappings       = "local_private"
+    }
     "${var.prefix}-app2" = {
       image_reference = "icr.io/codeengine/helloworld"
-    }
-  }
-  jobs = {
-    "${var.prefix}-job" = {
-      image_reference = "icr.io/codeengine/helloworld"
-      run_env_variables = [{
-        type  = "literal"
-        name  = "name_1"
-        value = "value_1"
-      }]
     }
   }
   config_maps = {
@@ -139,24 +134,12 @@ module "code_engine" {
     }
   }
   secrets = {
-    "${var.prefix}-s" = {
-      format = "generic"
-      data   = { "key_1" : "value_1", "key_2" : "value_2" }
-    },
     "${var.prefix}-tls" = {
       format = "tls"
       data = {
         "tls_cert" = format("%s%s", data.ibm_sm_public_certificate.public_certificate.certificate, data.ibm_sm_public_certificate.public_certificate.intermediate)
         "tls_key"  = data.ibm_sm_public_certificate.public_certificate.private_key
       }
-    }
-  }
-  builds = {
-    "${var.prefix}-build" = {
-      output_image  = "private.de.icr.io/icr_namespace/image-name"
-      output_secret = "icr-private" # pragma: allowlist secret
-      source_url    = "https://github.com/IBM/CodeEngine"
-      strategy_type = "dockerfile"
     }
   }
   domain_mappings = {

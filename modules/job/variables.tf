@@ -42,7 +42,7 @@ variable "run_volume_mounts" {
     mount_path = string
     reference  = string
     name       = optional(string)
-    value      = optional(string)
+    type       = string
   }))
   default = []
 }

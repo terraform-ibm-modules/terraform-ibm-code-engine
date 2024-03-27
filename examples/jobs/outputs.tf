@@ -7,19 +7,9 @@ output "project_id" {
   value       = module.code_engine.project_id
 }
 
-output "app" {
-  description = "Configuration of the created code engine app."
-  value       = module.code_engine.app
-}
-
 output "job" {
   description = "Configuration of the created code engine job."
   value       = module.code_engine.job
-}
-
-output "config_map" {
-  description = "Configuration of the created code engine config map."
-  value       = module.code_engine.config_map
 }
 
 output "secret" {
@@ -30,14 +20,4 @@ output "secret" {
 output "build" {
   description = "Configuration of the created code engine build."
   value       = module.code_engine.build
-}
-
-output "binding" {
-  description = "Configuration of the created code engine binding."
-  value       = module.code_engine.binding
-}
-
-output "domain_mapping" {
-  description = "Configuration of the created code engine domain maping."
-  value       = module.code_engine.domain_mapping
 }

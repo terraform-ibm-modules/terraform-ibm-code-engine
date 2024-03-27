@@ -17,7 +17,7 @@ variable "region" {
 variable "prefix" {
   type        = string
   description = "Prefix to append to all resources created by this example"
-  default     = "ce-submodule"
+  default     = "ce-jobs"
 }
 
 variable "resource_group" {
