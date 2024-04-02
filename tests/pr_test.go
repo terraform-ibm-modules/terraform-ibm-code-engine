@@ -15,6 +15,7 @@ import (
 const resourceGroup = "geretain-test-resources"
 const appsExampleDir = "examples/apps"
 const jobsExampleDir = "examples/jobs"
+const appsSolutionsDir = "solutions/apps"
 
 // Define a struct with fields that match the structure of the YAML data
 const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
@@ -97,6 +98,36 @@ func TestRunJobsExample(t *testing.T) {
 	t.Parallel()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
+	output, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
+}
+
+func TestRunAppsSolution(t *testing.T) {
+	t.Parallel()
+
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  appsSolutionsDir,
+		Prefix:        "ce-app-solutions",
+		ResourceGroup: resourceGroup,
+	})
+
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
+		},
+	}
+	options.TerraformVars = map[string]interface{}{
+		"ibmcloud_api_key":        options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
+		"resource_group_name":     resourceGroup,
+		"existing_resource_group": true,
+		"apps":                    "{" + options.Prefix + "-app:{image_reference:\"icr.io/codeengine/helloworld\"}}",
+		"secrets":                 "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
+		"config_maps":             "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
+		"project_name":            options.Prefix + "-pro",
+	}
+
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")

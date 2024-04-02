@@ -10,4 +10,4 @@ This architecture creates IBM Code Engine Apps. The solution supports provisioni
 - (Optional) IBM Code Engine Project Service Bindings
 - (Optional) IBM Code Engine Project Domain Mappings
 
-![apps](../../reference-architecture/apps.svg)
+![ce-apps-da](../../reference-architecture/ce-app-da.svg)
