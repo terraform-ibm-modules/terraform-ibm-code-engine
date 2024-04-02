@@ -1,0 +1,116 @@
+{
+    "products": [
+      {
+        "name": "deploy-arch-ibm-code-engine",
+        "label": "Code Engine",
+        "product_kind": "solution",
+        "tags": [
+          "ibm_created",
+          "target_terraform",
+          "terraform",
+          "solution",
+          "support_ibm",
+          "integration"
+        ],
+        "keywords": [
+          "code engine",
+          "IaC",
+          "infrastructure as code",
+          "terraform",
+          "solution"
+        ],
+        "short_description": "Supports provisioning and configuring IBM Code Engine for IBM Cloud.",
+        "long_description": "This architecture supports creating IBM Code Engine with project, apps, domain mappings, secrets, config maps, and service bindings.",
+        "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/README.md",
+        "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
+        "provider_name": "IBM",
+        "features": [
+          {
+            "title": "Create IBM Code Engine Project",
+            "description": "Creates IBM Code Engine Project to group, manage and provide access for Code Engine entities such as applications, jobs, and builds."
+          },
+          {
+            "title": "Create IBM Code Engine Apps",
+            "description": "Creates applications to serve HTTP requests or WebSockets as their communications protocol. The number of running instances of an app are automatically scaled up or down "
+          },
+          {
+            "title": "Create IBM Code Engine Custom Domain Mappings",
+            "description": "Creates mappings from your own custom domain to your code engine application within a project."
+          },
+          {
+            "title": "Create IBM Code Engine Secrets",
+            "description": "Provides a method to include sensitive configuration information, such as passwords or SSH keys, to your deployment."
+          },
+          {
+            "title": "Create IBM Code Engine Config Maps",
+            "description": "Provides a method to include non-sensitive data information to your deployment."
+          },
+          {
+            "title": "Create IBM Code Engine Service Bindings",
+            "description": "Creates service bindings to provide application's access to IBM Cloud services."
+          }
+        ],
+        "flavors": [
+          {
+            "label": "apps",
+            "name": "apps",
+            "install_type": "fullstack",
+            "working_directory": "solutions/apps",
+            "iam_permissions": [
+                {
+                    "role_crns": [
+                      "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+                    ],
+                    "service_name": "codeengine"
+                },
+                {
+                    "role_crns": [
+                      "crn:v1:bluemix:public:iam::::role:Editor"
+                    ],
+                    "service_name": "codeengine"
+                }
+            ],
+            "architecture": {
+              "descriptions": "This architecture creates IBM Code Engine entities.",
+              "features": [
+                {
+                  "title": "IBM Code Engine project",
+                  "description": "Yes"
+                },
+                {
+                  "title": "IBM Code Engine application",
+                  "description": "Yes"
+                },
+                {
+                  "title": "IBM Code Engine secrets",
+                  "description": "Yes"
+                },
+                {
+                    "title": "IBM Code Engine domain mapping",
+                    "description": "Yes"
+                },
+                {
+                    "title": "IBM Code Engine service binding",
+                    "description": "Yes"
+                },
+                {
+                    "title": "IBM Code Engine config maps",
+                    "description": "Yes"
+                }
+              ],
+              "diagrams": [
+                {
+                  "diagram": {
+                    "caption": "IBM Code Engine entities.",
+                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg.svg",
+                    "type": "image/svg+xml"
+                  },
+                  "description": "This architecture creates IBM Code Engine entities."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
