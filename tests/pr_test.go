@@ -82,10 +82,10 @@ func TestRunAppsExample(t *testing.T) {
 	assert.NotNil(t, output, "Expected some output")
 }
 
-func TestRunUpgradeBasicExample(t *testing.T) {
+func TestRunUpgradeJobsExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupAppsExampleOptions(t, "ce-apps-upg", appsExampleDir)
+	options := setupJobsExampleOptions(t, "ce-jobs-upg", jobsExampleDir)
 
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
