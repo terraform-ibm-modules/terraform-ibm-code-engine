@@ -136,6 +136,11 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 		TarIncludePatterns: []string{
 			"*.tf",
 			appsSolutionsDir + "/*.tf",
+			"modules/app/*.tf",
+			"modules/binding/*.tf",
+			"modules/config_map/*.tf",
+			"modules/project/*.tf",
+			"modules/secret/*.tf",
 		},
 		ResourceGroup:          resourceGroup,
 		Tags:                   []string{"test-schematic"},
