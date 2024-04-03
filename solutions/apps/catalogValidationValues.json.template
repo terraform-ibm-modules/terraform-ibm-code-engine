@@ -1,4 +1,6 @@
 {
   "ibmcloud_api_key": $VALIDATION_APIKEY,
   "resource_group_name": $PREFIX
+  "apps": []
+  "project_name": $PREFIX
 }
