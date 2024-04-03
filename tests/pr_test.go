@@ -127,9 +127,13 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 	t.Parallel()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
-		Testing:                t,
-		TemplateFolder:         appsSolutionsDir,
-		Prefix:                 "ce-app-solutions",
+		Testing:        t,
+		TemplateFolder: appsSolutionsDir,
+		Prefix:         "ce-app-solutions",
+		TarIncludePatterns: []string{
+			"*.tf",
+			appsSolutionsDir + "/*.tf",
+		},
 		ResourceGroup:          resourceGroup,
 		Tags:                   []string{"test-schematic"},
 		DeleteWorkspaceOnFail:  false,
