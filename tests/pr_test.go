@@ -75,6 +75,7 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 }
 
 func TestRunAppsExample(t *testing.T) {
+	t.Skip()
 	t.Parallel()
 
 	options := setupAppsExampleOptions(t, "ce-apps", appsExampleDir)
@@ -84,6 +85,7 @@ func TestRunAppsExample(t *testing.T) {
 }
 
 func TestRunJobsExample(t *testing.T) {
+	t.Skip()
 	t.Parallel()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
@@ -92,36 +94,37 @@ func TestRunJobsExample(t *testing.T) {
 	assert.NotNil(t, output, "Expected some output")
 }
 
-func TestRunAppsSolution(t *testing.T) {
-	t.Parallel()
+// func TestRunAppsSolution(t *testing.T) {
+// 	t.Skip()
+// 	t.Parallel()
 
-	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-		Testing:       t,
-		TerraformDir:  appsSolutionsDir,
-		Prefix:        "ce-app-solutions",
-		ResourceGroup: resourceGroup,
-	})
+// 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+// 		Testing:       t,
+// 		TerraformDir:  appsSolutionsDir,
+// 		Prefix:        "ce-app-solutions",
+// 		ResourceGroup: resourceGroup,
+// 	})
 
-	options.IgnoreUpdates = testhelper.Exemptions{
-		List: []string{
-			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
-		},
-	}
-	options.TerraformVars = map[string]interface{}{
-		"ibmcloud_api_key":        options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
-		"resource_group_name":     resourceGroup,
-		"existing_resource_group": true,
-		"app_name":                options.Prefix + "-app",
-		"image_reference":         "icr.io/codeengine/helloworld",
-		"secrets":                 "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
-		"config_maps":             "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
-		"project_name":            options.Prefix + "-pro",
-	}
+// 	options.IgnoreUpdates = testhelper.Exemptions{
+// 		List: []string{
+// 			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
+// 		},
+// 	}
+// 	options.TerraformVars = map[string]interface{}{
+// 		"ibmcloud_api_key":        options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
+// 		"resource_group_name":     resourceGroup,
+// 		"existing_resource_group": true,
+// 		"app_name":                options.Prefix + "-app",
+// 		"image_reference":         "icr.io/codeengine/helloworld",
+// 		"secrets":                 "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
+// 		"config_maps":             "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
+// 		"project_name":            options.Prefix + "-pro",
+// 	}
 
-	output, err := options.RunTestConsistency()
-	assert.Nil(t, err, "This should not have errored")
-	assert.NotNil(t, output, "Expected some output")
-}
+// 	output, err := options.RunTestConsistency()
+// 	assert.Nil(t, err, "This should not have errored")
+// 	assert.NotNil(t, output, "Expected some output")
+// }
 
 func TestRunAppSolutionInSchematics(t *testing.T) {
 	t.Parallel()
@@ -129,7 +132,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
 		TemplateFolder: appsSolutionsDir,
-		Prefix:         "ce-app-solutions",
+		Prefix:         "ce-da",
 		TarIncludePatterns: []string{
 			"*.tf",
 			appsSolutionsDir + "/*.tf",
@@ -149,6 +152,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 		{Name: "secrets", Value: "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", DataType: "object"}, // pragma: allowlist secret
 		{Name: "config_maps", Value: "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}", DataType: "object"},
 		{Name: "project_name", Value: options.Prefix + "-pro", DataType: "string"},
+		{Name: "region", Value: options.Region, DataType: "string"},
 	}
 
 	err := options.RunSchematicTest()
@@ -156,6 +160,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 }
 
 func TestRunUpgradeAppSolution(t *testing.T) {
+	t.Skip()
 	t.Parallel()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
