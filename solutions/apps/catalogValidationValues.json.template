@@ -1,0 +1,7 @@
+{
+  "ibmcloud_api_key": $VALIDATION_APIKEY,
+  "resource_group_name": $PREFIX,
+  "project_name": $PREFIX,
+  "app_name": $PREFIX,
+  "image_reference": "icr.io/codeengine/helloworld"
+}

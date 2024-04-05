@@ -17,7 +17,7 @@ repository:
   # Uncomment this name property and set the name to the current repo name.
   name: terraform-ibm-code-engine
 
-  description: "Creates IBM Cloud Code Engine resources."
+  description: "Provisions and configures IBM Cloud Code Engine."
 
   # Use a comma-separated list of topics to set on the repo (ensure not to use any caps in the topic string).
-  topics: terraform, ibm-cloud, terraform-module, code-engine, core-team, stable, supported
+  topics: terraform, ibm-cloud, terraform-module, code-engine, core-team, stable, supported, deployable-architecture
