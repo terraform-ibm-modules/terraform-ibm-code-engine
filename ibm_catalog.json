@@ -111,7 +111,7 @@
               {
                 "diagram": {
                   "caption": "IBM Cloud Object Code Engine application solution.",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
