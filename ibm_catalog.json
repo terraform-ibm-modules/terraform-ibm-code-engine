@@ -1,116 +1,125 @@
 {
-    "products": [
+   "products":[
       {
-        "name": "deploy-arch-ibm-code-engine",
-        "label": "IBM Cloud Code Engine",
-        "product_kind": "solution",
-        "tags": [
-          "ibm_created",
-          "target_terraform",
-          "terraform",
-          "solution",
-          "support_ibm",
-          "integration"
-        ],
-        "keywords": [
-          "code engine",
-          "IaC",
-          "infrastructure as code",
-          "terraform",
-          "solution"
-        ],
-        "short_description": "Provisions and configures IBM Cloud Code Engine",
-        "long_description": "This architecture creates an instance of IBM Cloud Code Engine and configures the project, applications, domain mappings, secrets, configmaps, and service bindings.",
-        "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/README.md",
-        "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
-        "provider_name": "IBM",
-        "features": [
-          {
-            "title": "Creates a Code Engine project",
-            "description": "Code Engine projects group, manage, and provide access for Code Engine resources such as applications, jobs, and builds."
-          },
-          {
-            "title": "Creates Code Engine applications",
-            "description": "Code Engine applications serve HTTP requests or WebSockets as their communications protocol. The number of running instances of an app are scaled up or down as required by the workdloads."
-          },
-          {
-            "title": "Creates custom domain mappings",
-            "description": "Creates the mappings from your custom domain to your Code Engine application in a project to route requests from your custom URL to your application."
-          },
-          {
-            "title": "Creates Code Engine secrets",
-            "description": "Provides a method to include sensitive configuration information, such as passwords or SSH keys, to your deployment."
-          },
-          {
-            "title": "Creates Code Engine configmaps",
-            "description": "Configmaps provide a method to include non-sensitive data information in your deployment. By referencing values from your configmap as environment variables, you can decouple specific information from your deployment and keep your application portable."
-          },
-          {
-            "title": "Creates Code Engine service bindings",
-            "description": "Service bindings provide access from your application to other IBM Cloud services."
-          }
-        ],
-        "flavors": [
-          {
-            "label": "New code engine apps",
-            "name": "apps",
-            "install_type": "fullstack",
-            "working_directory": "solutions/apps",
-            "iam_permissions": [
-                {
-                    "role_crns": [
-                      "crn:v1:bluemix:public:iam::::serviceRole:Writer"
-                    ],
-                    "service_name": "codeengine"
-                },
-                {
-                    "role_crns": [
-                      "crn:v1:bluemix:public:iam::::role:Editor"
-                    ],
-                    "service_name": "codeengine"
-                }
-            ],
-            "architecture": {
-              "descriptions": "This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings.",
-              "features": [
-                {
-                  "title": "IBM Cloud Code Engine project",
-                  "description": "Yes"
-                },
-                {
-                  "title": "IBM Cloud Code Engine application",
-                  "description": "Yes"
-                },
-                {
-                  "title": "IBM Cloud Code Engine secrets",
-                  "description": "Yes"
-                },
-                {
-                    "title": "IBM Cloud Code Engine domain mapping",
-                    "description": "Yes"
-                },
-                {
-                    "title": "IBM Cloud Code Engine service binding",
-                    "description": "Yes"
-                },
-                {
-                    "title": "IBM Cloud Code Engine configmaps",
-                    "description": "Yes"
-                }
-              ],
-              "diagrams": [
-                {
-                  "diagram": {
-                    "caption": "IBM Cloud Object Code Engine application solution.",
-                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg.svg",
-                    "type": "image/svg+xml"
-                  },
-                  "description": "This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
-                }
-              ]
+         "name":"deploy-arch-ibm-code-engine",
+         "label":"IBM Cloud Code Engine",
+         "product_kind":"solution",
+         "tags":[
+            "ibm_created",
+            "target_terraform",
+            "terraform",
+            "solution",
+            "support_ibm",
+            "integration"
+         ],
+         "keywords":[
+            "code engine",
+            "IaC",
+            "infrastructure as code",
+            "terraform",
+            "solution"
+         ],
+         "short_description":"Provisions and configures IBM Cloud Code Engine",
+         "long_description":"This architecture creates an instance of IBM Cloud Code Engine and configures the project, applications, domain mappings, secrets, configmaps, and service bindings.",
+         "offering_docs_url":"https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/README.md",
+         "offering_icon_url":"https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
+         "provider_name":"IBM",
+         "features":[
+            {
+               "title":"Creates a Code Engine project",
+               "description":"Code Engine projects group, manage, and provide access for Code Engine resources such as applications, jobs, and builds."
+            },
+            {
+               "title":"Creates Code Engine applications",
+               "description":"Code Engine applications serve HTTP requests or WebSockets as their communications protocol. The number of running instances of an app are scaled up or down as required by the workdloads."
+            },
+            {
+               "title":"Creates custom domain mappings",
+               "description":"Creates the mappings from your custom domain to your Code Engine application in a project to route requests from your custom URL to your application."
+            },
+            {
+               "title":"Creates Code Engine secrets",
+               "description":"Provides a method to include sensitive configuration information, such as passwords or SSH keys, to your deployment."
+            },
+            {
+               "title":"Creates Code Engine configmaps",
+               "description":"Configmaps provide a method to include non-sensitive data information in your deployment. By referencing values from your configmap as environment variables, you can decouple specific information from your deployment and keep your application portable."
+            },
+            {
+               "title":"Creates Code Engine service bindings",
+               "description":"Service bindings provide access from your application to other IBM Cloud services."
             }
-          }
-        ]
+         ],
+         "flavors":[
+            {
+               "label":"New code engine apps",
+               "name":"apps",
+               "install_type":"fullstack",
+               "working_directory":"solutions/apps",
+               "compliance":{
+                  "authority":"scc-v3",
+                  "profiles":[
+                     {
+                        "profile_name":"IBM Cloud Framework for Financial Services",
+                        "profile_version":"1.6.0"
+                     }
+                  ]
+               },
+               "iam_permissions":[
+                  {
+                     "role_crns":[
+                        "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+                     ],
+                     "service_name":"codeengine"
+                  },
+                  {
+                     "role_crns":[
+                        "crn:v1:bluemix:public:iam::::role:Editor"
+                     ],
+                     "service_name":"codeengine"
+                  }
+               ],
+               "architecture":{
+                  "descriptions":"This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings.",
+                  "features":[
+                     {
+                        "title":"IBM Cloud Code Engine project",
+                        "description":"Yes"
+                     },
+                     {
+                        "title":"IBM Cloud Code Engine application",
+                        "description":"Yes"
+                     },
+                     {
+                        "title":"IBM Cloud Code Engine secrets",
+                        "description":"Yes"
+                     },
+                     {
+                        "title":"IBM Cloud Code Engine domain mapping",
+                        "description":"Yes"
+                     },
+                     {
+                        "title":"IBM Cloud Code Engine service binding",
+                        "description":"Yes"
+                     },
+                     {
+                        "title":"IBM Cloud Code Engine configmaps",
+                        "description":"Yes"
+                     }
+                  ],
+                  "diagrams":[
+                     {
+                        "diagram":{
+                           "caption":"IBM Cloud Object Code Engine application solution.",
+                           "url":"https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg.svg",
+                           "type":"image/svg+xml"
+                        },
+                        "description":"This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
+                     }
+                  ]
+               }
+            }
+         ]
       }
-    ]
-  }
+   ]
+}
