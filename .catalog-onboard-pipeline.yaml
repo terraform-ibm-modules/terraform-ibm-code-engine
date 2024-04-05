@@ -4,9 +4,9 @@ offerings:
   - name: deploy-arch-ibm-code-engine
     kind: solution
     catalog_id: 7df1e4ca-d54c-4fd0-82ce-3d13247308cd
-    offering_id:
+    offering_id: 413843d9-8962-48a5-8ab5-dfcf4429372c
     variations:
-      - name: codeengine
+      - name: apps
         mark_ready: true
         install_type: fullstack
         scc:
