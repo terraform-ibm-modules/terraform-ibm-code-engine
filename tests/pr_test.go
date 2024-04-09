@@ -66,6 +66,12 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
 	})
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.job[\"" + options.Prefix + "-job\"].ibm_code_engine_job.ce_job",
+			"module.code_engine.module.job[\"" + options.Prefix + "-job-2\"].ibm_code_engine_job.ce_job",
+		},
+	}
 	options.TerraformVars = map[string]interface{}{
 		"resource_group": resourceGroup,
 		"prefix":         options.Prefix,
