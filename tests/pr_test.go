@@ -41,6 +41,7 @@ func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
 	})
+	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
 	options.IgnoreUpdates = testhelper.Exemptions{
 		List: []string{
 			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
@@ -66,6 +67,7 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
 	})
+	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
 	options.IgnoreUpdates = testhelper.Exemptions{
 		List: []string{
 			"module.code_engine.module.job[\"" + options.Prefix + "-job\"].ibm_code_engine_job.ce_job",
@@ -148,7 +150,7 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 		Prefix:        "ce-app-upg",
 		ResourceGroup: resourceGroup,
 	})
-
+	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
 	options.IgnoreUpdates = testhelper.Exemptions{
 		List: []string{
 			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
