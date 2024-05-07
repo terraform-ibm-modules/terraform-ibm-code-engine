@@ -4,13 +4,13 @@
 
 variable "ibmcloud_api_key" {
   type        = string
-  description = "The IBM Cloud API Key"
+  description = "The IBM Cloud API key."
   sensitive   = true
 }
 
 variable "region" {
   type        = string
-  description = "Region to provision all resources created by this solution."
+  description = "The region in which to provision all resources created by this solution."
   default     = "us-south"
 }
 
@@ -22,17 +22,17 @@ variable "existing_resource_group" {
 
 variable "resource_group_name" {
   type        = string
-  description = "The name of a new or an existing resource group in which to provision the IBM Code Engine resources in."
+  description = "The name of a new or an existing resource group to provision the IBM Cloud Code Engine resources to."
 }
 
 variable "project_name" {
-  description = "The name of the project to which code engine resources will be added. It is required if var.existing_project_id is null."
+  description = "The name of the project to add the IBM Cloud Code Engine resources to. If the value of `var.existing_project_id` is `null`, the project name is required."
   type        = string
   default     = null
 }
 
 variable "existing_project_id" {
-  description = "The ID of the existing project to which code engine resources will be added. It is required if var.project_name is null."
+  description = "The ID of the existing project to add the IBM Cloud Code Engine resources to. If the value of `var.project_name` is `null`, the project ID is required."
   type        = string
   default     = null
 }
@@ -48,13 +48,13 @@ variable "image_reference" {
 }
 
 variable "image_secret" {
-  description = "The name of the image registry access secret."
+  description = "The name of the access secret that is used for the image registry."
   type        = string
   default     = null
 }
 
 variable "run_env_variables" {
-  description = "References to config maps, secrets or a literal values that are exposed as environment variables within the running application."
+  description = "References to configmaps, secrets, or literal values that are displayed as environment variables within the running application."
   type = list(object({
     type      = optional(string)
     name      = optional(string)
@@ -67,7 +67,7 @@ variable "run_env_variables" {
 }
 
 variable "run_volume_mounts" {
-  description = "Optional mounts of config maps or a secrets."
+  description = "Optional. Mount targets for configmaps or secrets."
   type = list(object({
     mount_path = string
     reference  = string
@@ -78,19 +78,19 @@ variable "run_volume_mounts" {
 }
 
 variable "image_port" {
-  description = "The port which is used to connect to the port that is exposed by the container image."
+  description = "The port number that is used to connect to the port displayed by the container image."
   type        = number
   default     = 8080
 }
 
 variable "managed_domain_mappings" {
-  description = "Define which of the system managed domain mappings will be setup for the application. Valid values are 'local_public', 'local_private' and 'local'."
+  description = "Specify which of the following values for the system-managed domain mappings to set up for the application: `local_public`, `local_private`, and `local`."
   type        = string
   default     = null
 }
 
 variable "run_arguments" {
-  description = "Arguments for the app that are passed to start the container."
+  description = "The arguments for the app that are passed to start the container."
   type        = list(string)
   default     = []
 }
@@ -102,7 +102,7 @@ variable "run_as_user" {
 }
 
 variable "run_commands" {
-  description = "Commands for the app that are passed to start the container."
+  description = "The commands for the app that are passed to start the container."
   type        = list(string)
   default     = []
 }
@@ -120,13 +120,13 @@ variable "scale_concurrency" {
 }
 
 variable "scale_concurrency_target" {
-  description = "The threshold of concurrent requests per instance at which one or more additional instances are created."
+  description = "The threshold of concurrent requests per instance at which one or more extra instances are created."
   type        = number
   default     = null
 }
 
 variable "scale_cpu_limit" {
-  description = "The number of CPU set for the instance of the app."
+  description = "The number of CPUs to set for the instance of the app."
   type        = string
   default     = "1"
 }
@@ -138,13 +138,13 @@ variable "scale_ephemeral_storage_limit" {
 }
 
 variable "scale_initial_instances" {
-  description = "The initial number of instances that are created upon app creation or app update."
+  description = "The initial number of instances that are created during app creation or app update."
   type        = number
   default     = 1
 }
 
 variable "scale_max_instances" {
-  description = "The maximum number of instances for this app."
+  description = "The maximum number of instances for the app."
   type        = number
   default     = 10
 }
@@ -156,19 +156,19 @@ variable "scale_memory_limit" {
 }
 
 variable "scale_min_instances" {
-  description = "The minimum number of instances for this app.  If you set this value to 0, the app will scale down to zero, if not hit by any request for some time."
+  description = "The minimum number of instances for the app. If you set this value to `0` and the app does not receive any requests, it will scale down to zero instances."
   type        = number
   default     = 0
 }
 
 variable "scale_request_timeout" {
-  description = "The amount of time in seconds that is allowed for a running app to respond to a request."
+  description = "The amount of time in seconds during which a running app can respond to a request."
   type        = number
   default     = 300
 }
 
 variable "config_maps" {
-  description = "A map of code engine config maps to be created. Example: { configmap_name: {data: {key_1: 'value_1' }}}"
+  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`.
   type = map(object({
     data = map(string)
   }))
@@ -176,7 +176,7 @@ variable "config_maps" {
 }
 
 variable "secrets" {
-  description = "A map of code engine secrets to be created. Example: { secret_name: {format: 'generic', data: {key_1: 'value_1' }}}"
+  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`.
   type = map(object({
     format = string
     data   = map(string)
@@ -197,7 +197,7 @@ variable "secrets" {
 }
 
 variable "domain_mappings" {
-  description = "A map of code engine domain mappings to be created. Example: { domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}" # pragma: allowlist secret
+  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`. # pragma: allowlist secret
   type = map(object({
     tls_secret = string # pragma: allowlist secret
     components = list(object({
@@ -209,7 +209,7 @@ variable "domain_mappings" {
 }
 
 variable "bindings" {
-  description = "A map of code engine bindings to be created. Example: { 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}"
+  description = "A map of the IBM Cloud Code Engine bindings to create. For example, `{ 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`.
   type = map(object({
     secret_name = string
     components = list(object({
