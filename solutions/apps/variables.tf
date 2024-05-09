@@ -209,7 +209,7 @@ variable "domain_mappings" {
 }
 
 variable "bindings" {
-  description = "A map of the IBM Cloud Code Engine bindings to create. For example, `{ 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`.
+  description = "A map of the IBM Cloud Code Engine bindings to create. For example, `{ 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`".
   type = map(object({
     secret_name = string
     components = list(object({
