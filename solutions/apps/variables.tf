@@ -168,7 +168,7 @@ variable "scale_request_timeout" {
 }
 
 variable "config_maps" {
-  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`".
+  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`."
   type = map(object({
     data = map(string)
   }))
@@ -176,7 +176,7 @@ variable "config_maps" {
 }
 
 variable "secrets" {
-  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`".
+  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`."
   type = map(object({
     format = string
     data   = map(string)
@@ -197,7 +197,7 @@ variable "secrets" {
 }
 
 variable "domain_mappings" {
-  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`". # pragma: allowlist secret
+  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`." # pragma: allowlist secret
   type = map(object({
     tls_secret = string # pragma: allowlist secret
     components = list(object({
@@ -209,7 +209,7 @@ variable "domain_mappings" {
 }
 
 variable "bindings" {
-  description = "A map of the IBM Cloud Code Engine bindings to create. For example, `{ 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`".
+  description = "A map of the IBM Cloud Code Engine bindings to create. For example, `{ 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`."
   type = map(object({
     secret_name = string
     components = list(object({
