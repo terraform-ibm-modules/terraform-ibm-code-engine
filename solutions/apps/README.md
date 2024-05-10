@@ -1,13 +1,12 @@
-# IBM Code Engine Apps
+# IBM Cloud Code Engine apps deployable architecture
 
-This architecture creates IBM Code Engine Apps. The solution supports provisioning the following resources:
+This deployable architecture creates IBM Cloud Code Engine apps and supports provisioning Code Engine project apps and the following optional resources:
 
-- (Optional) A resource group
-- (Optional) IBM Code Engine Project
-- IBM Code Engine Project Apps
-- (Optional) IBM Code Engine Project Secrets
-- (Optional) IBM Code Engine Project Config Maps
-- (Optional) IBM Code Engine Project Service Bindings
-- (Optional) IBM Code Engine Project Domain Mappings
+- A resource group.
+- A Code Engine project.
+- Code Engine project secrets.
+- Code Engine project configmaps.
+- Code Engine project service bindings.
+- Code Engine project domain mappings.
 
 ![ce-apps-da](../../reference-architecture/ce-app-da.svg)
