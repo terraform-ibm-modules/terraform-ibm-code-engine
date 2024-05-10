@@ -20,7 +20,7 @@
         "solution"
       ],
       "short_description": "Provisions and configures IBM Cloud Code Engine",
-      "long_description": "This architecture creates an instance of IBM Cloud Code Engine and configures the project, applications, domain mappings, secrets, configmaps, and service bindings.",
+      "long_description": "Creates an instance of IBM Cloud Code Engine and configures the project, applications, domain mappings, secrets, configmaps, and service bindings.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
       "provider_name": "IBM",
@@ -39,11 +39,11 @@
         },
         {
           "title": "Creates Code Engine secrets",
-          "description": "Provides a method to include sensitive configuration information, such as passwords or SSH keys, to your deployment."
+          "description": "Code Engine secrets provide a method to include sensitive configuration information, such as passwords or SSH keys, in your deployment."
         },
         {
           "title": "Creates Code Engine configmaps",
-          "description": "Configmaps provide a method to include non-sensitive data information in your deployment. By referencing values from your configmap as environment variables, you can decouple specific information from your deployment and keep your application portable."
+          "description": "Configmaps provide a method to include nonsensitive data information in your deployment. By referencing values from your configmap as environment variables, you can decouple specific information from your deployment and keep your application portable."
         },
         {
           "title": "Creates Code Engine service bindings",
@@ -52,7 +52,7 @@
       ],
       "flavors": [
         {
-          "label": "New code engine apps",
+          "label": "New Code Engine apps",
           "name": "apps",
           "install_type": "fullstack",
           "working_directory": "solutions/apps",
@@ -80,7 +80,7 @@
             }
           ],
           "architecture": {
-            "descriptions": "This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings.",
+            "descriptions": "This deployable architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings.",
             "features": [
               {
                 "title": "IBM Cloud Code Engine project",
@@ -110,11 +110,11 @@
             "diagrams": [
               {
                 "diagram": {
-                  "caption": "IBM Cloud Object Code Engine application solution.",
+                  "caption": "IBM Cloud Code Engine application solution.",
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
+                "description": "This deployable architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
               }
             ]
           }
