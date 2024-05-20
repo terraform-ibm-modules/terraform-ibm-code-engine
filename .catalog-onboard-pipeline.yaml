@@ -7,7 +7,7 @@ offerings:
     offering_id: 413843d9-8962-48a5-8ab5-dfcf4429372c
     variations:
       - name: apps
-        mark_ready: true
+        mark_ready: false
         install_type: fullstack
         scc:
           instance_id: 1c7d5f78-9262-44c3-b779-b28fe4d88c37
