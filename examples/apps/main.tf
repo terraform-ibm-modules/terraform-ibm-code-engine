@@ -4,7 +4,7 @@
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
-  version = "1.1.5"
+  version = "1.1.6"
   # if an existing resource group is not set (null) create a new one using prefix
   resource_group_name          = var.resource_group == null ? "${var.prefix}-resource-group" : null
   existing_resource_group_name = var.resource_group
@@ -43,7 +43,7 @@ module "secrets_manager_public_cert_engine" {
   depends_on = [ibm_resource_instance.secrets_manager]
   count      = var.existing_sm_instance_guid == null ? 1 : 0
   source     = "terraform-ibm-modules/secrets-manager-public-cert-engine/ibm"
-  version    = "1.0.0"
+  version    = "1.0.1"
   providers = {
     ibm              = ibm.ibm-sm
     ibm.secret-store = ibm.ibm-sm
@@ -63,7 +63,7 @@ module "secrets_manager_public_cert_engine" {
 module "secrets_manager_group" {
   count                    = var.existing_cert_secret_id == null ? 1 : 0
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
-  version                  = "1.2.1"
+  version                  = "1.2.2"
   region                   = local.sm_region
   secrets_manager_guid     = local.sm_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"
