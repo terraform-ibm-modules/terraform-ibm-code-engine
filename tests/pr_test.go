@@ -46,7 +46,8 @@ func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		List: []string{
 			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
 			"module.code_engine.module.app[\"" + options.Prefix + "-app2\"].ibm_code_engine_app.ce_app",
-			"module.code_engine_build.module.secret[\"" + options.Prefix + "-secret\"].ibm_code_engine_secret.ce_secret",
+			"module.code_engine_build.module.secret[\"" + options.Prefix + "-cr-secret\"].ibm_code_engine_secret.ce_secret",
+			"module.code_engine_build.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
 		},
 	}
 	options.TerraformVars = map[string]interface{}{
