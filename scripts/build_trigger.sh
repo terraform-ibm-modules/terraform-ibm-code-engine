@@ -25,7 +25,6 @@ URL="https://api.$REGION.codeengine.cloud.ibm.com/v2/projects/$PROJECT_ID/build_
 response=$(curl -s "$URL" --header "Authorization: $IAM_TOKEN" --header "Content-Type: application/json" -X POST -d "{ \"build_name\" : \"$BUILD_NAME\"}")
 
 build_id=$(echo "$response" | jq -r '.name')
-echo $build_id
 
 STATUS_URL="https://api.$REGION.codeengine.cloud.ibm.com/v2/projects/$PROJECT_ID/build_runs/$build_id"
 
@@ -35,7 +34,6 @@ until [ $attempts -ge 20 ]; do
     attempts=$((attempts + 1))
     response=$(curl -s "$STATUS_URL" --header "Authorization: $IAM_TOKEN")
     status=$(echo "$response" | jq -r '.status')
-    echo $status
     if [[ "$status" == "succeeded" ]]; then
         echo "Image created."
         break
