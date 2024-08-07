@@ -31,3 +31,8 @@ output "binding" {
   description = "Configuration of the created code engine binding."
   value       = module.code_engine.binding
 }
+
+output "build" {
+  description = "Configuration of the created code engine build app."
+  value       = module.code_engine.build
+}
