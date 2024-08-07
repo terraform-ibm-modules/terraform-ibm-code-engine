@@ -8,5 +8,6 @@ This deployable architecture creates IBM Cloud Code Engine apps and supports pro
 - Code Engine project configmaps.
 - Code Engine project service bindings.
 - Code Engine project domain mappings.
+- Code Engine project build.
 
 ![ce-apps-da](../../reference-architecture/ce-app-da.svg)

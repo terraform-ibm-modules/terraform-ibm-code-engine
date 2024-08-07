@@ -7,6 +7,11 @@ variable "resource_group_id" {
   type        = string
 }
 
+variable "region" {
+  type        = string
+  description = "The region in which to provision all resources created by this solution."
+}
+
 variable "project_name" {
   description = "The name of the project to which code engine resources will be added. It is required if var.existing_project_id is null."
   type        = string
@@ -135,6 +140,35 @@ variable "builds" {
     strategy_size      = optional(string)
     strategy_spec_file = optional(string)
     timeout            = optional(number)
+    run_env_variables = optional(list(object({
+      type      = optional(string)
+      name      = optional(string)
+      value     = optional(string)
+      prefix    = optional(string)
+      key       = optional(string)
+      reference = optional(string)
+    })))
+    run_volume_mounts = optional(list(object({
+      mount_path = string
+      reference  = string
+      name       = optional(string)
+      type       = string
+    })))
+    image_port                    = optional(number)
+    managed_domain_mappings       = optional(string)
+    run_arguments                 = optional(list(string))
+    run_as_user                   = optional(number)
+    run_commands                  = optional(list(string))
+    run_service_account           = optional(string)
+    scale_concurrency             = optional(number)
+    scale_concurrency_target      = optional(number)
+    scale_cpu_limit               = optional(string)
+    scale_ephemeral_storage_limit = optional(string)
+    scale_initial_instances       = optional(number)
+    scale_max_instances           = optional(number)
+    scale_memory_limit            = optional(string)
+    scale_min_instances           = optional(number)
+    scale_request_timeout         = optional(number)
   }))
   default = {}
 }

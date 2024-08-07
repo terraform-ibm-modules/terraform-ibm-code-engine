@@ -17,6 +17,7 @@ module "resource_group" {
 module "code_engine" {
   source            = "../.."
   resource_group_id = module.resource_group.resource_group_id
+  region            = var.region
   project_name      = "${var.prefix}-project"
   jobs = {
     "${var.prefix}-job" = {

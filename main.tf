@@ -18,8 +18,9 @@ module "project" {
 # Code Engine App
 ##############################################################################
 module "app" {
+  depends_on                    = [null_resource.build_trigger]
   source                        = "./modules/app"
-  for_each                      = var.apps
+  for_each                      = length(var.apps) != 0 ? var.apps : local.builds
   project_id                    = local.project_id
   name                          = each.key
   image_reference               = each.value.image_reference
@@ -83,7 +84,7 @@ module "config_map" {
 # Code Engine Secret
 ##############################################################################
 module "secret" {
-  depends_on = [module.app, module.job]
+  depends_on = [module.job]
   source     = "./modules/secret"
   for_each   = var.secrets
   project_id = local.project_id
@@ -97,7 +98,14 @@ module "secret" {
 ##############################################################################
 # Code Engine Build
 ##############################################################################
+
+locals {
+  builds = { for key, value in var.builds :
+  key => merge(value, { image_reference = value.output_image }, { image_secret = value.output_secret }) }
+}
+
 module "build" {
+  depends_on         = [module.secret]
   source             = "./modules/build"
   for_each           = var.builds
   project_id         = local.project_id
@@ -113,14 +121,28 @@ module "build" {
   strategy_size      = each.value.strategy_size
   strategy_spec_file = each.value.strategy_spec_file
   timeout            = each.value.timeout
+}
 
+data "ibm_iam_auth_token" "build_tokendata" {
+  depends_on = [module.build]
+}
+
+resource "null_resource" "build_trigger" {
+  for_each = var.builds
+  provisioner "local-exec" {
+    command     = "${path.module}/scripts/build_trigger.sh ${var.region} ${local.project_id} ${each.key}"
+    interpreter = ["/bin/bash", "-c"]
+    environment = {
+      IAM_TOKEN = data.ibm_iam_auth_token.build_tokendata.iam_access_token
+    }
+  }
 }
 
 ##############################################################################
 # Code Engine Domain Mapping
 ##############################################################################
 module "domain_mapping" {
-  depends_on = [module.secret]
+  depends_on = [module.app, module.secret]
   source     = "./modules/domain_mapping"
   for_each   = var.domain_mappings
   project_id = local.project_id

@@ -97,6 +97,16 @@ data "ibm_sm_public_certificate" "public_certificate" {
   secret_id   = local.cert_secret_id
 }
 
+module "container_registry" {
+  source            = "terraform-ibm-modules/container-registry/ibm"
+  version           = "1.2.4"
+  name              = "${var.prefix}-codeengine"
+  resource_group_id = module.resource_group.resource_group_id
+  providers = {
+    ibm = ibm.ibm-cr
+  }
+}
+
 ########################################################################################################################
 # Code Engine instance
 ########################################################################################################################
@@ -105,6 +115,7 @@ module "code_engine" {
   depends_on        = [resource.ibm_sm_public_certificate.secrets_manager_public_certificate]
   source            = "../.."
   resource_group_id = module.resource_group.resource_group_id
+  region            = var.region
   project_name      = "${var.prefix}-project"
   apps = {
     "${var.prefix}-app" = {
@@ -150,6 +161,35 @@ module "code_engine" {
         resource_type = "app_v2"
       }]
       tls_secret = "${var.prefix}-tls"
+    }
+  }
+}
+
+module "code_engine_build" {
+  depends_on        = [resource.ibm_sm_public_certificate.secrets_manager_public_certificate, module.container_registry]
+  source            = "../.."
+  resource_group_id = module.resource_group.resource_group_id
+  region            = var.region
+  project_name      = "${var.prefix}-build-project"
+  secrets = {
+    "${var.prefix}-cr-secret" = {
+      "format" = "registry"
+      "data" = {
+        password = var.ibmcloud_api_key
+        server   = "us.icr.io"
+        username = "iamapikey"
+      }
+    }
+  }
+  builds = {
+    "${var.prefix}-app" = {
+      output_image                  = "us.icr.io/${var.prefix}-codeengine/helloworld"
+      output_secret                 = "${var.prefix}-cr-secret"
+      source_url                    = "https://github.com/IBM/CodeEngine"
+      strategy_type                 = "dockerfile"
+      scale_cpu_limit               = "4",
+      scale_memory_limit            = "32G"
+      scale_ephemeral_storage_limit = "300M"
     }
   }
 }
