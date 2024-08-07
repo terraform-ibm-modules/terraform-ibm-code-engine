@@ -133,6 +133,7 @@ variable "builds" {
     output_secret      = string # pragma: allowlist secret
     source_url         = string
     strategy_type      = string
+    deploy_app         = optional(bool, false)
     source_context_dir = optional(string)
     source_revision    = optional(string)
     source_secret      = optional(string)

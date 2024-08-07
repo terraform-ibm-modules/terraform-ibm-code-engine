@@ -101,7 +101,7 @@ module "secret" {
 
 locals {
   builds = { for key, value in var.builds :
-  key => merge(value, { image_reference = value.output_image }, { image_secret = value.output_secret }) }
+  key => merge(value, { image_reference = value.output_image }, { image_secret = value.output_secret }) if value.deploy_app }
 }
 
 module "build" {
@@ -128,7 +128,7 @@ data "ibm_iam_auth_token" "build_tokendata" {
 }
 
 resource "null_resource" "build_trigger" {
-  for_each = var.builds
+  for_each = { for key, value in var.builds : key => value if value.deploy_app }
   provisioner "local-exec" {
     command     = "${path.module}/scripts/build_trigger.sh ${var.region} ${local.project_id} ${each.key}"
     interpreter = ["/bin/bash", "-c"]

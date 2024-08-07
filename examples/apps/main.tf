@@ -190,6 +190,7 @@ module "code_engine_build" {
       scale_cpu_limit               = "4",
       scale_memory_limit            = "32G"
       scale_ephemeral_storage_limit = "300M"
+      deploy_app                    = true
     }
   }
 }
