@@ -2,6 +2,7 @@
 package test
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -172,4 +173,24 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
 	}
+}
+
+func TestDeployCEProjectsDA(t *testing.T) {
+	t.Parallel()
+
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:      t,
+		TerraformDir: "solutions/projects",
+		Prefix:       "ce-da",
+	})
+
+	options.TerraformVars = map[string]interface{}{
+		"resource_group_name":     resourceGroup,
+		"existing_resource_group": true,
+		"project_names":           fmt.Sprintf("[\"%s-test-1\", \"%s-test-2\"]", options.Prefix, options.Prefix),
+	}
+
+	output, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
 }
