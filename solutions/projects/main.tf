@@ -1,3 +1,7 @@
+locals {
+  # add prefix to all projects created by this solution
+  projects = [for project in var.project_names : "${var.prefix}-${project}"]
+}
 ########################################################################################################################
 # Resource group
 ########################################################################################################################
@@ -14,7 +18,7 @@ module "resource_group" {
 ########################################################################################################################
 
 module "project" {
-  for_each          = toset(var.project_names)
+  for_each          = toset(local.projects)
   source            = "../../modules/project"
   name              = each.value
   resource_group_id = module.resource_group.resource_group_id
