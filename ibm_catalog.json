@@ -121,7 +121,7 @@
           }
         },
         {
-            "label": "New Code Engine Projects",
+            "label": "New Code Engine projects",
             "name": "projects",
             "install_type": "fullstack",
             "working_directory": "solutions/projects",
