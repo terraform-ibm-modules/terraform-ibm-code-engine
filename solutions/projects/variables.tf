@@ -11,7 +11,8 @@ variable "ibmcloud_api_key" {
 variable "prefix" {
   type        = string
   description = "Prefix to added to all projects created by this solution."
-  default     = "project"
+  default     = null
+  nullable    = true
 }
 
 variable "region" {
