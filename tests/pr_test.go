@@ -2,7 +2,6 @@
 package test
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -187,7 +186,8 @@ func TestDeployCEProjectsDA(t *testing.T) {
 	options.TerraformVars = map[string]interface{}{
 		"resource_group_name":     resourceGroup,
 		"existing_resource_group": true,
-		"project_names":           fmt.Sprintf("[\"%s-test-1\", \"%s-test-2\"]", options.Prefix, options.Prefix),
+		"prefix":                  options.Prefix,
+		"project_names":           "[\"test-1\", \"test-2\"]",
 	}
 
 	output, err := options.RunTestConsistency()
