@@ -119,6 +119,45 @@
               }
             ]
           }
+        },
+        {
+            "label": "New Code Engine projects",
+            "name": "projects",
+            "install_type": "fullstack",
+            "working_directory": "solutions/projects",
+            "iam_permissions": [
+                {
+                "role_crns": [
+                    "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+                ],
+                "service_name": "codeengine"
+                },
+                {
+                "role_crns": [
+                    "crn:v1:bluemix:public:iam::::role:Editor"
+                ],
+                "service_name": "codeengine"
+                }
+            ],
+            "architecture": {
+                "descriptions": "This deployable architecture creates IBM Cloud Code Engine projects",
+                "features": [
+                {
+                    "title": "IBM Cloud Code Engine project",
+                    "description": "Yes"
+                }
+                ],
+                "diagrams": [
+                {
+                    "diagram": {
+                    "caption": "IBM Cloud Code Engine application solution.",
+                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-projects-da.svg",
+                    "type": "image/svg+xml"
+                    },
+                    "description": "This deployable architecture creates IBM Cloud Code Engine projects"
+                }
+                ]
+            }
         }
       ]
     }
