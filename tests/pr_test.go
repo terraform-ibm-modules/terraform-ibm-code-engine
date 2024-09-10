@@ -175,6 +175,28 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 	}
 }
 
+func TestUpgradeCEProjectsDA(t *testing.T) {
+	t.Parallel()
+
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:      t,
+		TerraformDir: "solutions/projects",
+		Prefix:       "ce-da",
+	})
+
+	options.TerraformVars = map[string]interface{}{
+		"resource_group_name":     resourceGroup,
+		"existing_resource_group": true,
+		"prefix":                  options.Prefix,
+		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
+	}
+
+	output, err := options.RunTestUpgrade()
+
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
+}
+
 func TestDeployCEProjectsDA(t *testing.T) {
 	t.Parallel()
 
