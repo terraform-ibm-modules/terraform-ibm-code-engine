@@ -23,8 +23,8 @@ module "resource_group" {
 ########################################################################################################################
 
 module "project" {
-  for_each          = toset(local.projects)
+  count             = length(local.projects)
   source            = "../../modules/project"
-  name              = each.value
+  name              = local.projects[count.index]
   resource_group_id = module.resource_group.resource_group_id
 }
