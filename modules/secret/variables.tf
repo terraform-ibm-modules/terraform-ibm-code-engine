@@ -19,6 +19,7 @@ variable "format" {
 variable "data" {
   description = "Data container that allows to specify config parameters and their values as a key-value map."
   type        = map(string)
+  sensitive   = true
   default     = {}
 }
 
