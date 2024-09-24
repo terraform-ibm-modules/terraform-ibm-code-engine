@@ -20,7 +20,6 @@ output "config_map" {
 output "secret" {
   description = "Configuration of the created code engine secret."
   value       = module.code_engine.secret
-  sensitive   = true
 }
 
 output "domain_mapping" {
