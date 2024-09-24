@@ -15,6 +15,7 @@ output "job" {
 output "secret" {
   description = "Configuration of the created code engine secret."
   value       = module.code_engine.secret
+  sensitive   = true
 }
 
 output "build" {
