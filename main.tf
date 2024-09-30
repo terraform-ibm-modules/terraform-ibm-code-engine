@@ -88,7 +88,7 @@ module "secret" {
   for_each   = var.secrets
   project_id = local.project_id
   name       = each.key
-  data       = each.value.data
+  data       = sensitive(each.value.data)
   format     = each.value.format
   # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
   # service_access = each.value.service_access
