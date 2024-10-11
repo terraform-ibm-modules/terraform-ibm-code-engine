@@ -48,6 +48,7 @@ module "app" {
 # Code Engine Job
 ##############################################################################
 module "job" {
+  depends_on                    = [module.secret, module.config_map]
   source                        = "./modules/job"
   for_each                      = var.jobs
   project_id                    = local.project_id
