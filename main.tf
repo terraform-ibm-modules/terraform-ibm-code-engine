@@ -121,7 +121,7 @@ module "build" {
 # Code Engine Domain Mapping
 ##############################################################################
 module "domain_mapping" {
-  depends_on = [module.app]
+  depends_on = [module.secret, module.app]
   source     = "./modules/domain_mapping"
   for_each   = var.domain_mappings
   project_id = local.project_id
