@@ -18,6 +18,7 @@ module "project" {
 # Code Engine App
 ##############################################################################
 module "app" {
+  depends_on                    = [module.secret, module.config_map]
   source                        = "./modules/app"
   for_each                      = var.apps
   project_id                    = local.project_id
@@ -47,6 +48,7 @@ module "app" {
 # Code Engine Job
 ##############################################################################
 module "job" {
+  depends_on                    = [module.secret, module.config_map]
   source                        = "./modules/job"
   for_each                      = var.jobs
   project_id                    = local.project_id
@@ -83,7 +85,6 @@ module "config_map" {
 # Code Engine Secret
 ##############################################################################
 module "secret" {
-  depends_on = [module.app, module.job]
   source     = "./modules/secret"
   for_each   = var.secrets
   project_id = local.project_id
@@ -120,7 +121,7 @@ module "build" {
 # Code Engine Domain Mapping
 ##############################################################################
 module "domain_mapping" {
-  depends_on = [module.secret]
+  depends_on = [module.secret, module.app]
   source     = "./modules/domain_mapping"
   for_each   = var.domain_mappings
   project_id = local.project_id
