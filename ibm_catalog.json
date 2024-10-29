@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "deploy-arch-ibm-code-engine",
-      "label": "IBM Cloud Code Engine",
+      "label": "Cloud automation for Code Engine",
       "product_kind": "solution",
       "tags": [
         "ibm_created",
