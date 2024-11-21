@@ -118,7 +118,26 @@
                 "description": "This deployable architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
               }
             ]
+          },
+          "configuration":[
+            {
+            "key": "provider_visibility",
+            "options": [
+              {
+                "displayname": "private",
+                "value": "private"
+              },
+              {
+                "displayname": "public",
+                "value": "public"
+              },
+              {
+                "displayname": "public-and-private",
+                "value": "public-and-private"
+              }
+            ]
           }
+        ]
         },
         {
             "label": "New Code Engine projects",
@@ -157,7 +176,26 @@
                     "description": "This deployable architecture creates IBM Cloud Code Engine projects"
                 }
                 ]
+            },
+            "configuration":[
+              {
+              "key": "provider_visibility",
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
             }
+          ]
         }
       ]
     }
