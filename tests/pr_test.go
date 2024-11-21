@@ -132,7 +132,6 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 		{Name: "existing_resource_group", Value: true, DataType: "bool"},
 		{Name: "app_name", Value: options.Prefix + "-app", DataType: "string"},
 		{Name: "image_reference", Value: "icr.io/codeengine/helloworld", DataType: "string"},
-		{Name: "provider_visibility", Value: "public", DataType: "string"},
 		{Name: "secrets", Value: "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", DataType: "object"}, // pragma: allowlist secret
 		{Name: "config_maps", Value: "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}", DataType: "object"},
 		{Name: "project_name", Value: options.Prefix + "-pro", DataType: "string"},
