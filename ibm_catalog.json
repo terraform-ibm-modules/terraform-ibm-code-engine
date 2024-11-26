@@ -146,49 +146,19 @@
           {
             "key": "resource_group_name"
           },
-
           {
             "key": "region",
-            "required": true,
-            "default_value": "us-south",
-            "options": [
-              {
-                "displayname": "Dallas (us-south)",
-                "value": "us-south"
-              },
-              {
-                "displayname": "Frankfurt (eu-de)",
-                "value": "eu-de"
-              },
-              {
-                "displayname": "London (eu-gb)",
-                "value": "eu-gb"
-              },
-              {
-                "displayname": "Madrid (eu-es)",
-                "value": "eu-es"
-              },
-              {
-                "displayname": "Osaka (jp-osa)",
-                "value": "jp-osa"
-              },
-              {
-                "displayname": "Sao Paulo (br-sao)",
-                "value": "br-sao"
-              },
-              {
-                "displayname": "Toronto (ca-tor)",
-                "value": "ca-tor"
-              },
-              {
-                "displayname": "Tokyo (jp-tok)",
-                "value": "jp-tok"
-              },
-              {
-                "displayname": "Washington (us-east)",
-                "value": "us-east"
+            "type": "string",
+            "custom_config": {
+              "type": "region",
+              "grouping": "deployment",
+              "original_grouping": "deployment",
+              "config_constraints": {
+                "showKinds": [
+                  "region"
+                ]
               }
-            ]
+            }
           },
           {
             "key": "project_name"
@@ -340,46 +310,17 @@
             },
             {
               "key": "region",
-              "required": true,
-              "default_value": "us-south",
-              "options": [
-                {
-                  "displayname": "Dallas (us-south)",
-                  "value": "us-south"
-                },
-                {
-                  "displayname": "Frankfurt (eu-de)",
-                  "value": "eu-de"
-                },
-                {
-                  "displayname": "London (eu-gb)",
-                  "value": "eu-gb"
-                },
-                {
-                  "displayname": "Madrid (eu-es)",
-                  "value": "eu-es"
-                },
-                {
-                  "displayname": "Osaka (jp-osa)",
-                  "value": "jp-osa"
-                },
-                {
-                  "displayname": "Sao Paulo (br-sao)",
-                  "value": "br-sao"
-                },
-                {
-                  "displayname": "Toronto (ca-tor)",
-                  "value": "ca-tor"
-                },
-                {
-                  "displayname": "Tokyo (jp-tok)",
-                  "value": "jp-tok"
-                },
-                {
-                  "displayname": "Washington (us-east)",
-                  "value": "us-east"
+              "type": "string",
+              "custom_config": {
+                "type": "region",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "showKinds": [
+                    "region"
+                  ]
                 }
-              ]
+              }
             },
             {
               "key": "project_names"
