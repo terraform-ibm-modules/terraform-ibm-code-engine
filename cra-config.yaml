@@ -7,6 +7,7 @@ CRA_TARGETS:
     CRA_ENVIRONMENT_VARIABLES:
       TF_VAR_acme_letsencrypt_private_key: "DUMMY VALUE FOR CRA"
       TF_VAR_cis_id: "crn:v1:bluemix:public:internet-svcs:global:a/abac0df06b644a9cabc6e44f55b3880e:59aa1a88-ac47-45e4-bd96-2bc778d26ca7::"
+      TF_VAR_provider_visibility: "public"
     # SCC_INSTANCE_ID: "" # The SCC instance ID to use to download profile for CRA scan. If not provided, a default global value will be used.
     # SCC_REGION: "" # The IBM Cloud region that the SCC instance is in. If not provided, a default global value will be used.
     # CRA_ENVIRONMENT_VARIABLES:  # An optional map of environment variables for CRA, where the key is the variable name and value is the value. Useful for providing TF_VARs.
