@@ -163,6 +163,7 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 		"existing_resource_group": true,
 		"app_name":                options.Prefix + "-app",
 		"image_reference":         "icr.io/codeengine/helloworld",
+		"provider_visibility":     "public",
 		"secrets":                 "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
 		"config_maps":             "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
 		"project_name":            options.Prefix + "-pro",
@@ -187,6 +188,7 @@ func TestUpgradeCEProjectsDA(t *testing.T) {
 	options.TerraformVars = map[string]interface{}{
 		"resource_group_name":     resourceGroup,
 		"existing_resource_group": true,
+		"provider_visibility":     "public",
 		"prefix":                  options.Prefix,
 		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
 	}
@@ -212,6 +214,7 @@ func TestDeployCEProjectsDA(t *testing.T) {
 		"resource_group_name":     resourceGroup,
 		"existing_resource_group": true,
 		"prefix":                  options.Prefix,
+		"provider_visibility":     "public",
 		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
 	}
 
