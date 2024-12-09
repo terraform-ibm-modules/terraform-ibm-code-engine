@@ -58,7 +58,7 @@ variable "managed_domain_mappings" {
   type        = string
   default     = null
   validation {
-    condition     = var.managed_domain_mappings == null || contains(["local_public", "local_private", "local"], var.managed_domain_mappings)
+    condition     = var.managed_domain_mappings == null || can(regex("local_public|local_private|local", var.managed_domain_mappings))
     error_message = "Valid values are 'local_public', 'local_private', or 'local'."
   }
 }
