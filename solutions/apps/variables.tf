@@ -98,6 +98,10 @@ variable "managed_domain_mappings" {
   description = "Specify which of the following values for the system-managed domain mappings to set up for the application: `local_public`, `local_private`, and `local`."
   type        = string
   default     = null
+  validation {
+    condition     = var.managed_domain_mappings == null || can(regex("local_public|local_private|local", var.managed_domain_mappings))
+    error_message = "Valid values are 'local_public', 'local_private', or 'local'."
+  }
 }
 
 variable "run_arguments" {
