@@ -58,7 +58,7 @@ No modules.
 | <a name="input_image_port"></a> [image\_port](#input\_image\_port) | The port which is used to connect to the port that is exposed by the container image. | `number` | `8080` | no |
 | <a name="input_image_reference"></a> [image\_reference](#input\_image\_reference) | The name of the image that is used for the app. | `string` | n/a | yes |
 | <a name="input_image_secret"></a> [image\_secret](#input\_image\_secret) | The name of the image registry access secret. | `string` | `null` | no |
-| <a name="input_managed_domain_mappings"></a> [managed\_domain\_mappings](#input\_managed\_domain\_mappings) | Define which of the system managed domain mappings will be setup for the application. Valid values are 'local\_public', 'local\_private' and 'local'. | `string` | `null` | no |
+| <a name="input_managed_domain_mappings"></a> [managed\_domain\_mappings](#input\_managed\_domain\_mappings) | Specify which of the following values for the system-managed domain mappings to set up for the application: `local_public`, `local_private`, and `local`. See https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads#optionsvisibility | `string` | `"local_public"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the app. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where app will be created. | `string` | n/a | yes |
 | <a name="input_run_arguments"></a> [run\_arguments](#input\_run\_arguments) | Arguments for the app that are passed to start the container. | `list(string)` | `[]` | no |
