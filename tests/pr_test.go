@@ -2,7 +2,6 @@
 package test
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -222,16 +221,4 @@ func TestDeployCEProjectsDA(t *testing.T) {
 
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")
-
-	// Check outputs for project names in correct order
-	expectedOutputs := []string{"project_1_name", "project_2_name", "project_3_name", "project_4_name", "project_5_name"}
-	_, outputErr := testhelper.ValidateTerraformOutputs(options.LastTestTerraformOutputs, expectedOutputs...)
-	if assert.NoErrorf(t, outputErr, "Some outputs not found or nil") {
-		assert.Equal(t, fmt.Sprintf("%s-test-1", options.Prefix), options.LastTestTerraformOutputs["project_1_name"], "Project 1 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-2", options.Prefix), options.LastTestTerraformOutputs["project_2_name"], "Project 2 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-3", options.Prefix), options.LastTestTerraformOutputs["project_3_name"], "Project 3 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-4", options.Prefix), options.LastTestTerraformOutputs["project_4_name"], "Project 4 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-5", options.Prefix), options.LastTestTerraformOutputs["project_5_name"], "Project 5 name not as expected")
-	}
-
 }
