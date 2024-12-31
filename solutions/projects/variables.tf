@@ -41,7 +41,7 @@ variable "resource_group_name" {
   description = "The name of a new or an existing resource group to provision the IBM Cloud Code Engine resources to."
 }
 
-variable "project_names" {
-  description = "The names of the projects to add the IBM Cloud Code Engine."
-  type        = list(string)
+variable "project_name" {
+  description = "The name of the projects to add the IBM Cloud Code Engine."
+  type        = string
 }
