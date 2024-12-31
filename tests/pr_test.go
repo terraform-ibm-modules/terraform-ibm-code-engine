@@ -190,7 +190,7 @@ func TestUpgradeCEProjectsDA(t *testing.T) {
 		"existing_resource_group": true,
 		"provider_visibility":     "public",
 		"prefix":                  options.Prefix,
-		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
+		"project_name":            "test-1",
 	}
 
 	output, err := options.RunTestUpgrade()
@@ -215,7 +215,7 @@ func TestDeployCEProjectsDA(t *testing.T) {
 		"existing_resource_group": true,
 		"prefix":                  options.Prefix,
 		"provider_visibility":     "public",
-		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
+		"project_name":            "test-1",
 	}
 
 	output, err := options.RunTestConsistency()
