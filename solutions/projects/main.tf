@@ -18,3 +18,8 @@ module "project" {
   name              = var.prefix != null ? "${var.prefix}-${var.project_name}" : var.project_name
   resource_group_id = module.resource_group.resource_group_id
 }
+
+moved {
+  from = module.project[0]
+  to   = module.project
+}
