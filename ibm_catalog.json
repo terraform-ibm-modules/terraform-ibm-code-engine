@@ -300,7 +300,8 @@
               ]
             },
             {
-              "key": "prefix"
+              "key": "prefix",
+              "required": true
             },
             {
               "key": "existing_resource_group"
