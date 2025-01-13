@@ -2,7 +2,7 @@ locals {
   # add prefix to all projects created by this solution if prefix is not null
   projects = [
     for project in var.project_names : (
-      var.prefix != null ? "${var.prefix}-${project}" : project
+      (var.prefix != null && var.prefix != "") ? "${var.prefix}-${project}" : project
     )
   ]
 }
