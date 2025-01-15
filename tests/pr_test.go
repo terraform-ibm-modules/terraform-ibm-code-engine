@@ -175,12 +175,12 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 	}
 }
 
-func TestUpgradeCEProjectsDA(t *testing.T) {
+func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
-		TerraformDir: "solutions/projects",
+		TerraformDir: "solutions/project",
 		Prefix:       "ce-da",
 	})
 
@@ -200,12 +200,12 @@ func TestUpgradeCEProjectsDA(t *testing.T) {
 	}
 }
 
-func TestDeployCEProjectsDA(t *testing.T) {
+func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
-		TerraformDir: "solutions/projects",
+		TerraformDir: "solutions/project",
 		Prefix:       "ce-da",
 	})
 
