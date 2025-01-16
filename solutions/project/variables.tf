@@ -119,7 +119,7 @@ variable "timeout" {
 # Code Engine Domain Mapping
 ##############################################################################
 variable "domain_mappings" {
-  description = "A map of code engine domain mappings to be created. For example, `{ test.example.com = { components = [{ name = test-app resource_type = app_v2 }] tls_secret = test-tls } }`"
+  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`." # pragma: allowlist secret
   type = map(object({
     tls_secret = string # pragma: allowlist secret
     components = list(object({
@@ -134,7 +134,7 @@ variable "domain_mappings" {
 # Code Engine Config Map
 ##############################################################################
 variable "config_maps" {
-  description = "A map of code engine config maps to be created. For example, { test-cm = { data = { key_1 : value_1, key_2 : value_2 } } }"
+  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`."
   type = map(object({
     data = map(string)
   }))
@@ -145,7 +145,7 @@ variable "config_maps" {
 # Code Engine Secret
 ##############################################################################
 variable "secrets" {
-  description = "A map of code engine secrets to be created. For example, `{ test-tls = { format = tls, data = { tls_cert = <cert>, tls_key = <cert_key> } } }`"
+  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`."
   type = map(object({
     format = string
     data   = map(string)

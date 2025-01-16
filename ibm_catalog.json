@@ -324,6 +324,45 @@
             },
             {
               "key": "project_name"
+            },
+            {
+              "key": "output_image"
+            },
+            {
+              "key": "output_secret"
+            },
+            {
+              "key": "source_context_dir"
+            },
+            {
+              "key": "source_revision"
+            },
+            {
+              "key": "source_secret"
+            },
+            {
+              "key": "source_type"
+            },
+            {
+              "key": "source_url"
+            },
+            {
+              "key": "strategy_size"
+            },
+            {
+              "key": "strategy_spec_file"
+            },
+            {
+              "key": "timeout"
+            },
+            {
+              "key": "domain_mappings"
+            },
+            {
+              "key": "config_maps"
+            },
+            {
+              "key": "secrets"
             }
           ]
         }

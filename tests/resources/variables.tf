@@ -36,12 +36,6 @@ variable "existing_sm_instance_region" {
   default     = null
 }
 
-variable "existing_cert_common_name" {
-  type        = string
-  description = "Required if value is passed into `var.existing_sm_instance_guid`."
-  default     = null
-}
-
 variable "existing_cert_secret_id" {
   type        = string
   description = "Required if value is passed into `var.existing_sm_instance_guid`."

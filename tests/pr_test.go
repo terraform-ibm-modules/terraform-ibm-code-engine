@@ -260,7 +260,7 @@ func TestDeployCEProjectDA(t *testing.T) {
 					"resource_group_name":     resourceGroup,
 					"existing_resource_group": true,
 					"output_image":            fmt.Sprintf("us.icr.io/%s/%s", terraform.Output(t, existingTerraformOptions, "cr_name"), prefix),
-					"output_secret":           fmt.Sprintf("%s-registry", prefix),
+					"output_secret":           fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
 					"source_url":              "https://github.com/IBM/CodeEngine",
 					"strategy_type":           "dockerfile",
 					"config_maps": map[string]interface{}{
@@ -284,7 +284,7 @@ func TestDeployCEProjectDA(t *testing.T) {
 							"data": map[string]string{
 								"server":   "us.icr.io",
 								"username": "iamapikey",
-								"password": val,
+								"password": val, // pragma: allowlist secret
 							},
 						},
 					},
