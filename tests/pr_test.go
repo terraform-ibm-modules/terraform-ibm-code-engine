@@ -231,7 +231,6 @@ func TestDeployCEProjectDA(t *testing.T) {
 			"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
 			"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
 			"existing_cert_secret_id":     permanentResources["cePublicCertId"],
-			"existing_cert_common_name":   "goldeneye.dev.cloud.ibm.com",
 		},
 		// Set Upgrade to true to ensure latest version of providers and modules are used by terratest.
 		// This is the same as setting the -upgrade=true flag with terraform.
