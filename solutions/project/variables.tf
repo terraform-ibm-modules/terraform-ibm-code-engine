@@ -45,3 +45,122 @@ variable "project_name" {
   description = "The name of the project to add the IBM Cloud Code Engine."
   type        = string
 }
+
+##############################################################################
+# Code Engine Build
+##############################################################################
+variable "output_image" {
+  description = "The name of the image which includes the whole container regsitry repository, namespace and image name. For example, `us.icr.io/<test>-namespace/<test-image>`"
+  type        = string
+  default     = null
+}
+
+variable "output_secret" {
+  description = "The secret that is required to access the image registry."
+  type        = string
+  default     = null
+}
+
+variable "source_context_dir" {
+  description = "The directory in the repository that contains the buildpacks file or the Dockerfile."
+  type        = string
+  default     = null
+}
+
+variable "source_revision" {
+  description = "Commit, tag, or branch in the source repository to pull."
+  type        = string
+  default     = null
+}
+
+variable "source_secret" {
+  description = "The name of the secret that is used access the repository source. If the var.source_type value is `local`, this field must be omitted."
+  type        = string
+  default     = null
+}
+
+variable "source_type" {
+  description = "Specifies the type of source to determine if your build source is in a repository or based on local source code."
+  type        = string
+  default     = null
+}
+
+variable "source_url" {
+  description = "The URL of the code repository."
+  type        = string
+  default     = null
+}
+
+variable "strategy_size" {
+  description = "The size for the build, which determines the amount of resources used."
+  type        = string
+  default     = null
+}
+
+variable "strategy_spec_file" {
+  description = "The path to the specification file that is used for build strategies for building an image."
+  type        = string
+  default     = null
+}
+
+variable "strategy_type" {
+  description = "The strategy to use for building the image."
+  type        = string
+  default     = "dockerfile"
+}
+
+variable "timeout" {
+  description = "The maximum amount of time, in seconds, that can pass before the build must succeed or fail."
+  type        = number
+  default     = 600
+}
+
+##############################################################################
+# Code Engine Domain Mapping
+##############################################################################
+variable "domain_mappings" {
+  description = "A map of code engine domain mappings to be created. For example, `{ test.example.com = { components = [{ name = test-app resource_type = app_v2 }] tls_secret = test-tls } }`"
+  type = map(object({
+    tls_secret = string # pragma: allowlist secret
+    components = list(object({
+      name          = string
+      resource_type = string
+    }))
+  }))
+  default = {}
+}
+
+##############################################################################
+# Code Engine Config Map
+##############################################################################
+variable "config_maps" {
+  description = "A map of code engine config maps to be created. For example, { test-cm = { data = { key_1 : value_1, key_2 : value_2 } } }"
+  type = map(object({
+    data = map(string)
+  }))
+  default = {}
+}
+
+##############################################################################
+# Code Engine Secret
+##############################################################################
+variable "secrets" {
+  description = "A map of code engine secrets to be created. For example, `{ test-tls = { format = tls, data = { tls_cert = <cert>, tls_key = <cert_key> } } }`"
+  type = map(object({
+    format = string
+    data   = map(string)
+    # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
+    # service_access = optional(list(object({
+    #   resource_key = list(object({
+    #     id = optional(string)
+    #   }))
+    #   role = list(object({
+    #     crn = optional(string)
+    #   }))
+    #   service_instance = list(object({
+    #     id = optional(string)
+    #   }))
+    # })))
+  }))
+  default = {}
+}
