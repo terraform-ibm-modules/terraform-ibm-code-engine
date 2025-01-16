@@ -119,170 +119,170 @@
               }
             ]
           },
-          "configuration":[
+          "configuration": [
             {
               "key": "ibmcloud_api_key"
             },
             {
-            "key": "provider_visibility",
-            "options": [
+              "key": "provider_visibility",
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            },
+            {
+              "key": "existing_resource_group"
+            },
+            {
+              "key": "resource_group_name"
+            },
+            {
+              "key": "region",
+              "type": "string",
+              "custom_config": {
+                "type": "region",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "showKinds": [
+                    "region"
+                  ]
+                }
+              }
+            },
+            {
+              "key": "project_name"
+            },
+            {
+              "key": "existing_project_id"
+            },
+            {
+              "key": "app_name"
+            },
+            {
+              "key": "image_reference"
+            },
+            {
+              "key": "image_secret"
+            },
+            {
+              "key": "run_env_variables"
+            },
+            {
+              "key": "run_volume_mounts"
+            },
+            {
+              "key": "image_port"
+            },
+            {
+              "key": "managed_domain_mappings"
+            },
+            {
+              "key": "run_arguments"
+            },
+            {
+              "key": "run_as_user"
+            },
+            {
+              "key": "run_commands"
+            },
+            {
+              "key": "run_service_account"
+            },
+            {
+              "key": "scale_concurrency"
+            },
+            {
+              "key": "scale_concurrency_target"
+            },
+            {
+              "key": "scale_cpu_limit"
+            },
+            {
+              "key": "scale_ephemeral_storage_limit"
+            },
+            {
+              "key": "scale_initial_instances"
+            },
+            {
+              "key": "scale_max_instances"
+            },
+            {
+              "key": "scale_memory_limit"
+            },
+            {
+              "key": "scale_min_instances"
+            },
+            {
+              "key": "scale_request_timeout"
+            },
+            {
+              "key": "config_maps"
+            },
+            {
+              "key": "secrets"
+            },
+            {
+              "key": "domain_mappings"
+            },
+            {
+              "key": "bindings"
+            }
+          ]
+        },
+        {
+          "label": "New Code Engine projects",
+          "name": "projects",
+          "install_type": "fullstack",
+          "working_directory": "solutions/projects",
+          "iam_permissions": [
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+              ],
+              "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "codeengine"
+            }
+          ],
+          "architecture": {
+            "descriptions": "This deployable architecture creates IBM Cloud Code Engine projects",
+            "features": [
               {
-                "displayname": "private",
-                "value": "private"
-              },
+                "title": "IBM Cloud Code Engine project",
+                "description": "Yes"
+              }
+            ],
+            "diagrams": [
               {
-                "displayname": "public",
-                "value": "public"
-              },
-              {
-                "displayname": "public-and-private",
-                "value": "public-and-private"
+                "diagram": {
+                  "caption": "IBM Cloud Code Engine application solution.",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-projects-da.svg",
+                  "type": "image/svg+xml"
+                },
+                "description": "This deployable architecture creates IBM Cloud Code Engine projects"
               }
             ]
           },
-          {
-            "key": "existing_resource_group"
-          },
-          {
-            "key": "resource_group_name"
-          },
-          {
-            "key": "region",
-            "type": "string",
-            "custom_config": {
-              "type": "region",
-              "grouping": "deployment",
-              "original_grouping": "deployment",
-              "config_constraints": {
-                "showKinds": [
-                  "region"
-                ]
-              }
-            }
-          },
-          {
-            "key": "project_name"
-          },
-          {
-            "key": "existing_project_id"
-          },
-          {
-            "key": "app_name"
-          },
-          {
-            "key": "image_reference"
-          },
-          {
-            "key": "image_secret"
-          },
-          {
-            "key": "run_env_variables"
-          },
-          {
-            "key": "run_volume_mounts"
-          },
-          {
-            "key":"image_port"
-          },
-          {
-            "key":"managed_domain_mappings"
-          },
-          {
-            "key":"run_arguments"
-          },
-          {
-            "key":"run_as_user"
-          },
-          {
-            "key":"run_commands"
-          },
-          {
-            "key":"run_service_account"
-          },
-          {
-            "key":"scale_concurrency"
-          },
-          {
-            "key":"scale_concurrency_target"
-          },
-          {
-            "key":"scale_cpu_limit"
-          },
-          {
-            "key":"scale_ephemeral_storage_limit"
-          },
-          {
-            "key":"scale_initial_instances"
-          },
-          {
-            "key":"scale_max_instances"
-          },
-          {
-            "key":"scale_memory_limit"
-          },
-          {
-            "key":"scale_min_instances"
-          },
-          {
-            "key":"scale_request_timeout"
-          },
-          {
-            "key":"config_maps"
-          },
-          {
-            "key":"secrets"
-          },
-          {
-            "key":"domain_mappings"
-          },
-          {
-            "key":"bindings"
-          }
-        ]
-        },
-        {
-            "label": "New Code Engine projects",
-            "name": "projects",
-            "install_type": "fullstack",
-            "working_directory": "solutions/projects",
-            "iam_permissions": [
-                {
-                "role_crns": [
-                    "crn:v1:bluemix:public:iam::::serviceRole:Writer"
-                ],
-                "service_name": "codeengine"
-                },
-                {
-                "role_crns": [
-                    "crn:v1:bluemix:public:iam::::role:Editor"
-                ],
-                "service_name": "codeengine"
-                }
-            ],
-            "architecture": {
-                "descriptions": "This deployable architecture creates IBM Cloud Code Engine projects",
-                "features": [
-                {
-                    "title": "IBM Cloud Code Engine project",
-                    "description": "Yes"
-                }
-                ],
-                "diagrams": [
-                {
-                    "diagram": {
-                    "caption": "IBM Cloud Code Engine application solution.",
-                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-projects-da.svg",
-                    "type": "image/svg+xml"
-                    },
-                    "description": "This deployable architecture creates IBM Cloud Code Engine projects"
-                }
-                ]
+          "configuration": [
+            {
+              "key": "ibmcloud_api_key"
             },
-            "configuration":[
-              {
-                "key": "ibmcloud_api_key"
-              },
-              {
+            {
               "key": "provider_visibility",
               "options": [
                 {
