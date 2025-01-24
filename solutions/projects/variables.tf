@@ -10,7 +10,7 @@ variable "ibmcloud_api_key" {
 variable "provider_visibility" {
   description = "Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints)."
   type        = string
-  default     = "public"
+  default     = "private"
 
   validation {
     condition     = contains(["public", "private", "public-and-private"], var.provider_visibility)
@@ -20,7 +20,7 @@ variable "provider_visibility" {
 variable "prefix" {
   type        = string
   description = "Prefix to add to all projects created by this solution. To not use any prefix value, you can set this value to `null` or an empty string."
-  default     = "codeengine"
+  default     = "code-engine"
   nullable    = true
 }
 
