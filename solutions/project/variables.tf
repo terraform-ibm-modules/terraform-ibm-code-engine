@@ -19,7 +19,7 @@ variable "provider_visibility" {
 }
 variable "prefix" {
   type        = string
-  description = "Prefix to added to all project created by this solution."
+  description = "Prefix added to the project created by this solution."
   default     = null
   nullable    = true
 }
