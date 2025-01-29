@@ -19,8 +19,8 @@ variable "provider_visibility" {
 }
 variable "prefix" {
   type        = string
-  description = "Prefix to added to all projects created by this solution."
-  default     = null
+  description = "Prefix to add to all projects created by this solution. To not use any prefix value, you can set this value to `null` or an empty string."
+  default     = "code-engine"
   nullable    = true
 }
 
