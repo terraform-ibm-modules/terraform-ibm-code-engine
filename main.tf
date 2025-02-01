@@ -100,6 +100,7 @@ module "secret" {
 # Code Engine Build
 ##############################################################################
 module "build" {
+  depends_on         = [module.secret]
   source             = "./modules/build"
   for_each           = var.builds
   project_id         = local.project_id
