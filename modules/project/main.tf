@@ -13,7 +13,7 @@ resource "ibm_code_engine_project" "ce_project" {
 # Context Based Restrictions
 ##############################################################################
 
-module "cbr_rule" {
+module "cbr_rules" {
   count            = length(var.cbr_rules) > 0 ? length(var.cbr_rules) : 0
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-rule-module"
   version          = "1.29.0"
@@ -29,7 +29,7 @@ module "cbr_rule" {
       },
       {
         name     = "serviceInstance"
-        value    = ibm_code_engine_project.ce_project
+        value    = ibm_code_engine_project.ce_project.id
         operator = "stringEquals"
       },
       {

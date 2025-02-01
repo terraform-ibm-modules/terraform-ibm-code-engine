@@ -173,12 +173,12 @@ variable "cbr_rules" {
         value = string
     }))) }))
     enforcement_mode = string
-    tags = optional(list(object({
-      name  = string
-      value = string
+    operations = optional(list(object({
+      api_types = list(object({
+        api_type_id = string
+      }))
     })))
   }))
-  description = "(Optional, list) List of CBR rules to create"
+  description = "The list of context-based restrictions rules to create."
   default     = []
-  # Validation happens in the rule module
 }
