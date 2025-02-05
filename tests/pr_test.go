@@ -5,9 +5,15 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/files"
+	"github.com/gruntwork-io/terratest/modules/logger"
+	"github.com/gruntwork-io/terratest/modules/random"
+	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
@@ -176,12 +182,12 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 	}
 }
 
-func TestUpgradeCEProjectsDA(t *testing.T) {
+func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
-		TerraformDir: "solutions/projects",
+		TerraformDir: "solutions/project",
 		Prefix:       "ce-da",
 	})
 
@@ -190,7 +196,7 @@ func TestUpgradeCEProjectsDA(t *testing.T) {
 		"existing_resource_group": true,
 		"provider_visibility":     "public",
 		"prefix":                  options.Prefix,
-		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
+		"project_name":            "test-1",
 	}
 
 	output, err := options.RunTestUpgrade()
@@ -201,37 +207,103 @@ func TestUpgradeCEProjectsDA(t *testing.T) {
 	}
 }
 
-func TestDeployCEProjectsDA(t *testing.T) {
+func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
 
-	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-		Testing:      t,
-		TerraformDir: "solutions/projects",
-		Prefix:       "ce-da",
+	// Provision watsonx Assistant instance
+	prefix := fmt.Sprintf("ce-data-%s", strings.ToLower(random.UniqueId()))
+	realTerraformDir := ".."
+	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
+	// tags := common.GetTagsFromTravis()
+
+	// Verify ibmcloud_api_key variable is set
+	checkVariable := "TF_VAR_ibmcloud_api_key"
+	val, present := os.LookupEnv(checkVariable)
+	require.True(t, present, checkVariable+" environment variable not set")
+	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
+
+	logger.Log(t, "Tempdir: ", tempTerraformDir)
+	existingTerraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: tempTerraformDir + "/tests/resources",
+		Vars: map[string]interface{}{
+			"resource_group":              resourceGroup,
+			"prefix":                      prefix,
+			"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
+			"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
+			"existing_cert_secret_id":     permanentResources["cePublicCertId"],
+		},
+		// Set Upgrade to true to ensure latest version of providers and modules are used by terratest.
+		// This is the same as setting the -upgrade=true flag with terraform.
+		Upgrade: true,
 	})
 
-	options.TerraformVars = map[string]interface{}{
-		"resource_group_name":     resourceGroup,
-		"existing_resource_group": true,
-		"prefix":                  options.Prefix,
-		"provider_visibility":     "public",
-		"project_names":           "[\"test-1\", \"test-2\", \"test-3\", \"test-4\", \"test-5\"]",
+	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
+	_, existErr := terraform.InitAndApplyE(t, existingTerraformOptions)
+	if existErr != nil {
+		assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
+	} else {
+		outputs, err := terraform.OutputAllE(t, existingTerraformOptions)
+		require.NoError(t, err, "Failed to retrieve Terraform outputs")
+		expectedOutputs := []string{"tls_cert", "tls_key", "cr_name"}
+		_, tfOutputsErr := testhelper.ValidateTerraformOutputs(outputs, expectedOutputs...)
+		if assert.Nil(t, tfOutputsErr, tfOutputsErr) {
+			options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+				Testing:      t,
+				TerraformDir: "solutions/project",
+				// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
+				ImplicitRequired: false,
+				TerraformVars: map[string]interface{}{
+					"prefix":                  prefix,
+					"provider_visibility":     "public",
+					"project_name":            prefix,
+					"resource_group_name":     resourceGroup,
+					"existing_resource_group": true,
+					"output_image":            fmt.Sprintf("us.icr.io/%s/%s", terraform.Output(t, existingTerraformOptions, "cr_name"), prefix),
+					"output_secret":           fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
+					"source_url":              "https://github.com/IBM/CodeEngine",
+					"strategy_type":           "dockerfile",
+					"config_maps": map[string]interface{}{
+						fmt.Sprintf("%s-cm", prefix): map[string]interface{}{
+							"data": map[string]interface{}{
+								"key_1": "value_1",
+								"key_2": "value_2",
+							},
+						},
+					},
+					"secrets": map[string]interface{}{
+						fmt.Sprintf("%s-tls", prefix): map[string]interface{}{
+							"format": "tls",
+							"data": map[string]string{
+								"tls_cert": strings.ReplaceAll(terraform.Output(t, existingTerraformOptions, "tls_cert"), "\n", `\n`),
+								"tls_key":  strings.ReplaceAll(terraform.Output(t, existingTerraformOptions, "tls_key"), "\n", `\n`),
+							},
+						},
+						fmt.Sprintf("%s-registry", prefix): map[string]interface{}{
+							"format": "registry",
+							"data": map[string]string{
+								"server":   "us.icr.io",
+								"username": "iamapikey",
+								"password": val, // pragma: allowlist secret
+							},
+						},
+					},
+				},
+			})
+			output, err := options.RunTestConsistency()
+			assert.Nil(t, err, "This should not have errored")
+			assert.NotNil(t, output, "Expected some output")
+		}
 	}
 
-	output, err := options.RunTestConsistency()
-
-	assert.Nil(t, err, "This should not have errored")
-	assert.NotNil(t, output, "Expected some output")
-
-	// Check outputs for project names in correct order
-	expectedOutputs := []string{"project_1_name", "project_2_name", "project_3_name", "project_4_name", "project_5_name"}
-	_, outputErr := testhelper.ValidateTerraformOutputs(options.LastTestTerraformOutputs, expectedOutputs...)
-	if assert.NoErrorf(t, outputErr, "Some outputs not found or nil") {
-		assert.Equal(t, fmt.Sprintf("%s-test-1", options.Prefix), options.LastTestTerraformOutputs["project_1_name"], "Project 1 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-2", options.Prefix), options.LastTestTerraformOutputs["project_2_name"], "Project 2 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-3", options.Prefix), options.LastTestTerraformOutputs["project_3_name"], "Project 3 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-4", options.Prefix), options.LastTestTerraformOutputs["project_4_name"], "Project 4 name not as expected")
-		assert.Equal(t, fmt.Sprintf("%s-test-5", options.Prefix), options.LastTestTerraformOutputs["project_5_name"], "Project 5 name not as expected")
+	// Check if "DO_NOT_DESTROY_ON_FAILURE" is set
+	envVal, _ := os.LookupEnv("DO_NOT_DESTROY_ON_FAILURE")
+	// Destroy the temporary existing resources if required
+	if t.Failed() && strings.ToLower(envVal) == "true" {
+		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
+	} else {
+		logger.Log(t, "START: Destroy (existing resources)")
+		terraform.Destroy(t, existingTerraformOptions)
+		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
+		logger.Log(t, "END: Destroy (existing resources)")
 	}
-
 }
