@@ -39,7 +39,7 @@ You need the following permissions to run this module.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.63.0, <2.0.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.74.0, <2.0.0 |
 
 ### Modules
 
@@ -70,6 +70,7 @@ No modules.
 | <a name="input_scale_concurrency"></a> [scale\_concurrency](#input\_scale\_concurrency) | The maximum number of requests that can be processed concurrently per instance. | `number` | `100` | no |
 | <a name="input_scale_concurrency_target"></a> [scale\_concurrency\_target](#input\_scale\_concurrency\_target) | The threshold of concurrent requests per instance at which one or more additional instances are created. | `number` | `null` | no |
 | <a name="input_scale_cpu_limit"></a> [scale\_cpu\_limit](#input\_scale\_cpu\_limit) | The number of CPU set for the instance of the app. | `string` | `"1"` | no |
+| <a name="input_scale_down_delay"></a> [scale\_down\_delay](#input\_scale\_down\_delay) | The amount of time in seconds that delays the scale-down behavior for an app instance. | `number` | `0` | no |
 | <a name="input_scale_ephemeral_storage_limit"></a> [scale\_ephemeral\_storage\_limit](#input\_scale\_ephemeral\_storage\_limit) | The amount of ephemeral storage to set for the instance of the app. | `string` | `"400M"` | no |
 | <a name="input_scale_initial_instances"></a> [scale\_initial\_instances](#input\_scale\_initial\_instances) | The initial number of instances that are created upon app creation or app update. | `number` | `1` | no |
 | <a name="input_scale_max_instances"></a> [scale\_max\_instances](#input\_scale\_max\_instances) | The maximum number of instances for this app. | `number` | `10` | no |
