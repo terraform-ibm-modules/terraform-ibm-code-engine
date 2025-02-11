@@ -227,6 +227,9 @@
               "key": "scale_request_timeout"
             },
             {
+            "key":"scale_down_delay"
+          },
+          {
               "key": "config_maps"
             },
             {
