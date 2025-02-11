@@ -140,3 +140,9 @@ variable "scale_request_timeout" {
   type        = number
   default     = 300
 }
+
+variable "scale_down_delay" {
+  description = "The amount of time in seconds that delays the scale-down behavior for an app instance."
+  type        = number
+  default     = 0
+}

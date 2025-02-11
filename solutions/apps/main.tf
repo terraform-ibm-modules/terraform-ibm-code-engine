@@ -40,6 +40,7 @@ module "code_engine" {
       scale_memory_limit            = var.scale_memory_limit
       scale_min_instances           = var.scale_min_instances
       scale_request_timeout         = var.scale_request_timeout
+      scale_down_delay              = var.scale_down_delay
   } }
   config_maps     = var.config_maps
   secrets         = var.secrets

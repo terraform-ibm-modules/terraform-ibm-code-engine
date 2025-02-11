@@ -53,6 +53,7 @@ variable "apps" {
     scale_memory_limit            = optional(string)
     scale_min_instances           = optional(number)
     scale_request_timeout         = optional(number)
+    scale_down_delay              = optional(number)
   }))
   default = {}
 }
