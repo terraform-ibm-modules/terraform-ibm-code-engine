@@ -182,6 +182,12 @@ variable "scale_request_timeout" {
   default     = 300
 }
 
+variable "scale_down_delay" {
+  description = "The amount of time in seconds that delays the scale-down behavior for an app instance."
+  type        = number
+  default     = 0
+}
+
 variable "config_maps" {
   description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`."
   type = map(object({

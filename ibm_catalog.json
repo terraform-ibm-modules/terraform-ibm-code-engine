@@ -27,7 +27,7 @@
       "features": [
         {
           "title": "Creates a Code Engine project",
-          "description": "Code Engine projects group, manage, and provide access for Code Engine resources such as applications, jobs, and builds."
+          "description": "Code Engine project group, manage, and provide access for Code Engine resources such as applications, jobs, and builds."
         },
         {
           "title": "Creates Code Engine applications",
@@ -227,6 +227,9 @@
               "key": "scale_request_timeout"
             },
             {
+              "key": "scale_down_delay"
+            },
+            {
               "key": "config_maps"
             },
             {
@@ -241,10 +244,10 @@
           ]
         },
         {
-          "label": "New Code Engine projects",
-          "name": "projects",
+          "label": "New Code Engine project",
+          "name": "project",
           "install_type": "fullstack",
-          "working_directory": "solutions/projects",
+          "working_directory": "solutions/project",
           "iam_permissions": [
             {
               "role_crns": [
@@ -260,7 +263,7 @@
             }
           ],
           "architecture": {
-            "descriptions": "This deployable architecture creates IBM Cloud Code Engine projects",
+            "descriptions": "This deployable architecture creates IBM Cloud Code Engine project",
             "features": [
               {
                 "title": "IBM Cloud Code Engine project",
@@ -271,10 +274,10 @@
               {
                 "diagram": {
                   "caption": "IBM Cloud Code Engine application solution.",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-projects-da.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-project-da.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This deployable architecture creates IBM Cloud Code Engine projects"
+                "description": "This deployable architecture creates IBM Cloud Code Engine project"
               }
             ]
           },
@@ -323,7 +326,7 @@
               }
             },
             {
-              "key": "project_names"
+              "key": "project_name"
             }
           ]
         }
