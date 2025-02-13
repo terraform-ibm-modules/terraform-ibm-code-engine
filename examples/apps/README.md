@@ -9,4 +9,4 @@ An end-to-end apps example that will provision the following:
 - Code Engine Domain Mapping
 - Secrets Manager Resources (Public Engine, Group, Public Certificate)
 - A Virtual Private Cloud (VPC).
-- A context-based restriction (CBR) rule to allow Code Engine to be accessible from VPC and Schematics.
+- A context-based restriction (CBR) rule to allow Code Engine to be accessible from VPC.
