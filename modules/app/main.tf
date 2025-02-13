@@ -24,7 +24,7 @@ resource "ibm_code_engine_app" "ce_app" {
   scale_memory_limit            = var.scale_memory_limit
   scale_min_instances           = var.scale_min_instances
   scale_request_timeout         = var.scale_request_timeout
-
+  scale_down_delay              = var.scale_down_delay
 
   dynamic "run_env_variables" {
     for_each = var.run_env_variables != null ? var.run_env_variables : []

@@ -2,5 +2,5 @@
   "ibmcloud_api_key": $VALIDATION_APIKEY,
   "resource_group_name": $PREFIX,
   "prefix": $PREFIX,
-  "project_names": "[\"project1\", \"project2\"]"
+  "project_name": "project1"
 }

@@ -1,12 +1,3 @@
-locals {
-  # add prefix to all projects created by this solution if prefix is not null
-  projects = [
-    for project in var.project_names : (
-      (var.prefix != null && var.prefix != "") ? "${var.prefix}-${project}" : project
-    )
-  ]
-}
-
 ########################################################################################################################
 # Resource group
 ########################################################################################################################
@@ -19,12 +10,11 @@ module "resource_group" {
 }
 
 ########################################################################################################################
-# Code Engine Projects
+# Code Engine Project
 ########################################################################################################################
 
 module "project" {
-  count             = length(local.projects)
   source            = "../../modules/project"
-  name              = local.projects[count.index]
+  name              = var.prefix != null ? "${var.prefix}-${var.project_name}" : var.project_name
   resource_group_id = module.resource_group.resource_group_id
 }
