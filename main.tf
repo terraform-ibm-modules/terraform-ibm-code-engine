@@ -12,6 +12,7 @@ module "project" {
   source            = "./modules/project"
   name              = var.project_name
   resource_group_id = var.resource_group_id
+  cbr_rules         = var.cbr_rules
 }
 
 ##############################################################################
