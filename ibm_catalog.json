@@ -66,7 +66,6 @@
               }
             ]
           },
-
           "iam_permissions": [
             {
               "role_crns": [
@@ -162,9 +161,6 @@
               }
             },
             {
-            "key": "cbr_rules"
-          },
-          {
               "key": "project_name"
             },
             {
@@ -314,6 +310,12 @@
             },
             {
               "key": "resource_group_name"
+            },
+            {
+              "key": "cbr_rules"
+            },
+            {
+              "key": "strategy_type"
             },
             {
               "key": "region",
