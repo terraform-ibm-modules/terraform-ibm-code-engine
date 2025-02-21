@@ -20,7 +20,7 @@ The `domain_mappings` input variable allows you to provide the URL route to your
   	- `name` (required): The name of the referenced component.
   	- `resource_type` (required): The type of the referenced resource.
   - `tls_secret` (required): The name of the TLS secret that includes the certificate and private key of this domain mapping.
-  
+
 ### Example for Domain Mapping
 
 ```hcl
@@ -30,7 +30,7 @@ domain_mappings = {
         name = "my-app-1"
         resource_type = "app_v2"
     }
-    tls_secret = "my-tls-secret"
+    tls_secret = "my-tls-secret" #pragma: allowlist secret
   }
 }
 ```
@@ -47,7 +47,7 @@ The `config_maps` input variable allows you to provide a method to include non-s
 ### Options for Config Maps
 
   - `data` (required): (Map) The key-value pair for the config map.
-  
+
 ### Example for Config Maps
 
 ```hcl
@@ -71,7 +71,7 @@ The `secrets` input variable allows you to provide a method to include sensitive
 
  - `data` (required): (Map) The key-value pair for the secret.
  - `format` (required): (Map) Specify the format of the secret.
-  
+
 
 ### Example for Secrets
 
