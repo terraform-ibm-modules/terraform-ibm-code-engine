@@ -315,9 +315,6 @@
               "key": "cbr_rules"
             },
             {
-              "key": "strategy_type"
-            },
-            {
               "key": "region",
               "type": "string",
               "custom_config": {
@@ -335,34 +332,7 @@
               "key": "project_name"
             },
             {
-              "key": "output_image"
-            },
-            {
-              "key": "output_secret"
-            },
-            {
-              "key": "source_context_dir"
-            },
-            {
-              "key": "source_revision"
-            },
-            {
-              "key": "source_secret"
-            },
-            {
-              "key": "source_type"
-            },
-            {
-              "key": "source_url"
-            },
-            {
-              "key": "strategy_size"
-            },
-            {
-              "key": "strategy_spec_file"
-            },
-            {
-              "key": "timeout"
+              "key": "builds"
             },
             {
               "key": "domain_mappings"

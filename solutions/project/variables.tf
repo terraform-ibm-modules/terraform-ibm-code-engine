@@ -49,77 +49,29 @@ variable "project_name" {
 ##############################################################################
 # Code Engine Build
 ##############################################################################
-variable "output_image" {
-  description = "The name of the image which includes the whole container regsitry repository, namespace and image name. For example, `us.icr.io/<test>-namespace/<test-image>`"
-  type        = string
-  default     = null
-}
-
-variable "output_secret" {
-  description = "The secret that is required to access the image registry."
-  type        = string
-  default     = null
-}
-
-variable "source_context_dir" {
-  description = "The directory in the repository that contains the buildpacks file or the Dockerfile."
-  type        = string
-  default     = null
-}
-
-variable "source_revision" {
-  description = "Commit, tag, or branch in the source repository to pull."
-  type        = string
-  default     = null
-}
-
-variable "source_secret" {
-  description = "The name of the secret that is used access the repository source. If the var.source_type value is `local`, this field must be omitted."
-  type        = string
-  default     = null
-}
-
-variable "source_type" {
-  description = "Specifies the type of source to determine if your build source is in a repository or based on local source code."
-  type        = string
-  default     = null
-}
-
-variable "source_url" {
-  description = "The URL of the code repository."
-  type        = string
-  default     = null
-}
-
-variable "strategy_size" {
-  description = "The size for the build, which determines the amount of resources used."
-  type        = string
-  default     = null
-}
-
-variable "strategy_spec_file" {
-  description = "The path to the specification file that is used for build strategies for building an image."
-  type        = string
-  default     = null
-}
-
-variable "strategy_type" {
-  description = "The strategy to use for building the image."
-  type        = string
-  default     = "dockerfile"
-}
-
-variable "timeout" {
-  description = "The maximum amount of time, in seconds, that can pass before the build must succeed or fail."
-  type        = number
-  default     = 600
+variable "builds" {
+  description = "A map of code engine builds to be created.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#builds)"
+  type = map(object({
+    output_image       = string
+    output_secret      = string # pragma: allowlist secret
+    source_url         = string
+    strategy_type      = string
+    source_context_dir = optional(string)
+    source_revision    = optional(string)
+    source_secret      = optional(string)
+    source_type        = optional(string)
+    strategy_size      = optional(string)
+    strategy_spec_file = optional(string)
+    timeout            = optional(number)
+  }))
+  default = {}
 }
 
 ##############################################################################
 # Code Engine Domain Mapping
 ##############################################################################
 variable "domain_mappings" {
-  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`." # pragma: allowlist secret
+  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#domain_mappings)" # pragma: allowlist secret
   type = map(object({
     tls_secret = string # pragma: allowlist secret
     components = list(object({
@@ -134,7 +86,7 @@ variable "domain_mappings" {
 # Code Engine Config Map
 ##############################################################################
 variable "config_maps" {
-  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`."
+  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#config_maps)"
   type = map(object({
     data = map(string)
   }))
@@ -145,7 +97,7 @@ variable "config_maps" {
 # Code Engine Secret
 ##############################################################################
 variable "secrets" {
-  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`."
+  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#secrets)"
   type = map(object({
     format = string
     data   = map(string)

@@ -25,21 +25,22 @@ module "project" {
 ##############################################################################
 module "build" {
   depends_on         = [module.secret]
-  count              = var.output_image != null && var.output_secret != null && var.source_url != null ? 1 : 0
   source             = "../../modules/build"
+  for_each           = var.builds
   project_id         = module.project.project_id
-  name               = var.prefix != null ? "${var.prefix}-${var.project_name}" : var.project_name
-  output_image       = var.output_image
-  output_secret      = var.output_secret
-  source_url         = var.source_url
-  strategy_type      = var.strategy_type
-  source_context_dir = var.source_context_dir
-  source_revision    = var.source_revision
-  source_secret      = var.source_secret
-  source_type        = var.source_type
-  strategy_size      = var.strategy_size
-  strategy_spec_file = var.strategy_spec_file
-  timeout            = var.timeout
+  name               = each.key
+  output_image       = each.value.output_image
+  output_secret      = each.value.output_secret
+  source_url         = each.value.source_url
+  strategy_type      = each.value.strategy_type
+  source_context_dir = each.value.source_context_dir
+  source_revision    = each.value.source_revision
+  source_secret      = each.value.source_secret
+  source_type        = each.value.source_type
+  strategy_size      = each.value.strategy_size
+  strategy_spec_file = each.value.strategy_spec_file
+  timeout            = each.value.timeout
+
 }
 
 ##############################################################################
