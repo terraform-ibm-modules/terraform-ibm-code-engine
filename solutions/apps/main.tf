@@ -18,6 +18,7 @@ module "code_engine" {
   resource_group_id   = module.resource_group.resource_group_id
   project_name        = var.project_name
   existing_project_id = var.existing_project_id
+  cbr_rules           = var.cbr_rules
   apps = {
     # tflint-ignore: terraform_deprecated_interpolation
     "${var.app_name}" = {
