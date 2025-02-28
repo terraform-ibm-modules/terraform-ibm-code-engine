@@ -335,9 +335,6 @@
             },
             {
               "key": "project_name"
-            },
-            {
-              "key": "cbr_rules"
             }
           ]
         }
