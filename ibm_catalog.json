@@ -66,7 +66,6 @@
               }
             ]
           },
-
           "iam_permissions": [
             {
               "role_crns": [
@@ -241,6 +240,9 @@
             },
             {
               "key": "bindings"
+            },
+            {
+              "key": "cbr_rules"
             }
           ]
         },
@@ -333,6 +335,9 @@
             },
             {
               "key": "project_name"
+            },
+            {
+              "key": "cbr_rules"
             }
           ]
         }
