@@ -9,7 +9,7 @@ module "resource_group" {
   existing_resource_group_name = var.existing_resource_group == true ? var.resource_group_name : null
 }
 locals {
-  prefix = var.prefix != null ? (var.prefix != "" ? var.prefix : null) : null
+  prefix = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
 }
 ########################################################################################################################
 # Code Engine Project
@@ -17,7 +17,7 @@ locals {
 
 module "project" {
   source            = "../../modules/project"
-  name              = try("${local.prefix}-${var.project_name}", var.project_name)
+  name              = "${local.prefix}${var.project_name}"
   resource_group_id = module.resource_group.resource_group_id
   cbr_rules         = var.cbr_rules
 }
