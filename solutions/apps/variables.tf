@@ -46,6 +46,7 @@ variable "resource_group_name" {
 variable "project_name" {
   description = "The name of the project to add the IBM Cloud Code Engine resources to. If the value of `var.existing_project_id` is `null`, the project name is required."
   type        = string
+  default     = null
 }
 
 variable "existing_project_id" {
