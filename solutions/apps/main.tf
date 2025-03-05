@@ -10,7 +10,7 @@ module "resource_group" {
 }
 
 locals {
-  prefix = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : null : null
+  prefix = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
 }
 
 ########################################################################################################################

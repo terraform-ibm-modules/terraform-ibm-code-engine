@@ -19,8 +19,8 @@ variable "provider_visibility" {
 }
 variable "prefix" {
   type        = string
-  description = "Prefix added to the project created by this solution. To not use any prefix value, you can set this value to `null` or an empty string."
-  default     = "dev"
+  description = "Prefix added to the project created by this solution (e.g `prod`, `test`, `dev`). To not use any prefix value, you can set this value to `null` or an empty string."
+  default     = null
   nullable    = true
 }
 
