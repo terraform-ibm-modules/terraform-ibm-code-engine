@@ -9,6 +9,10 @@ module "resource_group" {
   existing_resource_group_name = var.existing_resource_group == true ? var.resource_group_name : null
 }
 
+locals {
+  prefix = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
+}
+
 ########################################################################################################################
 # Code Engine instance
 ########################################################################################################################
@@ -16,7 +20,7 @@ module "resource_group" {
 module "code_engine" {
   source              = "../.."
   resource_group_id   = module.resource_group.resource_group_id
-  project_name        = var.project_name
+  project_name        = var.project_name != null ? "${local.prefix}${var.project_name}" : null
   existing_project_id = var.existing_project_id
   cbr_rules           = var.cbr_rules
   apps = {
