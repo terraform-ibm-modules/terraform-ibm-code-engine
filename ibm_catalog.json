@@ -315,6 +315,9 @@
               "key": "resource_group_name"
             },
             {
+              "key": "cbr_rules"
+            },
+            {
               "key": "region",
               "type": "string",
               "custom_config": {
@@ -332,7 +335,16 @@
               "key": "project_name"
             },
             {
-              "key": "cbr_rules"
+              "key": "builds"
+            },
+            {
+              "key": "domain_mappings"
+            },
+            {
+              "key": "config_maps"
+            },
+            {
+              "key": "secrets"
             }
           ]
         }
