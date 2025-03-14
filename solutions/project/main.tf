@@ -17,7 +17,7 @@ locals {
 
 module "project" {
   source            = "../../modules/project"
-  name              = var.project_name != null ? "${local.prefix}${var.project_name}" : null
+  name              = "${local.prefix}${var.project_name}"
   resource_group_id = module.resource_group.resource_group_id
   cbr_rules         = var.cbr_rules
 }
