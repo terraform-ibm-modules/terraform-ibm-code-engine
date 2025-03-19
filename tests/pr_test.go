@@ -136,6 +136,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group_name", Value: options.ResourceGroup, DataType: "string"},
 		{Name: "existing_resource_group", Value: true, DataType: "bool"},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "app_name", Value: options.Prefix + "-app", DataType: "string"},
 		{Name: "image_reference", Value: "icr.io/codeengine/helloworld", DataType: "string"},
 		{Name: "secrets", Value: "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", DataType: "object"}, // pragma: allowlist secret
@@ -170,6 +171,7 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 		"app_name":                options.Prefix + "-app",
 		"image_reference":         "icr.io/codeengine/helloworld",
 		"provider_visibility":     "public",
+		"prefix":                  options.Prefix,
 		"secrets":                 "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
 		"config_maps":             "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
 		"project_name":            options.Prefix + "-pro",
