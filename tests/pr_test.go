@@ -54,7 +54,6 @@ func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
 		"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
 		"existing_cert_secret_id":     permanentResources["cePublicCertId"],
-		"existing_cert_common_name":   "goldeneye.dev.cloud.ibm.com",
 	}
 
 	return options
