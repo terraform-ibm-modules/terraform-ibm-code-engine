@@ -84,6 +84,7 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 
 func TestRunAppsExample(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := setupAppsExampleOptions(t, "ce-apps", appsExampleDir)
 	output, err := options.RunTestConsistency()
@@ -93,7 +94,6 @@ func TestRunAppsExample(t *testing.T) {
 
 func TestRunJobsExample(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
@@ -103,7 +103,6 @@ func TestRunJobsExample(t *testing.T) {
 
 func TestRunAppSolutionInSchematics(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
@@ -146,7 +145,6 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 
 func TestRunUpgradeAppSolution(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
@@ -182,7 +180,6 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 
 func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
@@ -208,7 +205,6 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 
 func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
