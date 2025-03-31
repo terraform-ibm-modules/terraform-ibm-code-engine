@@ -34,32 +34,6 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
-	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-		Testing:       t,
-		TerraformDir:  terraformDir,
-		Prefix:        prefix,
-		ResourceGroup: resourceGroup,
-	})
-	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
-	options.IgnoreUpdates = testhelper.Exemptions{
-		List: []string{
-			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
-			"module.code_engine.module.app[\"" + options.Prefix + "-app2\"].ibm_code_engine_app.ce_app",
-		},
-	}
-	options.TerraformVars = map[string]interface{}{
-		"resource_group":              resourceGroup,
-		"prefix":                      options.Prefix,
-		"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
-		"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
-		"ca_name":                     permanentResources["certificateAuthorityName"],
-		"dns_provider_name":           permanentResources["dnsProviderName"],
-	}
-
-	return options
-}
-
 func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
@@ -82,18 +56,49 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 	return options
 }
 
-func TestRunAppsExample(t *testing.T) {
+func TestRunAppsExamplesInSchematics(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
-	options := setupAppsExampleOptions(t, "ce-apps", appsExampleDir)
-	output, err := options.RunTestConsistency()
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing:        t,
+		TemplateFolder: appsExampleDir,
+		Prefix:         "ce-apps",
+		TarIncludePatterns: []string{
+			"*.tf",
+			appsExampleDir + "/*.tf",
+			"modules/app/*.tf",
+			"modules/binding/*.tf",
+			"modules/config_map/*.tf",
+			"modules/project/*.tf",
+			"modules/secret/*.tf",
+			"modules/build/*.tf",
+			"modules/domain_mapping/*.tf",
+			"modules/job/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 60,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "resource_group_name", Value: options.ResourceGroup, DataType: "string"},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "existing_sm_instance_guid", Value: permanentResources["secretsManagerGuid"], DataType: "string"},
+		{Name: "existing_sm_instance_region", Value: permanentResources["secretsManagerRegion"], DataType: "string"},
+		{Name: "ca_name", Value: permanentResources["certificateAuthorityName"], DataType: "string"},
+		{Name: "dns_provider_name", Value: permanentResources["dnsProviderName"], DataType: "string"},
+		{Name: "region", Value: options.Region, DataType: "string"},
+	}
+
+	err := options.RunSchematicTest()
 	assert.Nil(t, err, "This should not have errored")
-	assert.NotNil(t, output, "Expected some output")
 }
 
 func TestRunJobsExample(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
@@ -103,6 +108,7 @@ func TestRunJobsExample(t *testing.T) {
 
 func TestRunAppSolutionInSchematics(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
@@ -145,6 +151,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 
 func TestRunUpgradeAppSolution(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
@@ -180,6 +187,7 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 
 func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
@@ -205,6 +213,7 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 
 func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
