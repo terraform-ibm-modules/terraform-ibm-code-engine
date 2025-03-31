@@ -162,6 +162,11 @@ module "code_engine" {
             value = module.cbr_vpc_zone.zone_id
         }]
       }]
+      operations = [{
+        api_types = [{
+            api_type_id = "crn:v1:bluemix:public:context-based-restrictions::::platform-api-type:"
+            }]
+      }]
     }
   ]
 

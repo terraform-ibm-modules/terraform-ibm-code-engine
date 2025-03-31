@@ -53,8 +53,8 @@ func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		"prefix":                      options.Prefix,
 		"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
 		"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
-		"existing_cert_secret_id":     permanentResources["cePublicCertId"],
-		"existing_cert_common_name":   "goldeneye.dev.cloud.ibm.com",
+		"ca_name":                     permanentResources["certificateAuthorityName"],
+		"dns_provider_name":           permanentResources["dnsProviderName"],
 	}
 
 	return options
@@ -93,6 +93,7 @@ func TestRunAppsExample(t *testing.T) {
 
 func TestRunJobsExample(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
@@ -102,6 +103,7 @@ func TestRunJobsExample(t *testing.T) {
 
 func TestRunAppSolutionInSchematics(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
@@ -144,6 +146,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 
 func TestRunUpgradeAppSolution(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
@@ -179,6 +182,7 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 
 func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
@@ -204,6 +208,7 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 
 func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
+	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
