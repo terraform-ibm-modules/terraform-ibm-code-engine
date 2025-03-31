@@ -83,8 +83,8 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-		{Name: "resource_group_name", Value: options.ResourceGroup, DataType: "string"},
-		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
+		{Name: "prefix", Value: options.Prefix + "-app", DataType: "string"},
 		{Name: "existing_sm_instance_guid", Value: permanentResources["secretsManagerGuid"], DataType: "string"},
 		{Name: "existing_sm_instance_region", Value: permanentResources["secretsManagerRegion"], DataType: "string"},
 		{Name: "ca_name", Value: permanentResources["certificateAuthorityName"], DataType: "string"},
