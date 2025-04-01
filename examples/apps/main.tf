@@ -181,7 +181,7 @@ module "code_engine" {
           attributes = [
             {
               "name" : "endpointType",
-              "value" : "private"
+              "value" : "public"
             },
             {
               name  = "networkZoneId"
