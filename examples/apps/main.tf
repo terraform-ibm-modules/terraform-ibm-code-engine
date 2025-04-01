@@ -180,10 +180,6 @@ module "code_engine" {
         {
           attributes = [
             {
-              "name" : "endpointType",
-              "value" : "private"
-            },
-            {
               name  = "networkZoneId"
               value = module.cbr_zone_schematics.zone_id
           }]
