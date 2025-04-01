@@ -137,6 +137,21 @@ module "cbr_vpc_zone" {
   }]
 }
 
+module "cbr_zone_schematics" {
+  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
+  version          = "1.29.0"
+  name             = "${var.prefix}-schematics-zone"
+  zone_description = "CBR Network zone containing Schematics"
+  account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
+  addresses = [{
+    type = "serviceRef",
+    ref = {
+      account_id   = data.ibm_iam_account_settings.iam_account_settings.account_id
+      service_name = "schematics"
+    }
+  }]
+}
+
 ########################################################################################################################
 # Code Engine instance
 ########################################################################################################################
@@ -148,7 +163,7 @@ module "code_engine" {
   project_name      = "${var.prefix}-project"
   cbr_rules = [
     {
-      description      = "${var.prefix}-code engine access only from vpc"
+      description      = "${var.prefix}-code engine access"
       enforcement_mode = "enabled"
       account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
       rule_contexts = [{
@@ -160,6 +175,18 @@ module "code_engine" {
           {
             name  = "networkZoneId"
             value = module.cbr_vpc_zone.zone_id
+        }]
+        },
+        {
+          attributes = [
+            {
+              name  = "networkZoneId"
+              value = module.cbr_zone_schematics.zone_id
+          }]
+      }]
+      operations = [{
+        api_types = [{
+          api_type_id = "crn:v1:bluemix:public:context-based-restrictions::::platform-api-type:"
         }]
       }]
     }
