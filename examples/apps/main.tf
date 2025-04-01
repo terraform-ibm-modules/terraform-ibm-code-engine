@@ -163,7 +163,7 @@ module "code_engine" {
   project_name      = "${var.prefix}-project"
   cbr_rules = [
     {
-      description      = "${var.prefix}-code engine access only from vpc"
+      description      = "${var.prefix}-code engine access"
       enforcement_mode = "enabled"
       account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
       rule_contexts = [{
@@ -176,16 +176,18 @@ module "code_engine" {
             name  = "networkZoneId"
             value = module.cbr_vpc_zone.zone_id
         }]
-        }, {
-        attributes = [
-          {
-            "name" : "endpointType",
-            "value" : "private"
-          },
-          {
-            name  = "networkZoneId"
-            value = module.cbr_zone_schematics.zone_id
-      }] }]
+        },
+        {
+          attributes = [
+            {
+              "name" : "endpointType",
+              "value" : "private"
+            },
+            {
+              name  = "networkZoneId"
+              value = module.cbr_zone_schematics.zone_id
+          }]
+      }]
       operations = [{
         api_types = [{
           api_type_id = "crn:v1:bluemix:public:context-based-restrictions::::platform-api-type:"
