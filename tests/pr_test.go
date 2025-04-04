@@ -17,6 +17,7 @@ const resourceGroup = "geretain-test-resources"
 const appsExampleDir = "examples/apps"
 const jobsExampleDir = "examples/jobs"
 const appsSolutionsDir = "solutions/apps"
+const projectSolutionsDir = "solutions/project"
 
 // Define a struct with fields that match the structure of the YAML data
 const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
@@ -132,8 +133,7 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-		{Name: "resource_group_name", Value: options.ResourceGroup, DataType: "string"},
-		{Name: "existing_resource_group", Value: true, DataType: "bool"},
+		{Name: "existing_resource_group_name", Value: options.ResourceGroup, DataType: "string"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "app_name", Value: options.Prefix + "-app", DataType: "string"},
 		{Name: "image_reference", Value: "icr.io/codeengine/helloworld", DataType: "string"},
@@ -163,16 +163,15 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 		},
 	}
 	options.TerraformVars = map[string]interface{}{
-		"ibmcloud_api_key":        options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
-		"resource_group_name":     resourceGroup,
-		"existing_resource_group": true,
-		"app_name":                options.Prefix + "-app",
-		"image_reference":         "icr.io/codeengine/helloworld",
-		"provider_visibility":     "public",
-		"prefix":                  options.Prefix,
-		"secrets":                 "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
-		"config_maps":             "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
-		"project_name":            options.Prefix + "-pro",
+		"ibmcloud_api_key":             options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
+		"existing_resource_group_name": resourceGroup,
+		"app_name":                     options.Prefix + "-app",
+		"image_reference":              "icr.io/codeengine/helloworld",
+		"provider_visibility":          "public",
+		"prefix":                       options.Prefix,
+		"secrets":                      "{" + options.Prefix + "-secret:{format:\"generic\", data:{ key_1 : \"value_1\" }}}", // pragma: allowlist secret
+		"config_maps":                  "{" + options.Prefix + "-cm:{data:{ key_1 : \"value_1\" }}}",
+		"project_name":                 options.Prefix + "-pro",
 	}
 
 	output, err := options.RunTestUpgrade()
@@ -187,16 +186,15 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
-		TerraformDir: "solutions/project",
+		TerraformDir: projectSolutionsDir,
 		Prefix:       "ce-da",
 	})
 
 	options.TerraformVars = map[string]interface{}{
-		"resource_group_name":     resourceGroup,
-		"existing_resource_group": true,
-		"provider_visibility":     "public",
-		"prefix":                  options.Prefix,
-		"project_name":            "test-1",
+		"existing_resource_group_name": resourceGroup,
+		"provider_visibility":          "public",
+		"prefix":                       options.Prefix,
+		"project_name":                 "test-1",
 	}
 
 	output, err := options.RunTestUpgrade()
@@ -212,16 +210,15 @@ func TestDeployCEProjectDA(t *testing.T) {
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
-		TerraformDir: "solutions/project",
+		TerraformDir: projectSolutionsDir,
 		Prefix:       "ce-da",
 	})
 
 	options.TerraformVars = map[string]interface{}{
-		"resource_group_name":     resourceGroup,
-		"existing_resource_group": true,
-		"prefix":                  options.Prefix,
-		"provider_visibility":     "public",
-		"project_name":            "test-1",
+		"existing_resource_group_name": resourceGroup,
+		"prefix":                       options.Prefix,
+		"provider_visibility":          "public",
+		"project_name":                 "test-1",
 	}
 
 	output, err := options.RunTestConsistency()
