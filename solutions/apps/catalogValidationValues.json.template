@@ -1,6 +1,6 @@
 {
   "ibmcloud_api_key": $VALIDATION_APIKEY,
-  "existing_resource_group_name": $PREFIX,
+  "existing_resource_group_name": "geretain-test-resources",
   "project_name": $PREFIX,
   "app_name": $PREFIX,
   "image_reference": "icr.io/codeengine/helloworld"
