@@ -11,6 +11,10 @@ variable "project_name" {
   description = "The name of the project to which code engine resources will be added. It is required if var.existing_project_id is null."
   type        = string
   default     = null
+  validation {
+    condition     = (var.project_name != null) != (var.existing_project_id != null)
+    error_message = "Please provide exactly one of var.project_name or var.existing_project_id. Passing neither or both is invalid."
+  }
 }
 
 variable "existing_project_id" {
