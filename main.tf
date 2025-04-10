@@ -1,7 +1,5 @@
 locals {
   project_id = var.project_name == null ? var.existing_project_id : module.project[0].id
-  # tflint-ignore: terraform_unused_declarations
-  validate_project_name_id = (var.project_name != null && var.existing_project_id != null) || (var.project_name == null && var.existing_project_id == null) ? tobool("Please provide exactly one of var.project_name or var.existing_project_id. Passing neither or both is invalid.") : true
 }
 
 ##############################################################################
