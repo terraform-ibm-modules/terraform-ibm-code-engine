@@ -20,6 +20,7 @@ module "cbr_rules" {
   rule_description = var.cbr_rules[count.index].description
   enforcement_mode = var.cbr_rules[count.index].enforcement_mode
   rule_contexts    = var.cbr_rules[count.index].rule_contexts
+  operations       = var.cbr_rules[count.index].operations
   resources = [{
     attributes = [
       {

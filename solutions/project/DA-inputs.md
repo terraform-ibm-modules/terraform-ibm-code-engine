@@ -32,7 +32,7 @@ The `builds` input variable allows you to provide details of the of builds which
 ### Example for Builds
 
 ```hcl
-builds = {
+{
   "your-build-name" = {
     output_image  = "container_registry_url"
     output_secret = "secret-name" # pragma: allowlist secret
@@ -61,7 +61,7 @@ The `domain_mappings` input variable allows you to provide the URL route to your
 ### Example for Domain Mapping
 
 ```hcl
-domain_mappings = {
+{
   "www.example.com" = {
     components  = {
         name = "my-app-1"
@@ -88,7 +88,7 @@ The `config_maps` input variable allows you to provide a method to include non-s
 ### Example for Config Maps
 
 ```hcl
-config_maps = {
+{
   "your-config-name" = {
     data = { "key_1" : "value_1", "key_2" : "value_2" }
   }
@@ -113,7 +113,7 @@ The `secrets` input variable allows you to provide a method to include sensitive
 ### Example for Secrets
 
 ```hcl
-secrets = {
+{
   "your-secret-name" = {
     format = "generic"
     data   = { "key_1" : "value_1", "key_2" : "value_2" }

@@ -142,14 +142,19 @@
             },
             {
               "key": "prefix",
+              "required": true
+            },
+            {
+              "key": "existing_resource_group_name",
               "required": true,
-              "description": "Prefix to add to all projects created by this solution (e.g `prod`, `test`, `dev`). To not use any prefix value, you can enter the string `__NULL__`."
-            },
-            {
-              "key": "existing_resource_group"
-            },
-            {
-              "key": "resource_group_name"
+              "custom_config": {
+                "type": "resource_group",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "identifier": "rg_name"
+                }
+              }
             },
             {
               "key": "region",
@@ -312,14 +317,19 @@
             },
             {
               "key": "prefix",
+              "required": true
+            },
+            {
+              "key": "existing_resource_group_name",
               "required": true,
-              "description": "Prefix to add to all projects created by this solution (e.g `prod`, `test`, `dev`). To not use any prefix value, you can enter the string `__NULL__`."
-            },
-            {
-              "key": "existing_resource_group"
-            },
-            {
-              "key": "resource_group_name"
+              "custom_config": {
+                "type": "resource_group",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "identifier": "rg_name"
+                }
+              }
             },
             {
               "key": "project_name"

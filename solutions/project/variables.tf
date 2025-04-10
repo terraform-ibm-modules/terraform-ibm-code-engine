@@ -29,15 +29,10 @@ variable "region" {
   default     = "us-south"
 }
 
-variable "existing_resource_group" {
-  type        = bool
-  description = "Whether to use an existing resource group."
-  default     = false
-}
-
-variable "resource_group_name" {
+variable "existing_resource_group_name" {
   type        = string
-  description = "The name of a new or an existing resource group to provision the IBM Cloud Code Engine resources to."
+  description = "The name of an existing resource group to provision the resources."
+  default     = "Default"
 }
 
 variable "project_name" {

@@ -4,7 +4,7 @@
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
-  version = "1.1.6"
+  version = "1.2.0"
   # if an existing resource group is not set (null) create a new one using prefix
   resource_group_name          = var.resource_group == null ? "${var.prefix}-resource-group" : null
   existing_resource_group_name = var.resource_group
@@ -63,7 +63,7 @@ module "secrets_manager_public_cert_engine" {
 module "secrets_manager_group" {
   count                    = var.existing_cert_secret_id == null ? 1 : 0
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
-  version                  = "1.2.3"
+  version                  = "1.3.2"
   region                   = local.sm_region
   secrets_manager_guid     = local.sm_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"
@@ -137,6 +137,21 @@ module "cbr_vpc_zone" {
   }]
 }
 
+module "cbr_zone_schematics" {
+  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
+  version          = "1.29.0"
+  name             = "${var.prefix}-schematics-zone"
+  zone_description = "CBR Network zone containing Schematics"
+  account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
+  addresses = [{
+    type = "serviceRef",
+    ref = {
+      account_id   = data.ibm_iam_account_settings.iam_account_settings.account_id
+      service_name = "schematics"
+    }
+  }]
+}
+
 ########################################################################################################################
 # Code Engine instance
 ########################################################################################################################
@@ -148,7 +163,7 @@ module "code_engine" {
   project_name      = "${var.prefix}-project"
   cbr_rules = [
     {
-      description      = "${var.prefix}-code engine access only from vpc"
+      description      = "${var.prefix}-code engine access"
       enforcement_mode = "enabled"
       account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
       rule_contexts = [{
@@ -160,6 +175,18 @@ module "code_engine" {
           {
             name  = "networkZoneId"
             value = module.cbr_vpc_zone.zone_id
+        }]
+        },
+        {
+          attributes = [
+            {
+              name  = "networkZoneId"
+              value = module.cbr_zone_schematics.zone_id
+          }]
+      }]
+      operations = [{
+        api_types = [{
+          api_type_id = "crn:v1:bluemix:public:context-based-restrictions::::platform-api-type:"
         }]
       }]
     }
