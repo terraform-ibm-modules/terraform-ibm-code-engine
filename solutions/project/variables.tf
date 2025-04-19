@@ -40,6 +40,77 @@ variable "project_name" {
   type        = string
 }
 
+##############################################################################
+# Code Engine Build
+##############################################################################
+variable "builds" {
+  description = "A map of code engine builds to be created.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#builds)"
+  type = map(object({
+    output_image       = string
+    output_secret      = string # pragma: allowlist secret
+    source_url         = string
+    strategy_type      = string
+    source_context_dir = optional(string)
+    source_revision    = optional(string)
+    source_secret      = optional(string)
+    source_type        = optional(string)
+    strategy_size      = optional(string)
+    strategy_spec_file = optional(string)
+    timeout            = optional(number)
+  }))
+  default = {}
+}
+
+##############################################################################
+# Code Engine Domain Mapping
+##############################################################################
+variable "domain_mappings" {
+  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#domain_mappings)" # pragma: allowlist secret
+  type = map(object({
+    tls_secret = string # pragma: allowlist secret
+    components = list(object({
+      name          = string
+      resource_type = string
+    }))
+  }))
+  default = {}
+}
+
+##############################################################################
+# Code Engine Config Map
+##############################################################################
+variable "config_maps" {
+  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#config_maps)"
+  type = map(object({
+    data = map(string)
+  }))
+  default = {}
+}
+
+##############################################################################
+# Code Engine Secret
+##############################################################################
+variable "secrets" {
+  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#secrets)"
+  type = map(object({
+    format = string
+    data   = map(string)
+    # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
+    # service_access = optional(list(object({
+    #   resource_key = list(object({
+    #     id = optional(string)
+    #   }))
+    #   role = list(object({
+    #     crn = optional(string)
+    #   }))
+    #   service_instance = list(object({
+    #     id = optional(string)
+    #   }))
+    # })))
+  }))
+  default = {}
+}
+
 variable "cbr_rules" {
   type = list(object({
     description = string
