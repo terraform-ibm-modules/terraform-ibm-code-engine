@@ -332,6 +332,9 @@
               }
             },
             {
+              "key": "project_name"
+            },
+            {
               "key": "region",
               "type": "string",
               "custom_config": {
@@ -349,7 +352,16 @@
               "key": "cbr_rules"
             },
             {
-              "key": "project_name"
+              "key": "builds"
+            },
+            {
+              "key": "domain_mappings"
+            },
+            {
+              "key": "config_maps"
+            },
+            {
+              "key": "secrets"
             }
           ]
         }

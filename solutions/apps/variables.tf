@@ -190,7 +190,7 @@ variable "scale_down_delay" {
 }
 
 variable "config_maps" {
-  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`."
+  description = "A map of the IBM Cloud Code Engine configmaps to create. For example, `{ configmap_name: {data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/apps/DA-inputs.md#config_maps)"
   type = map(object({
     data = map(string)
   }))
@@ -198,7 +198,7 @@ variable "config_maps" {
 }
 
 variable "secrets" {
-  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`."
+  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/apps/DA-inputs.md#secrets)"
   type = map(object({
     format = string
     data   = map(string)
@@ -219,7 +219,7 @@ variable "secrets" {
 }
 
 variable "domain_mappings" {
-  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`." # pragma: allowlist secret
+  description = "A map of the IBM Cloud Code Engine domain mappings to create. For example, `{ domain_mapping_name: {tls_secret: 'tls_secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/apps/DA-inputs.md#domain_mappings)" # pragma: allowlist secret
   type = map(object({
     tls_secret = string # pragma: allowlist secret
     components = list(object({
