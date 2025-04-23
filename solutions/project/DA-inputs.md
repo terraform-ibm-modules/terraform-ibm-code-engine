@@ -34,10 +34,15 @@ The `builds` input variable allows you to provide details of the of builds which
 ```hcl
 {
   "your-build-name" = {
-    output_image  = "container_registry_url"
-    output_secret = "secret-name" # pragma: allowlist secret
-    source_url    = "https://github.com/IBM/CodeEngine"
-    strategy_type = "dockerfile"
+    output_image       = "container_registry_url"
+    output_secret      = "secret-name" # pragma: allowlist secret
+    source_url         = "https://github.com/IBM/CodeEngine"
+    strategy_type      = "dockerfile"
+    source_context_dir = "helloworld"
+    source_revision    = "test-branch"
+    source_type        = "git"
+    strategy_size      = "large"
+    timeout            = "1200"
   }
 }
 ```
