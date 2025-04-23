@@ -42,7 +42,7 @@ The `builds` input variable allows you to provide details of the of builds which
     source_revision    = "test-branch"
     source_type        = "git"
     strategy_size      = "large"
-    timeout            = "1200"
+    timeout            = 1200
   }
 }
 ```
