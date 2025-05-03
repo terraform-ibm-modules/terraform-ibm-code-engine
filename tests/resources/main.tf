@@ -24,7 +24,7 @@ data "ibm_sm_public_certificate" "public_certificate" {
 
 module "namespace" {
   source            = "terraform-ibm-modules/container-registry/ibm"
-  version           = "1.4.2"
+  version           = "1.4.3"
   namespace_name    = "${var.prefix}-namespace"
   resource_group_id = module.resource_group.resource_group_id
   images_per_repo   = 1
