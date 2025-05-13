@@ -81,7 +81,6 @@
             }
           ],
           "architecture": {
-            "descriptions": "This deployable architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings.",
             "features": [
               {
                 "title": "IBM Cloud Code Engine project",
@@ -276,7 +275,6 @@
             }
           ],
           "architecture": {
-            "descriptions": "This deployable architecture creates IBM Cloud Code Engine project",
             "features": [
               {
                 "title": "IBM Cloud Code Engine project",
