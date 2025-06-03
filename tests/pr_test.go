@@ -262,12 +262,19 @@ func TestDeployCEProjectDA(t *testing.T) {
 					"provider_visibility":          "public",
 					"project_name":                 prefix,
 					"existing_resource_group_name": resourceGroup,
+					"container_registry_namespace": prefix,
 					"builds": map[string]interface{}{
 						fmt.Sprintf("%s-build", prefix): map[string]interface{}{
 							"output_image":  fmt.Sprintf("us.icr.io/%s/%s", terraform.Output(t, existingTerraformOptions, "cr_name"), prefix),
 							"output_secret": fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
 							"source_url":    "https://github.com/IBM/CodeEngine",
 							"strategy_type": "dockerfile",
+						},
+						fmt.Sprintf("%s-build-2", prefix): map[string]interface{}{
+							"output_secret":      fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
+							"source_url":         "https://github.com/IBM/CodeEngine",
+							"strategy_type":      "dockerfile",
+							"source_context_dir": "hello",
 						},
 					},
 					"config_maps": map[string]interface{}{
