@@ -307,9 +307,11 @@ func TestDeployCEProjectDA(t *testing.T) {
 
 		tfvarsPath := tempTerraformDir + "/solutions/project/terraform.auto.tfvars"
 		writeTfvarsFile(t, tfvarsPath, tfVars)
-		if err := os.Remove(tfvarsPath); err != nil {
-			log.Printf("Warning: failed to remove %s: %v\n", tfvarsPath, err)
-		}
+		defer func() {
+			if err := os.Remove(tfvarsPath); err != nil {
+				fmt.Printf("Warning: failed to remove %s: %v\n", tfvarsPath, err)
+			}
+		}()
 
 		options := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: tempTerraformDir + "/solutions/project",
