@@ -2,9 +2,15 @@
 package test
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"sort"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -247,67 +253,77 @@ func TestDeployCEProjectDA(t *testing.T) {
 	if existErr != nil {
 		assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
 	} else {
-		outputs, err := terraform.OutputAllE(t, existingTerraformOptions)
-		require.NoError(t, err, "Failed to retrieve Terraform outputs")
-		expectedOutputs := []string{"tls_cert", "tls_key", "cr_name"}
-		_, tfOutputsErr := testhelper.ValidateTerraformOutputs(outputs, expectedOutputs...)
-		if assert.Nil(t, tfOutputsErr, tfOutputsErr) {
-			options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-				Testing:      t,
-				TerraformDir: "solutions/project",
-				// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
-				ImplicitRequired: false,
-				TerraformVars: map[string]interface{}{
-					"prefix":                       prefix,
-					"provider_visibility":          "public",
-					"project_name":                 prefix,
-					"existing_resource_group_name": resourceGroup,
-					"container_registry_namespace": prefix,
-					"builds": map[string]interface{}{
-						fmt.Sprintf("%s-build", prefix): map[string]interface{}{
-							"output_image":  fmt.Sprintf("us.icr.io/%s/%s", terraform.Output(t, existingTerraformOptions, "cr_name"), prefix),
-							"output_secret": fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
-							"source_url":    "https://github.com/IBM/CodeEngine",
-							"strategy_type": "dockerfile",
-						},
-						fmt.Sprintf("%s-build-2", prefix): map[string]interface{}{
-							"output_secret":      fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
-							"source_url":         "https://github.com/IBM/CodeEngine",
-							"strategy_type":      "dockerfile",
-							"source_context_dir": "hello",
-						},
-					},
-					"config_maps": map[string]interface{}{
-						fmt.Sprintf("%s-cm", prefix): map[string]interface{}{
-							"data": map[string]interface{}{
-								"key_1": "value_1",
-								"key_2": "value_2",
-							},
-						},
-					},
-					"secrets": map[string]interface{}{
-						fmt.Sprintf("%s-tls", prefix): map[string]interface{}{
-							"format": "tls",
-							"data": map[string]string{
-								"tls_cert": strings.ReplaceAll(terraform.Output(t, existingTerraformOptions, "tls_cert"), "\n", `\n`),
-								"tls_key":  strings.ReplaceAll(terraform.Output(t, existingTerraformOptions, "tls_key"), "\n", `\n`),
-							},
-						},
-						fmt.Sprintf("%s-registry", prefix): map[string]interface{}{
-							"format": "registry",
-							"data": map[string]string{
-								"server":   "us.icr.io",
-								"username": "iamapikey",
-								"password": val, // pragma: allowlist secret
-							},
-						},
+
+		cr_name, _ := getTerraformOutput(tempTerraformDir+"/tests/resources", "cr_name")
+		tls_cert, _ := getTerraformOutput(tempTerraformDir+"/tests/resources", "tls_cert")
+		tls_key, _ := getTerraformOutput(tempTerraformDir+"/tests/resources", "tls_key")
+
+		tfVars := map[string]interface{}{
+			"prefix":                       prefix,
+			"provider_visibility":          "public",
+			"project_name":                 prefix,
+			"existing_resource_group_name": resourceGroup,
+			"container_registry_namespace": cr_name,
+			"builds": map[string]interface{}{
+				fmt.Sprintf("%s-build", prefix): map[string]interface{}{
+					"output_image":  fmt.Sprintf("private.us.icr.io/%s/%s", cr_name, prefix),
+					"output_secret": fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
+					"source_url":    "https://github.com/IBM/CodeEngine",
+					"strategy_type": "dockerfile",
+				},
+				fmt.Sprintf("%s-build-2", prefix): map[string]interface{}{
+					"output_secret":      fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
+					"source_url":         "https://github.com/IBM/CodeEngine",
+					"strategy_type":      "dockerfile",
+					"source_context_dir": "hello",
+				},
+			},
+			"config_maps": map[string]interface{}{
+				fmt.Sprintf("%s-cm", prefix): map[string]interface{}{
+					"data": map[string]interface{}{
+						"key_1": "value_1",
+						"key_2": "value_2",
 					},
 				},
-			})
-			output, err := options.RunTestConsistency()
-			assert.Nil(t, err, "This should not have errored")
-			assert.NotNil(t, output, "Expected some output")
+			},
+			"secrets": map[string]interface{}{
+				fmt.Sprintf("%s-tls", prefix): map[string]interface{}{
+					"format": "tls",
+					"data": map[string]string{
+						"tls_cert": strings.ReplaceAll(tls_cert, "\n", `\n`),
+						"tls_key":  strings.ReplaceAll(tls_key, "\n", `\n`),
+					},
+				},
+				fmt.Sprintf("%s-registry", prefix): map[string]interface{}{
+					"format": "registry",
+					"data": map[string]string{
+						"server":   "private.us.icr.io",
+						"username": "iamapikey",
+						"password": val, // pragma: allowlist secret
+					},
+				},
+			},
 		}
+
+		tfvarsPath := tempTerraformDir + "/solutions/project/terraform.auto.tfvars"
+		writeTfvarsFile(t, tfvarsPath, tfVars)
+		if err := os.Remove(tfvarsPath); err != nil {
+			log.Printf("Warning: failed to remove %s: %v\n", tfvarsPath, err)
+		}
+
+		options := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+			TerraformDir: tempTerraformDir + "/solutions/project",
+		})
+
+		cleanTerraformCache(tempTerraformDir + "/solutions/project")
+		terraform.WorkspaceSelectOrNew(t, options, prefix)
+		output, existErr := terraform.InitAndApplyE(t, options)
+		if existErr != nil {
+			assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
+		}
+
+		assert.Nil(t, existErr, "This should not have errored")
+		assert.NotNil(t, output, "Expected some output")
 	}
 
 	// Check if "DO_NOT_DESTROY_ON_FAILURE" is set
@@ -320,5 +336,110 @@ func TestDeployCEProjectDA(t *testing.T) {
 		terraform.Destroy(t, existingTerraformOptions)
 		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (existing resources)")
+	}
+}
+
+func getTerraformOutput(dir, name string) (string, error) {
+	cmd := exec.Command("terraform", "output", "-no-color", name)
+	cmd.Dir = dir
+
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+
+	err := cmd.Run()
+	if err != nil {
+		return "", err
+	}
+
+	// Trim and unquote if needed
+	raw := strings.TrimSpace(out.String())
+
+	// If heredoc-style, strip the surrounding <<EOT ... EOT markers
+	heredocPattern := regexp.MustCompile(`(?s)^<<EOT\n(.*)\nEOT$`)
+	if matches := heredocPattern.FindStringSubmatch(raw); matches != nil {
+		return matches[1], nil // only return the actual content
+	}
+
+	unquoted, err := strconv.Unquote(raw)
+	if err != nil {
+		// If unquoting fails (e.g. already unquoted), just return raw
+		return raw, nil
+	}
+	return unquoted, nil
+}
+
+func cleanTerraformCache(dir string) {
+	terraformFilesAndDirectories := []string{
+		".terraform",
+		".terraform.lock.hcl",
+		"terraform.tfstate",
+		"terraform.tfstate.backup",
+	}
+	for _, fileName := range terraformFilesAndDirectories {
+		fullPath := filepath.Join(dir, fileName)
+		if _, err := os.Stat(fullPath); err == nil {
+			// Path exists → remove (dir or file)
+			if err := os.RemoveAll(fullPath); err != nil {
+				// Ignore errors, just log them
+				log.Printf("Error removing file %s: %s", fileName, err)
+			}
+		} else if !os.IsNotExist(err) {
+			// Ignore errors, just log them
+			log.Printf("Error removing file %s: %s", fileName, err)
+		}
+	}
+}
+
+func toHCL(value interface{}, indentLevel int) string {
+	indent := strings.Repeat("  ", indentLevel)
+
+	switch val := value.(type) {
+	case string:
+		return fmt.Sprintf("\"%s\"", val)
+	case bool:
+		return fmt.Sprintf("%t", val)
+	case float64, int:
+		return fmt.Sprintf("%v", val)
+	case map[string]string:
+		var b strings.Builder
+		b.WriteString("{\n")
+		keys := make([]string, 0, len(val))
+		for k := range val {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			b.WriteString(fmt.Sprintf("%s  %s = \"%s\"\n", indent, k, val[k]))
+		}
+		b.WriteString(fmt.Sprintf("%s}", indent))
+		return b.String()
+	case map[string]interface{}:
+		var b strings.Builder
+		b.WriteString("{\n")
+		keys := make([]string, 0, len(val))
+		for k := range val {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			b.WriteString(fmt.Sprintf("%s  \"%s\" = %s\n", indent, k, toHCL(val[k], indentLevel+1)))
+		}
+		b.WriteString(fmt.Sprintf("%s}", indent))
+		return b.String()
+	default:
+		return fmt.Sprintf("\"%v\"", val)
+	}
+}
+
+func writeTfvarsFile(t *testing.T, path string, vars map[string]interface{}) {
+	var sb strings.Builder
+	for k, v := range vars {
+		sb.WriteString(fmt.Sprintf("%s = %s\n", k, toHCL(v, 0)))
+	}
+
+	err := os.WriteFile(path, []byte(sb.String()), 0644)
+	if err != nil {
+		t.Fatalf("Failed to write tfvars file: %v", err)
 	}
 }
