@@ -353,6 +353,9 @@
               "key": "builds"
             },
             {
+              "key": "container_registry_namespace"
+            },
+            {
               "key": "domain_mappings"
             },
             {
