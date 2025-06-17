@@ -26,7 +26,7 @@ if [[ -z "${BUILDS}" ]]; then
   exit 1
 fi
 
-ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP_ID}" --apikey "${IBMCLOUD_API_KEY}"
+ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP_ID}" --quiet
 
 # selecet the right code engine project
 ibmcloud ce project select -n "${CE_PROJECT_NAME}"

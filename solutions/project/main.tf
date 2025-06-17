@@ -27,15 +27,21 @@ module "project" {
 # Code Engine Build
 ##############################################################################
 locals {
+  registry_region_result = data.external.container_registry_region.result
+  registry               = lookup(local.registry_region_result, "registry", null)
+  container_registry     = local.registry != null ? "private.${local.registry}" : null
+  registry_region_error  = lookup(local.registry_region_result, "error", null)
 
-  container_registry = "private.${data.external.container_registry_region.result["registry"]}"
+  # This will cause Terraform to fail if "error" is present in the external script output executed as a part of container_registry_region
+  # tflint-ignore: terraform_unused_declarations
+  fail_if_registry_region_error = local.registry_region_error != null ? tobool("Registry region script failed: ${local.registry_region_error}") : null
 
   # if no build defines a container image reference (output_image), a new container registry namespace must be created using container_registry_namespace.
   any_missing_output_image = anytrue([
     for build in values(var.builds) :
     !contains(keys(build), "output_image") || build.output_image == null
   ])
-  image_container = local.any_missing_output_image ? "${local.container_registry}/${resource.ibm_cr_namespace.my_namespace[0].name}" : ""
+  image_container = local.any_missing_output_image && local.container_registry != null ? "${local.container_registry}/${resource.ibm_cr_namespace.my_namespace[0].name}" : ""
 
   # if output_image not exists then a new created container image reference
   updated_builds = {
