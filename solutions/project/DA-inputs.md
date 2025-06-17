@@ -17,7 +17,7 @@ The `builds` input variable allows you to provide details of the of builds which
 
 ### Options for Builds
 
-  - `output_image` (required): The name of the image.
+  - `output_image` (optional): The name of the image. A container image can be identified by a container image reference with the following structure: registry / namespace / repository : tag. If not provided, the name is automatically build using region registry / container_registry_namespace input / build name.
   - `output_secret` (required): The secret that is required to access the image registry.
   - `source_url` (required): The URL of the code repository.
   - `strategy_type` (required): Specifies the type of source to determine if your build source is in a repository or based on local source code.
