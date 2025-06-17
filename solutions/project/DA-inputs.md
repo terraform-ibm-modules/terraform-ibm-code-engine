@@ -118,10 +118,30 @@ The `secrets` input variable allows you to provide a method to include sensitive
 ### Example for Secrets
 
 ```hcl
+# generic secret
 {
   "your-secret-name" = {
     format = "generic"
     data   = { "key_1" : "value_1", "key_2" : "value_2" }
   }
+}
+
+# registry secret
+"registry_secret_name" = {
+    format = "registry"
+    optional("data") = {
+      "server"   = "private.us.icr.io",
+      "username" = "iamapikey",
+      "password" = iam_api_key, # pragma: allowlist secret
+    }
+}
+
+# private repository
+"private_repo" = {
+    format = "generic"
+    "data" = {
+      "password" = github_token, # pragma: allowlist secret
+      "username"   = github_user
+    }
 }
 ```
