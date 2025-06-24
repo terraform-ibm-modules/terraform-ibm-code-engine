@@ -49,7 +49,7 @@ locals {
     name => merge(
       build,
       {
-        output_image = coalesce(build.output_image, "${local.image_container}/${name}")
+        output_image = lookup(build, "output_image", "${local.image_container}/${name}")
       }
     )
   }
@@ -140,9 +140,9 @@ locals {
         data = (
           secret.format == "registry"
           ? merge(secret.data, {
-            password = coalesce(secret.data.password, var.ibmcloud_api_key),
-            username = coalesce(secret.data.username, "iamapikey"),
-            server   = coalesce(secret.data.server, local.container_registry)
+            password = lookup(secret.data, "password", var.ibmcloud_api_key),
+            username = lookup(secret.data, "username", "iamapikey"),
+            server   = lookup(secret.data, "server", local.container_registry)
           })
           : secret.data
         )
