@@ -90,6 +90,7 @@ module "build" {
 }
 
 resource "null_resource" "run_build" {
+  count      = length(local.updated_builds) > 0 ? 1 : 0
   depends_on = [module.build]
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
