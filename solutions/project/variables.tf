@@ -46,7 +46,7 @@ variable "project_name" {
 variable "builds" {
   description = "A map of code engine builds to be created.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#builds)"
   type = map(object({
-    output_image       = string
+    output_image       = optional(string)
     output_secret      = string # pragma: allowlist secret
     source_url         = string
     strategy_type      = string
@@ -59,6 +59,20 @@ variable "builds" {
     timeout            = optional(number)
   }))
   default = {}
+}
+
+variable "container_registry_namespace" {
+  description = "The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Used only for builds that do not have output_image set."
+  type        = string
+  default     = null
+
+  validation {
+    condition = alltrue([
+      for build in values(var.builds) :
+      contains(keys(build), "output_image") && build.output_image != null
+    ]) || var.container_registry_namespace != null
+    error_message = "container_registry_namespace is required because at least one build is missing an output_image"
+  }
 }
 
 ##############################################################################

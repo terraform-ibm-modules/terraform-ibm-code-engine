@@ -5,13 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strings"
 	"testing"
 
-	"github.com/gruntwork-io/terratest/modules/files"
-	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/random"
-	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
@@ -215,103 +213,155 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
 
-	// Provision watsonx Assistant instance
-	prefix := fmt.Sprintf("ce-data-%s", strings.ToLower(random.UniqueId()))
-	realTerraformDir := ".."
-	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
-	// tags := common.GetTagsFromTravis()
-
 	// Verify ibmcloud_api_key variable is set
 	checkVariable := "TF_VAR_ibmcloud_api_key"
 	val, present := os.LookupEnv(checkVariable)
 	require.True(t, present, checkVariable+" environment variable not set")
 	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
 
-	logger.Log(t, "Tempdir: ", tempTerraformDir)
-	existingTerraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: tempTerraformDir + "/tests/resources",
-		Vars: map[string]interface{}{
-			"resource_group":              resourceGroup,
-			"prefix":                      prefix,
+	prefix := fmt.Sprintf("ce-data-%s", strings.ToLower(random.UniqueId()))
+	// set up the options for existing resource deployment
+	// needed by solution
+	existingResourceOptions := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  "tests/resources",
+		Prefix:        prefix,
+		ResourceGroup: resourceGroup,
+		TerraformVars: map[string]interface{}{
 			"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
 			"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
 			"existing_cert_secret_id":     permanentResources["cePublicCertId"],
+			"resource_group":              resourceGroup,
+			"prefix":                      prefix,
 		},
-		// Set Upgrade to true to ensure latest version of providers and modules are used by terratest.
-		// This is the same as setting the -upgrade=true flag with terraform.
-		Upgrade: true,
+	})
+	// Creates temp dirs and runs InitAndApply for existing resources
+	// outputs will be in options after apply
+	existingResourceOptions.SkipTestTearDown = true
+	_, existDeployErr := existingResourceOptions.RunTest()
+
+	defer existingResourceOptions.TestTearDown() // public function ignores skip above
+
+	require.NoError(t, existDeployErr, "error creating needed existing VPC resources")
+
+	tfVars := map[string]interface{}{
+		"prefix":                       prefix,
+		"provider_visibility":          "public",
+		"project_name":                 prefix,
+		"existing_resource_group_name": resourceGroup,
+		"container_registry_namespace": fmt.Sprintf("test_%s_ns", prefix),
+		"builds": map[string]interface{}{
+			fmt.Sprintf("%s-build", prefix): map[string]interface{}{
+				"output_image":  fmt.Sprintf("private.us.icr.io/%s/%s", existingResourceOptions.LastTestTerraformOutputs["cr_name"].(string), prefix),
+				"output_secret": fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
+				"source_url":    "https://github.com/IBM/CodeEngine",
+				"strategy_type": "dockerfile",
+			},
+			fmt.Sprintf("%s-build-2", prefix): map[string]interface{}{
+				"output_secret":      fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
+				"source_url":         "https://github.com/IBM/CodeEngine",
+				"strategy_type":      "dockerfile",
+				"source_context_dir": "hello",
+			},
+		},
+		"config_maps": map[string]interface{}{
+			fmt.Sprintf("%s-cm", prefix): map[string]interface{}{
+				"data": map[string]interface{}{
+					"key_1": "value_1",
+					"key_2": "value_2",
+				},
+			},
+		},
+		"secrets": map[string]interface{}{
+			fmt.Sprintf("%s-tls", prefix): map[string]interface{}{
+				"format": "tls",
+				"data": map[string]string{
+					"tls_cert": strings.ReplaceAll(existingResourceOptions.LastTestTerraformOutputs["tls_cert"].(string), "\n", `\n`),
+					"tls_key":  strings.ReplaceAll(existingResourceOptions.LastTestTerraformOutputs["tls_key"].(string), "\n", `\n`),
+				},
+			},
+			fmt.Sprintf("%s-registry", prefix): map[string]interface{}{
+				"format": "registry",
+				"data": map[string]string{
+					"server":   "private.us.icr.io",
+					"username": "iamapikey",
+					"password": val, // pragma: allowlist secret
+				},
+			},
+		},
+	}
+
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  projectSolutionsDir,
+		Prefix:        prefix,
+		ResourceGroup: resourceGroup,
+		PreApplyHook: func(options *testhelper.TestOptions) error {
+			// create tfvar file from tfVars variable
+			tfvarFileName := fmt.Sprintf("%s/%s-terraform.tfvars", options.TerraformDir, prefix)
+			err := writeTfvarsFile(t, tfvarFileName, tfVars)
+			if err == nil {
+				options.TerraformOptions.VarFiles = []string{tfvarFileName}
+			}
+			return err
+		},
 	})
 
-	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
-	_, existErr := terraform.InitAndApplyE(t, existingTerraformOptions)
-	if existErr != nil {
-		assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
-	} else {
-		outputs, err := terraform.OutputAllE(t, existingTerraformOptions)
-		require.NoError(t, err, "Failed to retrieve Terraform outputs")
-		expectedOutputs := []string{"tls_cert", "tls_key", "cr_name"}
-		_, tfOutputsErr := testhelper.ValidateTerraformOutputs(outputs, expectedOutputs...)
-		if assert.Nil(t, tfOutputsErr, tfOutputsErr) {
-			options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-				Testing:      t,
-				TerraformDir: "solutions/project",
-				// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
-				ImplicitRequired: false,
-				TerraformVars: map[string]interface{}{
-					"prefix":                       prefix,
-					"provider_visibility":          "public",
-					"project_name":                 prefix,
-					"existing_resource_group_name": resourceGroup,
-					"builds": map[string]interface{}{
-						fmt.Sprintf("%s-build", prefix): map[string]interface{}{
-							"output_image":  fmt.Sprintf("us.icr.io/%s/%s", terraform.Output(t, existingTerraformOptions, "cr_name"), prefix),
-							"output_secret": fmt.Sprintf("%s-registry", prefix), // pragma: allowlist secret
-							"source_url":    "https://github.com/IBM/CodeEngine",
-							"strategy_type": "dockerfile",
-						},
-					},
-					"config_maps": map[string]interface{}{
-						fmt.Sprintf("%s-cm", prefix): map[string]interface{}{
-							"data": map[string]interface{}{
-								"key_1": "value_1",
-								"key_2": "value_2",
-							},
-						},
-					},
-					"secrets": map[string]interface{}{
-						fmt.Sprintf("%s-tls", prefix): map[string]interface{}{
-							"format": "tls",
-							"data": map[string]string{
-								"tls_cert": strings.ReplaceAll(terraform.Output(t, existingTerraformOptions, "tls_cert"), "\n", `\n`),
-								"tls_key":  strings.ReplaceAll(terraform.Output(t, existingTerraformOptions, "tls_key"), "\n", `\n`),
-							},
-						},
-						fmt.Sprintf("%s-registry", prefix): map[string]interface{}{
-							"format": "registry",
-							"data": map[string]string{
-								"server":   "us.icr.io",
-								"username": "iamapikey",
-								"password": val, // pragma: allowlist secret
-							},
-						},
-					},
-				},
-			})
-			output, err := options.RunTestConsistency()
-			assert.Nil(t, err, "This should not have errored")
-			assert.NotNil(t, output, "Expected some output")
+	_, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+}
+
+// function to convert map into HCL format (needed for tfvar file)
+func toHCL(value interface{}, indentLevel int) string {
+	indent := strings.Repeat("  ", indentLevel)
+
+	switch val := value.(type) {
+	case string:
+		return fmt.Sprintf("\"%s\"", val)
+	case bool:
+		return fmt.Sprintf("%t", val)
+	case float64, int:
+		return fmt.Sprintf("%v", val)
+	case map[string]string:
+		var b strings.Builder
+		b.WriteString("{\n")
+		keys := make([]string, 0, len(val))
+		for k := range val {
+			keys = append(keys, k)
 		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			b.WriteString(fmt.Sprintf("%s  %s = \"%s\"\n", indent, k, val[k]))
+		}
+		b.WriteString(fmt.Sprintf("%s}", indent))
+		return b.String()
+	case map[string]interface{}:
+		var b strings.Builder
+		b.WriteString("{\n")
+		keys := make([]string, 0, len(val))
+		for k := range val {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			b.WriteString(fmt.Sprintf("%s  \"%s\" = %s\n", indent, k, toHCL(val[k], indentLevel+1)))
+		}
+		b.WriteString(fmt.Sprintf("%s}", indent))
+		return b.String()
+	default:
+		return fmt.Sprintf("\"%v\"", val)
+	}
+}
+
+func writeTfvarsFile(t *testing.T, path string, vars map[string]interface{}) error {
+	var sb strings.Builder
+	for k, v := range vars {
+		sb.WriteString(fmt.Sprintf("%s = %s\n", k, toHCL(v, 0)))
 	}
 
-	// Check if "DO_NOT_DESTROY_ON_FAILURE" is set
-	envVal, _ := os.LookupEnv("DO_NOT_DESTROY_ON_FAILURE")
-	// Destroy the temporary existing resources if required
-	if t.Failed() && strings.ToLower(envVal) == "true" {
-		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
-	} else {
-		logger.Log(t, "START: Destroy (existing resources)")
-		terraform.Destroy(t, existingTerraformOptions)
-		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
-		logger.Log(t, "END: Destroy (existing resources)")
+	err := os.WriteFile(path, []byte(sb.String()), 0644)
+	if err != nil {
+		t.Fatalf("Failed to write tfvars file: %v", err)
 	}
+	return err
 }
