@@ -49,7 +49,7 @@ locals {
     name => merge(
       build,
       {
-        output_image = lookup(build, "output_image", "${local.image_container}/${name}")
+        output_image = coalesce(build.output_image, "${local.image_container}/${name}")
       }
     )
   }
