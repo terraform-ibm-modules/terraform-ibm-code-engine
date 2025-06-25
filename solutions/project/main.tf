@@ -89,9 +89,9 @@ module "build" {
   timeout            = each.value.timeout
 }
 
-resource "null_resource" "run_build" {
-  count      = length(local.updated_builds) > 0 ? 1 : 0
+resource "terraform_data" "run_build" {
   depends_on = [module.build]
+
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
     command     = "${path.module}/scripts/build-run.sh"
