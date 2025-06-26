@@ -127,21 +127,25 @@ The `secrets` input variable allows you to provide a method to include sensitive
 }
 
 # registry secret
-"registry_secret_name" = {
-    format = "registry"
-    optional("data") = {
-      "server"   = "private.us.icr.io",
-      "username" = "iamapikey",
-      "password" = iam_api_key, # pragma: allowlist secret
-    }
+{
+  "registry_secret_name" = {
+      format = "registry"
+      optional("data") = {
+        "server"   = "private.us.icr.io",
+        "username" = "iamapikey",
+        "password" = iam_api_key, # pragma: allowlist secret
+      }
+  }
 }
 
 # private repository
-"private_repo" = {
-    format = "generic"
-    "data" = {
-      "password" = github_token, # pragma: allowlist secret
-      "username"   = github_user
-    }
+{
+  "private_repo" = {
+      format = "generic"
+      "data" = {
+        "password" = github_token, # pragma: allowlist secret
+        "username"   = github_user
+      }
+  }
 }
 ```

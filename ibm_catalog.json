@@ -19,35 +19,35 @@
         "terraform",
         "solution"
       ],
-      "short_description": "Provisions and configures IBM Cloud Code Engine",
-      "long_description": "Creates an instance of IBM Cloud Code Engine and configures the project, applications, domain mappings, secrets, configmaps, and service bindings.",
+      "short_description": "Provisions and configures Serverless on IBM Cloud",
+      "long_description": "Creates an instance of [Serverless on IBM Cloud](https://www.ibm.com/products/code-engine) and configures the project, applications, domain mappings, secrets, configmaps, and service bindings. It enables you to manage IBM Cloud Code Engine’s fully managed, serverless platform using infrastructure as code for scalable, cloud-native workloads.\n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
       "provider_name": "IBM",
       "features": [
         {
-          "title": "Creates a Code Engine project",
-          "description": "Code Engine project group, manage, and provide access for Code Engine resources such as applications, jobs, and builds."
+          "title": "Project",
+          "description": "[A Code Engine project](https://cloud.ibm.com/docs/codeengine?topic=codeengine-manage-project) groups, manages, and provides access to Code Engine resources such as applications, jobs, and builds."
         },
         {
-          "title": "Creates Code Engine applications",
-          "description": "Code Engine applications serve HTTP requests or WebSockets as their communications protocol. The number of running instances of an app are scaled up or down as required by the workdloads."
+          "title": "Applications",
+          "description": "[Code Engine applications](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads) serve HTTP requests or WebSockets as their communications protocol. The number of running instances of an app are scaled up or down as required by the workdloads."
         },
         {
-          "title": "Creates custom domain mappings",
-          "description": "Creates the mappings from your custom domain to your Code Engine application in a project to route requests from your custom URL to your application."
+          "title": "Custom domain mappings",
+          "description": "Creates the [mappings](https://cloud.ibm.com/docs/codeengine?topic=codeengine-domain-mappings) from your custom domain to your Code Engine application in a project to route requests from your custom URL to your application."
         },
         {
-          "title": "Creates Code Engine secrets",
-          "description": "Code Engine secrets provide a method to include sensitive configuration information, such as passwords or SSH keys, in your deployment."
+          "title": "Secrets",
+          "description": "[Code Engine secrets](https://cloud.ibm.com/docs/codeengine?topic=codeengine-secret) provide a method to include sensitive configuration information, such as passwords or SSH keys, in your deployment."
         },
         {
-          "title": "Creates Code Engine configmaps",
-          "description": "Configmaps provide a method to include nonsensitive data information in your deployment. By referencing values from your configmap as environment variables, you can decouple specific information from your deployment and keep your application portable."
+          "title": "Configmaps",
+          "description": "[Code Engine Configmaps](https://cloud.ibm.com/docs/codeengine?topic=codeengine-configmap) provide a method to include nonsensitive data information in your deployment. By referencing values from your configmap as environment variables, you can decouple specific information from your deployment and keep your application portable."
         },
         {
-          "title": "Creates Code Engine service bindings",
-          "description": "Service bindings provide access from your application to other IBM Cloud services."
+          "title": "Service bindings",
+          "description": "[Code engine service bindings](https://cloud.ibm.com/docs/codeengine?topic=codeengine-service-binding) provide access from your application to other IBM Cloud services."
         }
       ],
       "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
@@ -67,6 +67,13 @@
             ]
           },
           "iam_permissions": [
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Viewer"
+              ],
+              "service_name": "Resource group only",
+              "notes": "Viewer access is required in the resource group you want to provision in."
+            },
             {
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::serviceRole:Writer"
@@ -124,6 +131,7 @@
             },
             {
               "key": "provider_visibility",
+              "hidden": true,
               "options": [
                 {
                   "displayname": "private",
@@ -157,17 +165,48 @@
             },
             {
               "key": "region",
-              "type": "string",
-              "custom_config": {
-                "type": "region",
-                "grouping": "deployment",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "showKinds": [
-                    "region"
-                  ]
+              "options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Osaka (jp-osa)",
+                  "value": "jp-osa"
+                },
+                {
+                  "displayname": "Sao Paulo (br-sao)",
+                  "value": "br-sao"
+                },
+                {
+                  "displayname": "Spain (us-es)",
+                  "value": "us-es"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                },
+                {
+                  "displayname": "Washington DC (us-east)",
+                  "value": "us-east"
                 }
-              }
+              ]
             },
             {
               "key": "project_name"
@@ -185,10 +224,22 @@
               "key": "image_secret"
             },
             {
-              "key": "run_env_variables"
+              "key": "run_env_variables",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              }
             },
             {
-              "key": "run_volume_mounts"
+              "key": "run_volume_mounts",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              }
             },
             {
               "key": "image_port"
@@ -251,7 +302,13 @@
               "key": "bindings"
             },
             {
-              "key": "cbr_rules"
+              "key": "cbr_rules",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              }
             }
           ]
         },
@@ -261,6 +318,13 @@
           "install_type": "fullstack",
           "working_directory": "solutions/project",
           "iam_permissions": [
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Viewer"
+              ],
+              "service_name": "Resource group only",
+              "notes": "Viewer access is required in the resource group you want to provision in."
+            },
             {
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::serviceRole:Writer"
@@ -298,6 +362,7 @@
             },
             {
               "key": "provider_visibility",
+              "hidden": true,
               "options": [
                 {
                   "displayname": "private",
@@ -334,20 +399,57 @@
             },
             {
               "key": "region",
-              "type": "string",
-              "custom_config": {
-                "type": "region",
-                "grouping": "deployment",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "showKinds": [
-                    "region"
-                  ]
+              "options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Osaka (jp-osa)",
+                  "value": "jp-osa"
+                },
+                {
+                  "displayname": "Sao Paulo (br-sao)",
+                  "value": "br-sao"
+                },
+                {
+                  "displayname": "Spain (us-es)",
+                  "value": "us-es"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                },
+                {
+                  "displayname": "Washington DC (us-east)",
+                  "value": "us-east"
                 }
-              }
+              ]
             },
             {
-              "key": "cbr_rules"
+              "key": "cbr_rules",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              }
             },
             {
               "key": "builds"

@@ -1,11 +1,3 @@
-# IBM Cloud Code Engine project deployable architecture
+# Cloud automation for Code Engine project
 
-This deployable architecture creates IBM Cloud Code Engine project and the following optional resources:
-
-- A resource group.
-- Code Engine project build.
-- Code Engine project secrets.
-- Code Engine project configmaps.
-- Code Engine project domain mappings.
-
-![ce-apps-da](../../reference-architecture/ce-project-da.svg)
+:exclamation: **Important:** This solution is not intended to be called by other modules because it contains a provider configuration and is not compatible with the `for_each`, `count`, and `depends_on` arguments. For more information, see [Providers Within Modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers).
