@@ -1,12 +1,3 @@
-# IBM Cloud Code Engine apps deployable architecture
+# Cloud automation for Code Engine apps
 
-This deployable architecture creates IBM Cloud Code Engine apps and supports provisioning Code Engine project apps and the following optional resources:
-
-- A resource group.
-- A Code Engine project.
-- Code Engine project secrets.
-- Code Engine project configmaps.
-- Code Engine project service bindings.
-- Code Engine project domain mappings.
-
-![ce-apps-da](../../reference-architecture/ce-app-da.svg)
+:exclamation: **Important:** This solution is not intended to be called by other modules because it contains a provider configuration and is not compatible with the `for_each`, `count`, and `depends_on` arguments. For more information, see [Providers Within Modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers).

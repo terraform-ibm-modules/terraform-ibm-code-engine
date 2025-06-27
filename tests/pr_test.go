@@ -158,7 +158,7 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
 		TerraformDir:  appsSolutionsDir,
-		Prefix:        "ce-app-upg",
+		Prefix:        "ce-app-u",
 		ResourceGroup: resourceGroup,
 	})
 	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
@@ -374,7 +374,7 @@ func TestCEProjectDABasic(t *testing.T) {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
 		TerraformDir: projectSolutionsDir,
-		Prefix:       "ce-da-empty",
+		Prefix:       "ce-da-b",
 	})
 
 	options.TerraformVars = map[string]interface{}{

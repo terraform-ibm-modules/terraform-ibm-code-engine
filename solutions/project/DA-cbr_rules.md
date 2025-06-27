@@ -34,7 +34,7 @@ The `cbr_rules` input variable allows you to provide a rule for the target servi
 ### Example Rule For Context-Based Restrictions Configuration
 
 ```hcl
-cbr_rules = [
+[
   {
   description = "Code Engine can be accessed from xyz"
   account_id = "defc0df06b644a9cabc6e44f55b3880s"
