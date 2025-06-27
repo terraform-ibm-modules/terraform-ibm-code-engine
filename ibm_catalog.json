@@ -76,12 +76,7 @@
             },
             {
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
-              ],
-              "service_name": "codeengine"
-            },
-            {
-              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "codeengine"
