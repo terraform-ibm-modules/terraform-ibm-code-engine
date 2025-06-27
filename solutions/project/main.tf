@@ -91,6 +91,7 @@ module "build" {
 
 resource "terraform_data" "run_build" {
   depends_on = [module.build]
+  count      = length(local.updated_builds) > 0 ? 1 : 0
 
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]

@@ -190,9 +190,10 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-		Testing:      t,
-		TerraformDir: projectSolutionsDir,
-		Prefix:       "ce-da",
+		Testing:                    t,
+		TerraformDir:               projectSolutionsDir,
+		Prefix:                     "ce-da",
+		CheckApplyResultForUpgrade: true,
 	})
 
 	options.TerraformVars = map[string]interface{}{
@@ -364,4 +365,26 @@ func writeTfvarsFile(t *testing.T, path string, vars map[string]interface{}) err
 		t.Fatalf("Failed to write tfvars file: %v", err)
 	}
 	return err
+}
+
+// test edge case when only empty project is created
+func TestCEProjectDABasic(t *testing.T) {
+	t.Parallel()
+
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:      t,
+		TerraformDir: projectSolutionsDir,
+		Prefix:       "ce-da-empty",
+	})
+
+	options.TerraformVars = map[string]interface{}{
+		"existing_resource_group_name": resourceGroup,
+		"provider_visibility":          "public",
+		"prefix":                       options.Prefix,
+		"project_name":                 "proj-test",
+	}
+
+	output, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
 }
