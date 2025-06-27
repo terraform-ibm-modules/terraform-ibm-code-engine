@@ -374,7 +374,7 @@ func TestCEProjectDABasic(t *testing.T) {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
 		TerraformDir: projectSolutionsDir,
-		Prefix:       "ce-da-empty",
+		Prefix:       "ce-da-b",
 	})
 
 	options.TerraformVars = map[string]interface{}{
