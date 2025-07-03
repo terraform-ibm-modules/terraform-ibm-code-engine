@@ -11,7 +11,7 @@ variable "ibmcloud_api_key" {
 variable "provider_visibility" {
   description = "Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints)."
   type        = string
-  default     = "private"
+  default     = "public"
 
   validation {
     condition     = contains(["public", "private", "public-and-private"], var.provider_visibility)
@@ -61,7 +61,7 @@ variable "existing_resource_group_name" {
 variable "project_name" {
   description = "The name of the project to add the IBM Cloud Code Engine resources to. If the value of `var.existing_project_id` is `null`, the project name is required. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<project_name>` format."
   type        = string
-  default     = null
+  default     = "example-corp-ce-project"
 }
 
 variable "existing_project_id" {
@@ -73,7 +73,7 @@ variable "existing_project_id" {
 variable "app_name" {
   description = "The name of the application to be created and managed. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads)"
   type        = string
-  default     = "my-ce-app"
+  default     = "example-corp-ai-app"
 }
 
 variable "image_reference" {
