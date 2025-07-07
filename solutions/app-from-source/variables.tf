@@ -210,4 +210,8 @@ variable "app" {
     scale_request_timeout         = optional(number)
     scale_down_delay              = optional(number)
   })
+
+  default = {
+    name = "app-from-source"
+  }
 }
