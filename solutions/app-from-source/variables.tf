@@ -70,7 +70,7 @@ variable "builds" {
   description = "A map of code engine builds to be created.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#builds)"
   type = map(object({
     output_image       = optional(string)
-    output_secret      = string # pragma: allowlist secret
+    output_secret      = optional(string) # pragma: allowlist secret
     source_url         = string
     strategy_type      = string
     source_context_dir = optional(string)
@@ -81,7 +81,13 @@ variable "builds" {
     strategy_spec_file = optional(string)
     timeout            = optional(number)
   }))
-  default = {}
+  default = {
+    "ce-build" = {
+      source_url         = "https://github.com/IBM/CodeEngine"
+      source_context_dir = "hello"
+      strategy_type      = "dockerfile"
+    }
+  }
 }
 
 variable "container_registry_namespace" {
@@ -212,6 +218,6 @@ variable "app" {
   })
 
   default = {
-    name = "app-from-source"
+    name = "application-ec"
   }
 }

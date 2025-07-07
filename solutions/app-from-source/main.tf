@@ -79,7 +79,7 @@ module "build" {
   project_id                 = module.project.project_id
   name                       = each.key
   output_image               = each.value.output_image
-  output_secret              = each.value.output_secret
+  output_secret              = each.value.output_secret != null ? each.value.output_secret : local.registry_name
   source_url                 = each.value.source_url
   strategy_type              = each.value.strategy_type
   source_context_dir         = each.value.source_context_dir
@@ -138,7 +138,8 @@ locals {
   ]
   has_registry = length(local.registry_secret_names) > 0
 
-  registry_name = local.has_registry ? local.registry_secret_names[0] : "${local.prefix}-registry"
+  registry_name = local.has_registry ? local.registry_secret_names[0] : "${local.prefix}registry"
+
   secrets = local.has_registry ? var.secrets : merge(
     var.secrets,
     {
