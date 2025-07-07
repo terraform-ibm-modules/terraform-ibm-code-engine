@@ -308,10 +308,10 @@
           ]
         },
         {
-          "label": "New Code Engine project",
+          "label": "app-from-source",
           "name": "project",
           "install_type": "fullstack",
-          "working_directory": "solutions/project",
+          "working_directory": "solutions/app-from-source",
           "iam_permissions": [
             {
               "role_crns": [
@@ -460,6 +460,9 @@
             },
             {
               "key": "secrets"
+            },
+            {
+              "key": "app"
             }
           ]
         }
