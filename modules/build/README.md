@@ -54,13 +54,13 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_existing_resource_group_id"></a> [existing\_resource\_group\_id](#input\_existing\_resource\_group\_id) | The ID of an existing resource group where build will be provisioned. This must be the same resource group in which the code engine project was created. | `string` | n/a | yes |
+| <a name="input_existing_resource_group_id"></a> [existing\_resource\_group\_id](#input\_existing\_resource\_group\_id) | n/a | `string` | n/a | yes |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The IBM Cloud API key. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the build. | `string` | n/a | yes |
-| <a name="input_output_image"></a> [output\_image](#input\_output\_image) | The name of the image. | `string` | n/a | yes |
+| <a name="input_output_image"></a> [output\_image](#input\_output\_image) | The name of the image. | `string` | `null` | no |
 | <a name="input_output_secret"></a> [output\_secret](#input\_output\_secret) | The secret that is required to access the image registry. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where build will be created. | `string` | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | The region in which to provision the build. This must be the same region in which the code engine project was created. | `string` | `"us-south"` | no |
+| <a name="input_region"></a> [region](#input\_region) | The region in which to provision the build. | `string` | `"us-south"` | no |
 | <a name="input_source_context_dir"></a> [source\_context\_dir](#input\_source\_context\_dir) | The directory in the repository that contains the buildpacks file or the Dockerfile. | `string` | `null` | no |
 | <a name="input_source_revision"></a> [source\_revision](#input\_source\_revision) | Commit, tag, or branch in the source repository to pull. | `string` | `null` | no |
 | <a name="input_source_secret"></a> [source\_secret](#input\_source\_secret) | The name of the secret that is used access the repository source. If the var.source\_type value is `local`, this field must be omitted. | `string` | `null` | no |

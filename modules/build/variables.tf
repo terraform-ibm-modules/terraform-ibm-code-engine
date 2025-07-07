@@ -26,6 +26,7 @@ variable "name" {
 variable "output_image" {
   description = "The name of the image."
   type        = string
+  default     = null
 }
 
 variable "output_secret" {
