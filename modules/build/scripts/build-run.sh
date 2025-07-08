@@ -70,4 +70,3 @@ while true; do
     retries=$((retries + 1))
     sleep "$RETRY_INTERVAL"
 done
-
