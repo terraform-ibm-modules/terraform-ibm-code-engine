@@ -54,19 +54,10 @@
       "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
       "flavors": [
         {
-          "label": "New Code Engine apps",
-          "name": "apps",
+          "label": "app-from-binary",
+          "name": "project",
           "install_type": "fullstack",
-          "working_directory": "solutions/apps",
-          "compliance": {
-            "authority": "scc-v3",
-            "profiles": [
-              {
-                "profile_name": "IBM Cloud Framework for Financial Services",
-                "profile_version": "1.7.0"
-              }
-            ]
-          },
+          "working_directory": "solutions/app-from-binary",
           "iam_permissions": [
             {
               "role_crns": [
@@ -77,7 +68,12 @@
             },
             {
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+              ],
+              "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "codeengine"
@@ -88,36 +84,16 @@
               {
                 "title": "IBM Cloud Code Engine project",
                 "description": "Yes"
-              },
-              {
-                "title": "IBM Cloud Code Engine application",
-                "description": "Yes"
-              },
-              {
-                "title": "IBM Cloud Code Engine secrets",
-                "description": "Yes"
-              },
-              {
-                "title": "IBM Cloud Code Engine domain mapping",
-                "description": "Yes"
-              },
-              {
-                "title": "IBM Cloud Code Engine service binding",
-                "description": "Yes"
-              },
-              {
-                "title": "IBM Cloud Code Engine configmaps",
-                "description": "Yes"
               }
             ],
             "diagrams": [
               {
                 "diagram": {
                   "caption": "IBM Cloud Code Engine application solution.",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-app-da.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-project-da.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This deployable architecture creates IBM Cloud Code Engine and configures the project, apps, domain mappings, secrets, configmaps, and service bindings."
+                "description": "This deployable architecture creates IBM Cloud Code Engine project"
               }
             ]
           },
@@ -158,6 +134,13 @@
                   "identifier": "rg_name"
                 }
               }
+            },
+            {
+              "key": "project_name"
+            },
+            {
+              "key": "app",
+              "required": true
             },
             {
               "key": "region",
@@ -305,11 +288,26 @@
                 "grouping": "deployment",
                 "original_grouping": "deployment"
               }
+            },
+            {
+              "key": "builds"
+            },
+            {
+              "key": "container_registry_namespace"
+            },
+            {
+              "key": "domain_mappings"
+            },
+            {
+              "key": "config_maps"
+            },
+            {
+              "key": "secrets"
             }
           ],
           "terraform_version": "1.10.5"
         },
-        {
+         {
           "label": "app-from-source",
           "name": "project",
           "install_type": "fullstack",
@@ -395,6 +393,10 @@
               "key": "project_name"
             },
             {
+              "key": "app",
+              "required": true
+            },
+            {
               "key": "region",
               "options": [
                 {
@@ -462,9 +464,6 @@
             },
             {
               "key": "secrets"
-            },
-            {
-              "key": "app"
             }
           ],
           "terraform_version": "1.10.5"
