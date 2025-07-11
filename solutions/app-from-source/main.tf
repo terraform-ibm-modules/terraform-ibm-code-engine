@@ -170,7 +170,7 @@ module "secret" {
 # Code Engine Apps
 ##############################################################################
 locals {
-  image_reference = module.build[keys(var.builds)[0]].output_image
+  image_reference = length(var.builds) > 0 ? module.build[keys(var.builds)[0]].output_image : null
 }
 
 module "app" {
@@ -198,4 +198,17 @@ module "app" {
   scale_memory_limit            = var.app.scale_memory_limit
   scale_min_instances           = var.app.scale_min_instances
   scale_request_timeout         = var.app.scale_request_timeout
+}
+
+##############################################################################
+# Code Engine Bindings
+##############################################################################
+
+module "binding" {
+  source      = "../../modules/binding"
+  for_each    = var.bindings
+  secret_name = each.value.secret_name
+  components  = each.value.components
+  project_id  = module.project.project_id
+  prefix      = local.prefix
 }

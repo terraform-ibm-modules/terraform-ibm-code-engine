@@ -8,7 +8,7 @@ output "project_name" {
 }
 
 output "project_id" {
-  description = "ID of the project."
+  description = "ID of the created code engine project."
   value       = module.project.project_id
 }
 
@@ -33,6 +33,11 @@ output "build" {
 }
 
 output "app" {
-  # description = "Configuration of the created code engine build."
-  value = module.app
+  description = "Configuration of the created code engine app."
+  value       = module.app
+}
+
+output "binding" {
+  description = "Configuration of the created code engine binding."
+  value       = module.binding
 }

@@ -290,12 +290,6 @@
               }
             },
             {
-              "key": "builds"
-            },
-            {
-              "key": "container_registry_namespace"
-            },
-            {
               "key": "domain_mappings"
             },
             {
@@ -303,6 +297,9 @@
             },
             {
               "key": "secrets"
+            },
+            {
+              "key": "bindings"
             }
           ],
           "terraform_version": "1.10.5"
@@ -464,6 +461,9 @@
             },
             {
               "key": "secrets"
+            },
+            {
+              "key": "bindings"
             }
           ],
           "terraform_version": "1.10.5"
