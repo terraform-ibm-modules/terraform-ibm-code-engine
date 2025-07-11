@@ -196,12 +196,6 @@
               }
             },
             {
-              "key": "builds"
-            },
-            {
-              "key": "container_registry_namespace"
-            },
-            {
               "key": "domain_mappings"
             },
             {
@@ -209,8 +203,10 @@
             },
             {
               "key": "secrets"
+            },
+            {
+              "key": "bindings"
             }
-
           ]
         },
          {
@@ -370,8 +366,10 @@
             },
             {
               "key": "secrets"
+            },
+            {
+              "key": "bindings"
             }
-
           ]
         }
       ]

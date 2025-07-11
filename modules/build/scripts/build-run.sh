@@ -54,16 +54,16 @@ while true; do
     status=$(ibmcloud ce buildrun get --name "$run_build_name" --output json | jq -r '.status')
     echo "Status: $status"
     if [[ "$status" == "succeeded" ]]; then
-        echo "Build $build succeeded"
+        echo "Build $BUILD_NAME succeeded"
         break
     elif [[ "$status" == "Failed" || "$status" == "Error" ]]; then
-        echo "Error: Build $build has status '{$status}'"
+        echo "Error: Build $BUILD_NAME has status '{$status}'"
         exit 1
     fi
 
     #  if max time timeout then finish with error
     if [[ $retries -ge $MAX_RETRIES ]]; then
-        echo "Build $build did not complete after $MAX_RETRIES retries. Timing out."
+        echo "Build $BUILD_NAME did not complete after $MAX_RETRIES retries. Timing out."
         exit 1
     fi
 

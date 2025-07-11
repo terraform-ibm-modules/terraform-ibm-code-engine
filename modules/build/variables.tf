@@ -9,8 +9,8 @@ variable "ibmcloud_api_key" {
 }
 
 variable "existing_resource_group_id" {
-  type = string
-
+  description = "The ID of an existing resource group to provision resources in to."
+  type        = string
 }
 
 variable "project_id" {
