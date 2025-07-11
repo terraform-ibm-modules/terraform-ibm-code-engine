@@ -53,7 +53,7 @@
       "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
       "flavors": [
         {
-          "label": "app-from-binary",
+          "label": "App from Binary",
           "name": "binary",
           "install_type": "fullstack",
           "working_directory": "solutions/app-from-binary",
@@ -81,8 +81,8 @@
           "architecture": {
             "features": [
               {
-                "title": "IBM Cloud Code Engine project",
-                "description": "Yes"
+                "title": " ",
+                "description": "Configured to launch an application on Code Engine from a binary image."
               }
             ],
             "diagrams": [
@@ -210,7 +210,7 @@
           ]
         },
         {
-          "label": "app-from-source",
+          "label": "App from Source",
           "name": "source",
           "install_type": "fullstack",
           "working_directory": "solutions/app-from-source",
@@ -238,8 +238,8 @@
           "architecture": {
             "features": [
               {
-                "title": "IBM Cloud Code Engine project",
-                "description": "Yes"
+                "title": " ",
+                "description": "Configured to launch an application on Code Engine from a source."
               }
             ],
             "diagrams": [
