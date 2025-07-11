@@ -68,6 +68,7 @@ variable "project_name" {
 ##############################################################################
 variable "builds" {
   description = "A map of code engine builds to be created.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#builds)"
+  nullable    = false
   type = map(object({
     output_image       = optional(string)
     output_secret      = optional(string) # pragma: allowlist secret
@@ -220,4 +221,20 @@ variable "app" {
   default = {
     name = "application-ec"
   }
+}
+
+##############################################################################
+# Code Engine Bindings
+##############################################################################
+
+variable "bindings" {
+  description = "A map of the IBM Cloud Code Engine bindings to create. For example, `{ 'PREFIX': {secret_name: 'secret_name', components: [{ name : 'app_name', resource_type: 'app_v2'}]}}`."
+  type = map(object({
+    secret_name = string
+    components = list(object({
+      name          = string
+      resource_type = string
+    }))
+  }))
+  default = {}
 }
