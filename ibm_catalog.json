@@ -55,7 +55,7 @@
       "flavors": [
         {
           "label": "app-from-binary",
-          "name": "project",
+          "name": "binary",
           "install_type": "fullstack",
           "working_directory": "solutions/app-from-binary",
           "iam_permissions": [
@@ -211,9 +211,9 @@
           ],
           "terraform_version": "1.10.5"
         },
-         {
+        {
           "label": "app-from-source",
-          "name": "project",
+          "name": "source",
           "install_type": "fullstack",
           "working_directory": "solutions/app-from-source",
           "iam_permissions": [
