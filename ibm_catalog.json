@@ -355,7 +355,8 @@
               }
             },
             {
-              "key": "builds"
+              "key": "builds",
+              "required": true
             },
             {
               "key": "container_registry_namespace"
