@@ -28,10 +28,10 @@ module "project" {
 # Code Engine Build
 ##############################################################################
 locals {
-  registry_region_result = data.external.container_registry_region.result
-  registry               = lookup(local.registry_region_result, "registry", null)
+  registry_region_result = local.any_missing_output_image && var.container_registry_namespace != null ? data.external.container_registry_region[0].result : null
+  registry               = local.registry_region_result != null ? lookup(local.registry_region_result, "registry", null) : null
   container_registry     = local.registry != null ? "private.${local.registry}" : null
-  registry_region_error  = lookup(local.registry_region_result, "error", null)
+  registry_region_error  = local.registry_region_result != null ? lookup(local.registry_region_result, "error", null) : null
 
   # This will cause Terraform to fail if "error" is present in the external script output executed as a part of container_registry_region
   # tflint-ignore: terraform_unused_declarations
@@ -62,6 +62,7 @@ resource "ibm_cr_namespace" "my_namespace" {
 }
 
 data "external" "container_registry_region" {
+  count   = local.any_missing_output_image && var.container_registry_namespace != null ? 1 : 0
   program = ["bash", "${path.module}/scripts/get-cr-region.sh"]
 
   query = {
