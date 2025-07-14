@@ -2,6 +2,17 @@
 # Input Variables
 ########################################################################################################################
 
+variable "ibmcloud_api_key" {
+  type        = string
+  description = "The IBM Cloud API key."
+  sensitive   = true
+}
+
+variable "existing_resource_group_id" {
+  description = "The ID of an existing resource group to provision resources in to."
+  type        = string
+}
+
 variable "project_id" {
   description = "The ID of the project where build will be created."
   type        = string
@@ -15,11 +26,18 @@ variable "name" {
 variable "output_image" {
   description = "The name of the image."
   type        = string
+  default     = null
 }
 
 variable "output_secret" {
   description = "The secret that is required to access the image registry."
   type        = string
+}
+
+variable "region" {
+  type        = string
+  description = "The region in which to provision the build."
+  default     = "us-south"
 }
 
 variable "source_context_dir" {

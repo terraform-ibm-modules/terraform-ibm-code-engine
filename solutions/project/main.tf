@@ -72,39 +72,24 @@ data "external" "container_registry_region" {
 }
 
 module "build" {
-  depends_on         = [module.secret]
-  source             = "../../modules/build"
-  for_each           = local.updated_builds
-  project_id         = module.project.project_id
-  name               = each.key
-  output_image       = each.value.output_image
-  output_secret      = each.value.output_secret
-  source_url         = each.value.source_url
-  strategy_type      = each.value.strategy_type
-  source_context_dir = each.value.source_context_dir
-  source_revision    = each.value.source_revision
-  source_secret      = each.value.source_secret
-  source_type        = each.value.source_type
-  strategy_size      = each.value.strategy_size
-  strategy_spec_file = each.value.strategy_spec_file
-  timeout            = each.value.timeout
-}
-
-resource "terraform_data" "run_build" {
-  depends_on = [module.build]
-  count      = length(local.updated_builds) > 0 ? 1 : 0
-
-  provisioner "local-exec" {
-    interpreter = ["/bin/bash", "-c"]
-    command     = "${path.module}/scripts/build-run.sh"
-    environment = {
-      IBMCLOUD_API_KEY  = var.ibmcloud_api_key
-      RESOURCE_GROUP_ID = module.resource_group.resource_group_id
-      CE_PROJECT_NAME   = module.project.name
-      REGION            = var.region
-      BUILDS            = join(" ", keys(local.updated_builds))
-    }
-  }
+  depends_on                 = [module.secret]
+  source                     = "../../modules/build"
+  for_each                   = local.updated_builds
+  project_id                 = module.project.project_id
+  name                       = each.key
+  output_image               = each.value.output_image
+  output_secret              = each.value.output_secret
+  source_url                 = each.value.source_url
+  strategy_type              = each.value.strategy_type
+  source_context_dir         = each.value.source_context_dir
+  source_revision            = each.value.source_revision
+  source_secret              = each.value.source_secret
+  source_type                = each.value.source_type
+  strategy_size              = each.value.strategy_size
+  strategy_spec_file         = each.value.strategy_spec_file
+  timeout                    = each.value.timeout
+  ibmcloud_api_key           = var.ibmcloud_api_key
+  existing_resource_group_id = module.resource_group.resource_group_id
 }
 
 ##############################################################################

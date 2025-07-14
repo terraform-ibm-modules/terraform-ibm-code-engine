@@ -54,10 +54,12 @@ module "code_engine" {
   }
   builds = {
     "${var.prefix}-build" = {
-      output_image  = "private.de.icr.io/icr_namespace/image-name"
-      output_secret = "icr-private" # pragma: allowlist secret
-      source_url    = "https://github.com/IBM/CodeEngine"
-      strategy_type = "dockerfile"
+      ibmcloud_api_key           = var.ibmcloud_api_key
+      existing_resource_group_id = module.resource_group.resource_group_id
+      output_image               = "private.de.icr.io/icr_namespace/image-name"
+      output_secret              = "icr-private" # pragma: allowlist secret
+      source_url                 = "https://github.com/IBM/CodeEngine"
+      strategy_type              = "dockerfile"
     }
   }
 }
