@@ -10,6 +10,15 @@ module "resource_group" {
   existing_resource_group_name = var.resource_group
 }
 
+locals {
+  cr_namespace = "private.us.icr.io/${resource.ibm_cr_namespace.my_namespace.name}/${var.prefix}-build"
+}
+
+resource "ibm_cr_namespace" "my_namespace" {
+  name              = "${var.prefix}-cr-namespace"
+  resource_group_id = module.resource_group.resource_group_id
+}
+
 ########################################################################################################################
 # Code Engine instance
 ########################################################################################################################
@@ -17,6 +26,7 @@ module "resource_group" {
 module "code_engine" {
   source            = "../.."
   resource_group_id = module.resource_group.resource_group_id
+  ibmcloud_api_key  = var.ibmcloud_api_key
   project_name      = "${var.prefix}-project"
   jobs = {
     "${var.prefix}-job" = {
@@ -50,16 +60,22 @@ module "code_engine" {
     "${var.prefix}-s" = {
       format = "generic"
       data   = { "key_1" : "value_1", "key_2" : "value_2" }
-    }
+    },
+    "${var.prefix}-rs" = {
+      format = "registry"
+      data = {
+        password = var.ibmcloud_api_key,
+        username = "iamapikey",
+        server   = "private.us.icr.io"
+      }
+    },
   }
   builds = {
     "${var.prefix}-build" = {
-      ibmcloud_api_key           = var.ibmcloud_api_key
-      existing_resource_group_id = module.resource_group.resource_group_id
-      output_image               = "private.de.icr.io/icr_namespace/image-name"
-      output_secret              = "icr-private" # pragma: allowlist secret
-      source_url                 = "https://github.com/IBM/CodeEngine"
-      strategy_type              = "dockerfile"
+      output_image  = local.cr_namespace
+      output_secret = "${var.prefix}-rs" # pragma: allowlist secret
+      source_url    = "https://github.com/IBM/CodeEngine"
+      strategy_type = "dockerfile"
     }
   }
 }

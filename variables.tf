@@ -14,12 +14,6 @@ variable "ibmcloud_api_key" {
   default     = null
 }
 
-variable "existing_resource_group_id" {
-  description = "The ID of an existing resource group to provision resources in to."
-  type        = string
-  default     = null
-}
-
 variable "project_name" {
   description = "The name of the project to which code engine resources will be added. It is required if var.existing_project_id is null."
   type        = string
@@ -142,19 +136,17 @@ variable "secrets" {
 variable "builds" {
   description = "A map of code engine builds to be created."
   type = map(object({
-    output_image               = string
-    output_secret              = string # pragma: allowlist secret
-    source_url                 = string
-    strategy_type              = string
-    ibmcloud_api_key           = string
-    existing_resource_group_id = string
-    source_context_dir         = optional(string)
-    source_revision            = optional(string)
-    source_secret              = optional(string)
-    source_type                = optional(string)
-    strategy_size              = optional(string)
-    strategy_spec_file         = optional(string)
-    timeout                    = optional(number)
+    output_image       = string
+    output_secret      = string # pragma: allowlist secret
+    source_url         = string
+    strategy_type      = string
+    source_context_dir = optional(string)
+    source_revision    = optional(string)
+    source_secret      = optional(string)
+    source_type        = optional(string)
+    strategy_size      = optional(string)
+    strategy_spec_file = optional(string)
+    timeout            = optional(number)
   }))
   default = {}
 }

@@ -55,8 +55,9 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		},
 	}
 	options.TerraformVars = map[string]interface{}{
-		"resource_group": resourceGroup,
-		"prefix":         options.Prefix,
+		"resource_group":   resourceGroup,
+		"prefix":           options.Prefix,
+		"ibmcloud_api_key": options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
 	}
 
 	return options
@@ -251,6 +252,7 @@ func TestDeployCEProjectDA(t *testing.T) {
 		"project_name":                 prefix,
 		"existing_resource_group_name": resourceGroup,
 		"container_registry_namespace": fmt.Sprintf("test_%s_ns", prefix),
+		"ibmcloud_api_key":             existingResourceOptions.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
 		"builds": map[string]interface{}{
 			fmt.Sprintf("%s-build", prefix): map[string]interface{}{
 				"output_image":  fmt.Sprintf("private.us.icr.io/%s/%s", existingResourceOptions.LastTestTerraformOutputs["cr_name"].(string), prefix),

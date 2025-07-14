@@ -116,7 +116,7 @@ module "build" {
   strategy_spec_file         = each.value.strategy_spec_file
   timeout                    = each.value.timeout
   ibmcloud_api_key           = var.ibmcloud_api_key
-  existing_resource_group_id = var.existing_resource_group_id
+  existing_resource_group_id = var.resource_group_id
 }
 
 ##############################################################################

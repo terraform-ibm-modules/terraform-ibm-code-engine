@@ -25,8 +25,8 @@ if [[ -z "${REGION}" ]]; then
   exit 1
 fi
 
-if [[ -z "${BUILDS}" ]]; then
-  echo "BUILDS is required" >&2
+if [[ -z "${BUILD_NAME}" ]]; then
+  echo "BUILD_NAME is required" >&2
   exit 1
 fi
 
@@ -35,34 +35,38 @@ ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP_ID}" --quiet
 # selecet the right code engine project
 ibmcloud ce project select -n "${CE_PROJECT_NAME}"
 
-# run a build for all builds
-# we check for status build to be succeeded before we finish with script.
-# This is needed in a case we deploy app, which needs build_run to be finished.
-for build in $BUILDS; do
-    echo "Submitting build: $build"
-    run_build_name=$(ibmcloud ce buildrun submit --build "$build" --output json | jq -r '.name')
+# check the image build status
+image_build_status=$(ibmcloud ce build get --name "${BUILD_NAME}" -o json | jq -r '.status')
+if [[ "$image_build_status" != "ready" ]]; then
+  echo "Error: Image build '${BUILD_NAME}' has status: ${image_build_status}"
+  exit 1
+fi
 
-    echo "Waiting for build run $run_build_name to complete..."
-    retries=0
-    while true; do
-        status=$(ibmcloud ce buildrun get --name "$run_build_name" --output json | jq -r '.status')
-        echo "Status: $status"
-        if [[ "$status" == "succeeded" ]]; then
-            echo "Build $build succeeded"
-            break
+# Ensure the build status is 'succeeded' before continuing.
+# This is required because the application deployment depends on a completed build run.
+echo "Submitting build: $BUILD_NAME"
+run_build_name=$(ibmcloud ce buildrun submit --build "$BUILD_NAME" --output json | jq -r '.name')
 
-        elif [[ "$status" == "Failed" || "$status" == "Error" ]]; then
-            echo "Build $build failed"
-            exit 1
-        fi
+echo "Waiting for build run $run_build_name to complete..."
+retries=0
 
-        #  if max time timeout then finish with error
-        if [[ $retries -ge $MAX_RETRIES ]]; then
-            echo "Build $build did not complete after $MAX_RETRIES retries. Timing out."
-            exit 1
-        fi
+while true; do
+    status=$(ibmcloud ce buildrun get --name "$run_build_name" --output json | jq -r '.status')
+    echo "Status: $status"
+    if [[ "$status" == "succeeded" ]]; then
+        echo "Build $BUILD_NAME succeeded"
+        break
+    elif [[ "$status" == "Failed" || "$status" == "Error" ]]; then
+        echo "Error: Build $BUILD_NAME has status '{$status}'"
+        exit 1
+    fi
 
-        retries=$((retries + 1))
-        sleep "$RETRY_INTERVAL"
-    done
+    #  if max time timeout then finish with error
+    if [[ $retries -ge $MAX_RETRIES ]]; then
+        echo "Build $BUILD_NAME did not complete after $MAX_RETRIES retries. Timing out."
+        exit 1
+    fi
+
+    retries=$((retries + 1))
+    sleep "$RETRY_INTERVAL"
 done
