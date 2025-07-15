@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-IBMCLOUD_CONFIG_HOME=$(mktemp -d)
-export IBMCLOUD_CONFIG_HOME
-
 INPUT=$(cat)
 REGION=$(echo "$INPUT" | jq -r '.REGION')
 RESOURCE_GROUP_ID=$(echo "$INPUT" | jq -r '.RESOURCE_GROUP_ID')

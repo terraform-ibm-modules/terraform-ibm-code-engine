@@ -109,7 +109,6 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 }
 
 func TestRunJobsExample(t *testing.T) {
-	t.Parallel()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
