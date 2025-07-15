@@ -102,6 +102,8 @@ module "build" {
   depends_on                 = [module.secret]
   source                     = "./modules/build"
   for_each                   = var.builds
+  ibmcloud_api_key           = var.ibmcloud_api_key
+  existing_resource_group_id = var.resource_group_id
   project_id                 = local.project_id
   name                       = each.key
   output_image               = each.value.output_image
@@ -115,8 +117,6 @@ module "build" {
   strategy_size              = each.value.strategy_size
   strategy_spec_file         = each.value.strategy_spec_file
   timeout                    = each.value.timeout
-  ibmcloud_api_key           = var.ibmcloud_api_key
-  existing_resource_group_id = var.resource_group_id
 }
 
 ##############################################################################
