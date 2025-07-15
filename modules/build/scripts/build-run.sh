@@ -51,7 +51,7 @@ echo "Waiting for build run $run_build_name to complete..."
 retries=0
 
 while true; do
-    ibmcloud target -r "${REGION}" -g "${RESOURCE_GROUP_ID}" 
+    ibmcloud target -r "${REGION}" -g "${RESOURCE_GROUP_ID}"
     status=$(ibmcloud ce buildrun get --name "$run_build_name" --output json | jq -r '.status')
     echo "Status: $status"
     if [[ "$status" == "succeeded" ]]; then
