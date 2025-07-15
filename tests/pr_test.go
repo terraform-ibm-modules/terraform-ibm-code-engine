@@ -65,7 +65,6 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 
 func TestRunAppsExamplesInSchematics(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
@@ -120,7 +119,6 @@ func TestRunJobsExample(t *testing.T) {
 
 func TestRunAppSolutionInSchematics(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
@@ -167,7 +165,6 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 
 func TestRunUpgradeAppSolution(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
@@ -202,7 +199,6 @@ func TestRunUpgradeAppSolution(t *testing.T) {
 
 func TestUpgradeCEProjectDA(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:                    t,
@@ -228,7 +224,6 @@ func TestUpgradeCEProjectDA(t *testing.T) {
 
 func TestDeployCEProjectDA(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	// Verify ibmcloud_api_key variable is set
 	checkVariable := "TF_VAR_ibmcloud_api_key"
@@ -387,7 +382,6 @@ func writeTfvarsFile(t *testing.T, path string, vars map[string]interface{}) err
 // test edge case when only empty project is created
 func TestCEProjectDABasic(t *testing.T) {
 	t.Parallel()
-	t.Skip()
 
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,

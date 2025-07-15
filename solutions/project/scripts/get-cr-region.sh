@@ -6,6 +6,8 @@ REGION=$(echo "$INPUT" | jq -r '.REGION')
 RESOURCE_GROUP_ID=$(echo "$INPUT" | jq -r '.RESOURCE_GROUP_ID')
 IBMCLOUD_API_KEY=$(echo "$INPUT" | jq -r '.IBMCLOUD_API_KEY')
 export IBMCLOUD_API_KEY
+IBMCLOUD_CONFIG_HOME=$(mktemp -d)
+export IBMCLOUD_CONFIG_HOME
 
 if [[ -z "${IBMCLOUD_API_KEY}" || "${IBMCLOUD_API_KEY}" == "null" ]]; then
   echo '{"error": "IBMCLOUD_API_KEY is required"}'
