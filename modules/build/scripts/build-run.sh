@@ -76,6 +76,7 @@ while true; do
         # System logged out, needs re-authentication.
         ibmcloud_login
         ibmcloud ce project select -n "${CE_PROJECT_NAME}"
+        ibmcloud ce buildrun list
     fi
 
     #  if max time timeout then finish with error
