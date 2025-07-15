@@ -1,6 +1,18 @@
 #!/bin/bash
 set -e
 
+# Log in to IBM Cloud
+function ibmcloud_login() {
+    printf "\n#### IBM CLOUD LOGIN ####\n\n"
+    attempts=1
+    until ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP_ID}" --quiet || [ $attempts -ge 3 ]; do
+        attempts=$((attempts + 1))
+        echo "Error logging in to IBM Cloud CLI..."
+        sleep 3
+    done
+    printf "\nLogin complete\n"
+}
+
 # max wait time = 60 × 10s = 10 minutes
 MAX_RETRIES=60
 RETRY_INTERVAL=10  # seconds
@@ -30,7 +42,7 @@ if [[ -z "${BUILD_NAME}" ]]; then
   exit 1
 fi
 
-ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP_ID}" --quiet
+ibmcloud_login
 
 # selecet the right code engine project
 ibmcloud ce project select -n "${CE_PROJECT_NAME}"
@@ -51,9 +63,9 @@ echo "Waiting for build run $run_build_name to complete..."
 retries=0
 
 while true; do
-    ibmcloud target -r "${REGION}" -g "${RESOURCE_GROUP_ID}"
+    # ibmcloud target -r "${REGION}" -g "${RESOURCE_GROUP_ID}"
     status=$(ibmcloud ce buildrun get --name "$run_build_name" --output json | jq -r '.status')
-    echo "Status: $status"
+    echo "Status: '$status'"
     if [[ "$status" == "succeeded" ]]; then
         echo "Build $BUILD_NAME succeeded"
         break

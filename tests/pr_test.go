@@ -87,7 +87,11 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 	})
-
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			fmt.Sprintf("module.code_engine.module.app[\"%s-app\"].ibm_code_engine_app.ce_app", options.Prefix),
+		},
+	}
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
@@ -136,7 +140,12 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 	})
-
+	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
+		},
+	}
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "existing_resource_group_name", Value: options.ResourceGroup, DataType: "string"},
