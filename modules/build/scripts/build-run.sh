@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+IBMCLOUD_CONFIG_HOME=$(mktemp -d)
+export IBMCLOUD_CONFIG_HOME
+
 # Log in to IBM Cloud
 function ibmcloud_login() {
     printf "\n#### IBM CLOUD LOGIN ####\n\n"
