@@ -89,7 +89,8 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 	})
 	options.IgnoreUpdates = testhelper.Exemptions{
 		List: []string{
-			fmt.Sprintf("module.code_engine.module.app[\"%s-app\"].ibm_code_engine_app.ce_app", options.Prefix),
+			"module.code_engine.module.app[\"" + options.Prefix + "-app-app\"].ibm_code_engine_app.ce_app",
+			"module.code_engine.module.app[\"" + options.Prefix + "-app-app2\"].ibm_code_engine_app.ce_app",
 		},
 	}
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{

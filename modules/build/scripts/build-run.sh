@@ -72,6 +72,10 @@ while true; do
     elif [[ "$status" == "Failed" || "$status" == "Error" ]]; then
         echo "Error: Build $BUILD_NAME has status '{$status}'"
         exit 1
+    elif [[ -z "$status" ]]; then
+        # System logged out, needs re-authentication.
+        ibmcloud_login
+        ibmcloud ce project select -n "${CE_PROJECT_NAME}"
     fi
 
     #  if max time timeout then finish with error
