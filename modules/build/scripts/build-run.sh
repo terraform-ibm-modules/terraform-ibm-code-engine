@@ -42,6 +42,7 @@ if [[ -z "${BUILD_NAME}" ]]; then
   exit 1
 fi
 
+# ibm cloud login
 ibmcloud_login
 
 # selecet the right code engine project
@@ -72,11 +73,6 @@ while true; do
     elif [[ "$status" == "Failed" || "$status" == "Error" ]]; then
         echo "Error: Build $BUILD_NAME has status '{$status}'"
         exit 1
-    elif [[ -z "$status" ]]; then
-        # System logged out, needs re-authentication.
-        ibmcloud_login
-        ibmcloud ce project select -n "${CE_PROJECT_NAME}"
-        ibmcloud ce buildrun list
     fi
 
     #  if max time timeout then finish with error
