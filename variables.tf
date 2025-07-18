@@ -7,6 +7,13 @@ variable "resource_group_id" {
   type        = string
 }
 
+variable "ibmcloud_api_key" {
+  type        = string
+  description = "The IBM Cloud API key."
+  sensitive   = true
+  default     = null
+}
+
 variable "project_name" {
   description = "The name of the project to which code engine resources will be added. It is required if var.existing_project_id is null."
   type        = string
