@@ -24,7 +24,7 @@ variable "name" {
 }
 
 variable "output_image" {
-  description = "A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started). If not specified"
+  description = "The name of the image."
   type        = string
 }
 
