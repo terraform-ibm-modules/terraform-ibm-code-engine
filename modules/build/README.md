@@ -54,10 +54,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_existing_resource_group_id"></a> [existing\_resource\_group\_id](#input\_existing\_resource\_group\_id) | The ID of an existing resource group to provision resources in to. | `string` | n/a | yes |
+| <a name="input_existing_resource_group_id"></a> [existing\_resource\_group\_id](#input\_existing\_resource\_group\_id) | The ID of an existing resource group where build will be provisioned. | `string` | n/a | yes |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The IBM Cloud API key. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the build. | `string` | n/a | yes |
-| <a name="input_output_image"></a> [output\_image](#input\_output\_image) | The name of the image. | `string` | `null` | no |
+| <a name="input_output_image"></a> [output\_image](#input\_output\_image) | A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started). If not specified | `string` | n/a | yes |
 | <a name="input_output_secret"></a> [output\_secret](#input\_output\_secret) | The secret that is required to access the image registry. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where build will be created. | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The region in which to provision the build. | `string` | `"us-south"` | no |

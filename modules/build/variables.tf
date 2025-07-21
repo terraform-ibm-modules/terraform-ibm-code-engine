@@ -9,7 +9,7 @@ variable "ibmcloud_api_key" {
 }
 
 variable "existing_resource_group_id" {
-  description = "The ID of an existing resource group to provision resources in to."
+  description = "The ID of an existing resource group where build will be provisioned."
   type        = string
 }
 
@@ -24,9 +24,8 @@ variable "name" {
 }
 
 variable "output_image" {
-  description = "The name of the image."
+  description = "A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started). If not specified"
   type        = string
-  default     = null
 }
 
 variable "output_secret" {

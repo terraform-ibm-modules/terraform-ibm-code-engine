@@ -9,9 +9,18 @@ variable "resource_group_id" {
 
 variable "ibmcloud_api_key" {
   type        = string
-  description = "The IBM Cloud API key."
+  description = "The IBM Cloud API key. Required only when 'builds' are specified and used."
   sensitive   = true
   default     = null
+  # ibmcloud_api_key must be set only when var.builds is not empty to run the "build run"
+  validation {
+    condition     = length(var.builds) == 0 || var.ibmcloud_api_key != null
+    error_message = "The 'ibmcloud_api_key' must be set if 'builds' is not empty to run the build process."
+  }
+  validation {
+    condition     = (var.ibmcloud_api_key == null || length(var.builds) > 0)
+    error_message = "If 'ibmcloud_api_key' is set, 'builds' must not be empty."
+  }
 }
 
 variable "project_name" {
@@ -134,7 +143,7 @@ variable "secrets" {
 }
 
 variable "builds" {
-  description = "A map of code engine builds to be created."
+  description = "A map of code engine builds to be created. Requires 'ibmcloud_api_key' to be set for authentication and execution."
   type = map(object({
     output_image       = string
     output_secret      = string # pragma: allowlist secret
