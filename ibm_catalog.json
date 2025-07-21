@@ -10,7 +10,8 @@
         "terraform",
         "solution",
         "support_ibm",
-        "integration"
+        "integration",
+        "converged_infra"
       ],
       "keywords": [
         "code engine",
