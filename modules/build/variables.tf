@@ -9,7 +9,7 @@ variable "ibmcloud_api_key" {
 }
 
 variable "existing_resource_group_id" {
-  description = "The ID of an existing resource group where build will be provisioned."
+  description = "The ID of an existing resource group where build will be provisioned. This must be the same resource group in which the code engine project was created."
   type        = string
 }
 
@@ -35,7 +35,7 @@ variable "output_secret" {
 
 variable "region" {
   type        = string
-  description = "The region in which to provision the build."
+  description = "The region in which to provision the build. This must be the same region in which the code engine project was created."
   default     = "us-south"
 }
 
