@@ -2,6 +2,17 @@
 # Input Variables
 ########################################################################################################################
 
+variable "ibmcloud_api_key" {
+  type        = string
+  description = "The IBM Cloud API key."
+  sensitive   = true
+}
+
+variable "existing_resource_group_id" {
+  description = "The ID of an existing resource group where build will be provisioned. This must be the same resource group in which the code engine project was created."
+  type        = string
+}
+
 variable "project_id" {
   description = "The ID of the project where build will be created."
   type        = string
@@ -20,6 +31,12 @@ variable "output_image" {
 variable "output_secret" {
   description = "The secret that is required to access the image registry."
   type        = string
+}
+
+variable "region" {
+  type        = string
+  description = "The region in which to provision the build. This must be the same region in which the code engine project was created."
+  default     = "us-south"
 }
 
 variable "source_context_dir" {

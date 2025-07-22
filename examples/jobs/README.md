@@ -6,3 +6,4 @@ An end-to-end jobs example that will provision the following:
 - Code Engine Job
 - Code Engine Generic Secret
 - Code Engine Build
+- Run Code Engine Build
