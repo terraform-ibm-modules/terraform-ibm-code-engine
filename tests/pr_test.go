@@ -55,8 +55,9 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 		},
 	}
 	options.TerraformVars = map[string]interface{}{
-		"resource_group": resourceGroup,
-		"prefix":         options.Prefix,
+		"resource_group":   resourceGroup,
+		"prefix":           options.Prefix,
+		"ibmcloud_api_key": options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
 	}
 
 	return options
@@ -86,7 +87,12 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 	})
-
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.app[\"" + options.Prefix + "-app-app\"].ibm_code_engine_app.ce_app",
+			"module.code_engine.module.app[\"" + options.Prefix + "-app-app2\"].ibm_code_engine_app.ce_app",
+		},
+	}
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
@@ -103,7 +109,6 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 }
 
 func TestRunJobsExample(t *testing.T) {
-	t.Parallel()
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
@@ -135,7 +140,12 @@ func TestRunAppSolutionInSchematics(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 	})
-
+	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.app[\"" + options.Prefix + "-app\"].ibm_code_engine_app.ce_app",
+		},
+	}
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "existing_resource_group_name", Value: options.ResourceGroup, DataType: "string"},
@@ -251,6 +261,7 @@ func TestDeployCEProjectDA(t *testing.T) {
 		"project_name":                 prefix,
 		"existing_resource_group_name": resourceGroup,
 		"container_registry_namespace": fmt.Sprintf("test_%s_ns", prefix),
+		"ibmcloud_api_key":             existingResourceOptions.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
 		"builds": map[string]interface{}{
 			fmt.Sprintf("%s-build", prefix): map[string]interface{}{
 				"output_image":  fmt.Sprintf("private.us.icr.io/%s/%s", existingResourceOptions.LastTestTerraformOutputs["cr_name"].(string), prefix),

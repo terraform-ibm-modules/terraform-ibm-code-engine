@@ -19,3 +19,23 @@ resource "ibm_code_engine_build" "ce_build" {
   strategy_spec_file = var.strategy_spec_file
   timeout            = var.timeout
 }
+
+data "ibm_code_engine_project" "code_engine_project" {
+  project_id = var.project_id
+}
+
+resource "terraform_data" "run_build" {
+  depends_on = [ibm_code_engine_build.ce_build]
+
+  provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
+    command     = "${path.module}/scripts/build-run.sh"
+    environment = {
+      IBMCLOUD_API_KEY  = var.ibmcloud_api_key
+      RESOURCE_GROUP_ID = var.existing_resource_group_id
+      CE_PROJECT_NAME   = data.ibm_code_engine_project.code_engine_project.name
+      REGION            = var.region
+      BUILD_NAME        = ibm_code_engine_build.ce_build.name
+    }
+  }
+}
