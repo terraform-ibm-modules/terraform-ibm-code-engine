@@ -306,7 +306,8 @@
                 "original_grouping": "deployment"
               }
             }
-          ]
+          ],
+          "terraform_version": "1.10.5"
         },
         {
           "label": "New Code Engine project",
@@ -462,7 +463,8 @@
             {
               "key": "secrets"
             }
-          ]
+          ],
+          "terraform_version": "1.10.5"
         }
       ]
     }
