@@ -389,10 +389,7 @@
               }
             },
             {
-              "key": "project_name"
-            },
-            {
-              "key": "app",
+              "key": "project_name",
               "required": true
             },
             {
@@ -450,8 +447,64 @@
               }
             },
             {
-              "key": "builds",
-              "required": true
+              "key": "source_type"
+            },
+            {
+              "key": "source_url"
+            },
+            {
+              "key": "source_secret"
+            },
+            {
+              "key": "source_revision"
+            },
+            {
+              "key": "source_context_dir"
+            },
+            {
+              "key": "output_secret"
+            },
+            {
+              "key": "output_image"
+            },
+            {
+              "key": "managed_domain_mappings"
+            },
+            {
+              "key": "build_name"
+            },
+            {
+              "key": "app_scale_memory_limit"
+            },
+            {
+              "key": "app_scale_ephemeral_storage_limit"
+            },
+            {
+              "key": "app_scale_cpu_limit"
+            },
+            {
+              "key": "app_name"
+            },
+            {
+              "key": "app_image_secret"
+            },
+            {
+              "key": "app_image_reference"
+            },
+            {
+              "key": "app_image_port"
+            },
+            {
+              "key": "strategy_size"
+            },
+            {
+              "key": "strategy_spec_file"
+            },
+            {
+              "key": "strategy_type"
+            },
+            {
+              "key": "timeout"
             },
             {
               "key": "container_registry_namespace"
