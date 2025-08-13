@@ -94,10 +94,15 @@ variable "project_name" {
 variable "build_name" {
   description = "The name of the build."
   type        = string
+  default = "helloworld"
 }
 
 variable "output_image" {
-  description = "The name of the image."
+    description = <<EOT
+If not explicitly set, this value will be automatically constructed using the `container_registry_namespace` input variable.
+
+WARNING: Ensure that `container_registry_namespace` is set and not null — it is required for automatic generation of this value.
+EOT
   type        = string
   default     = null
 }
@@ -111,13 +116,13 @@ variable "output_secret" {
 variable "source_context_dir" {
   description = "The directory in the repository that contains the buildpacks file or the Dockerfile."
   type        = string
-  default     = null
+  default     = "hello"
 }
 
 variable "source_revision" {
   description = "Commit, tag, or branch in the source repository to pull."
   type        = string
-  default     = null
+  default     = "main"
 }
 
 variable "source_secret" {
@@ -135,6 +140,7 @@ variable "source_type" {
 variable "source_url" {
   description = "The URL of the code repository."
   type        = string
+  default = "https://github.com/IBM/CodeEngine"
 }
 
 variable "strategy_size" {
@@ -152,6 +158,7 @@ variable "strategy_spec_file" {
 variable "strategy_type" {
   description = "The strategy to use for building the image."
   type        = string
+  default = "dockerfile"
 }
 
 variable "timeout" {
