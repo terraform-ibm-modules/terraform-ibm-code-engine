@@ -94,17 +94,18 @@ variable "project_name" {
 variable "build_name" {
   description = "The name of the build."
   type        = string
-  default = "helloworld"
+  default     = "helloworld"
 }
 
 variable "output_image" {
-    description = <<EOT
-If not explicitly set, this value will be automatically constructed using the `container_registry_namespace` input variable.
+  description = <<EOT
+A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started).
 
-WARNING: Ensure that `container_registry_namespace` is set and not null — it is required for automatic generation of this value.
+If not provided, the value will be derived from the 'container_registry_namespace' input variable, which must not be null in that case.
 EOT
-  type        = string
-  default     = null
+
+  type    = string
+  default = null
 }
 
 variable "output_secret" {
@@ -140,7 +141,7 @@ variable "source_type" {
 variable "source_url" {
   description = "The URL of the code repository."
   type        = string
-  default = "https://github.com/IBM/CodeEngine"
+  default     = "https://github.com/IBM/CodeEngine"
 }
 
 variable "strategy_size" {
@@ -158,7 +159,7 @@ variable "strategy_spec_file" {
 variable "strategy_type" {
   description = "The strategy to use for building the image."
   type        = string
-  default = "dockerfile"
+  default     = "dockerfile"
 }
 
 variable "timeout" {
@@ -170,7 +171,7 @@ variable "timeout" {
 variable "container_registry_namespace" {
   description = "The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Used only for builds that do not have output_image set."
   type        = string
-  default     = null
+  default     = "ce-cr-namespace"
 
   # validation {
   #   condition = alltrue([

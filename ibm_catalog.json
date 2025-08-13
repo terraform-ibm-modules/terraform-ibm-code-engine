@@ -450,7 +450,8 @@
               "key": "source_type"
             },
             {
-              "key": "source_url"
+              "key": "source_url",
+              "required": true
             },
             {
               "key": "source_secret"
@@ -507,7 +508,8 @@
               "key": "timeout"
             },
             {
-              "key": "container_registry_namespace"
+              "key": "container_registry_namespace",
+              "required": true
             },
             {
               "key": "domain_mappings"
