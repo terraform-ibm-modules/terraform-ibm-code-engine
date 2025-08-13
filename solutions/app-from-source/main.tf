@@ -81,18 +81,19 @@ module "build" {
   project_id                 = module.project.project_id
   name                       = var.build_name
   output_image               = local.output_image
-  output_secret              = var.output_secret != null ? var.output_secret : local.registry_secret_name
+  output_secret              = local.registry_secret_name
   source_url                 = var.source_url
   strategy_type              = var.strategy_type
   source_context_dir         = var.source_context_dir
   source_revision            = var.source_revision
-  source_secret              = var.source_secret
   source_type                = var.source_type
+  source_secret              = var.github_password != null && var.github_username != null ? local.github_secret_name : null
   strategy_size              = var.strategy_size
   strategy_spec_file         = var.strategy_spec_file
   timeout                    = var.timeout
   region                     = var.region
   existing_resource_group_id = module.resource_group.resource_group_id
+
 }
 
 ##############################################################################
@@ -101,7 +102,7 @@ module "build" {
 locals {
   # return tls secrets
   tls_secret_names = [
-    for name, secret in local.secrets : name
+    for name, secret in nonsensitive(local.secrets) : name
     if secret.format == "tls"
   ]
   # use the value of the first tls secret if exists
@@ -133,35 +134,68 @@ module "config_map" {
 # Code Engine Secret
 ##############################################################################
 locals {
-  registry_secret_names = [
-    for name, secret in var.secrets : name
-    if secret.format == "registry"
-  ]
-  has_registry = length(local.registry_secret_names) > 0
-
-  registry_secret_name = local.has_registry ? local.registry_secret_names[0] : "${local.prefix}registry"
-
-  secrets = local.has_registry ? var.secrets : merge(
-    var.secrets,
-    {
-      (local.registry_secret_name) = {
-        format = "registry"
-        data = {
-          password = var.ibmcloud_api_key,
-          username = "iamapikey",
-          server   = local.container_registry
-        }
+  github_secret_name = "${local.prefix}github-secret"
+  github_secret = var.github_password != null && var.github_username != null ? {
+    (local.github_secret_name) = {
+      format = "generic"
+      "data" = {
+        "password" = var.github_password,
+        username   = var.github_username
       }
     }
-  )
+  } : {}
+
+  registry_secret_name = "${local.prefix}registry-secret"
+  registry_secret = {
+    (local.registry_secret_name) = {
+      format = "registry"
+      "data" = {
+        password = var.ibmcloud_api_key,
+        username = "iamapikey",
+        server   = local.container_registry
+      }
+    }
+  }
+
+  secrets = merge(local.registry_secret, local.github_secret)
+
+  # secrets_for_each = {
+  #   for key, val in local.secrets : key => {
+  #     format = val.format
+  #     # Leave out sensitive data from for_each evaluation
+  #   }
+  # }
+
+  # registry_secret_names = [
+  #   for name, secret in var.secrets : name
+  #   if secret.format == "registry"
+  # ]
+  # has_registry = length(local.registry_secret_names) > 0
+
+
+
+  # secrets = local.has_registry ? var.secrets : merge(
+  #   var.secrets,
+  #   {
+  #     (local.registry_secret_name) = {
+  #       format = "registry"
+  #       data = {
+  #         password = var.ibmcloud_api_key,
+  #         username = "iamapikey",
+  #         server   = local.container_registry
+  #       }
+  #     }
+  #   }
+  # )
+
 }
 
 module "secret" {
   source     = "../../modules/secret"
-  for_each   = local.secrets
+  for_each   = nonsensitive(local.secrets)
   project_id = module.project.project_id
   name       = each.key
-  data       = sensitive(each.value.data)
+  data       = each.value.data
   format     = each.value.format
   # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
   # service_access = each.value.service_access

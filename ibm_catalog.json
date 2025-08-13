@@ -140,10 +140,6 @@
               "key": "project_name"
             },
             {
-              "key": "app",
-              "required": true
-            },
-            {
               "key": "region",
               "options": [
                 {
@@ -195,16 +191,14 @@
                 "type": "textarea",
                 "grouping": "deployment",
                 "original_grouping": "deployment"
-              }
+              },
+              "hidden": true
             },
             {
               "key": "domain_mappings"
             },
             {
               "key": "config_maps"
-            },
-            {
-              "key": "secrets"
             },
             {
               "key": "bindings"
@@ -351,17 +345,16 @@
                 "type": "textarea",
                 "grouping": "deployment",
                 "original_grouping": "deployment"
-              }
+              },
+              "hidden": true
             },
             {
-              "key": "source_type"
+              "key": "source_type",
+              "hidden": true
             },
             {
               "key": "source_url",
               "required": true
-            },
-            {
-              "key": "source_secret"
             },
             {
               "key": "source_revision"
@@ -369,8 +362,12 @@
             {
               "key": "source_context_dir"
             },
+
             {
-              "key": "output_secret"
+              "key": "github_password"
+            },
+            {
+              "key": "github_username"
             },
             {
               "key": "output_image"
@@ -423,9 +420,6 @@
             },
             {
               "key": "config_maps"
-            },
-            {
-              "key": "secrets"
             },
             {
               "key": "bindings"
