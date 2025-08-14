@@ -213,6 +213,7 @@ locals {
 
 module "app" {
   source = "../../modules/app"
+  depends_on = [ module.build ]
   # count                         = var.app == null ? 0 : 1
   name            = local.app_name
   image_reference = local.image_reference
@@ -237,6 +238,7 @@ module "app" {
   scale_memory_limit = var.app_scale_memory_limit != null ? var.app_scale_memory_limit : local.app_scale_memory_limit
   # scale_min_instances           = var.app.scale_min_instances
   scale_request_timeout = var.app_scale_request_timeout
+  
 }
 
 ##############################################################################
