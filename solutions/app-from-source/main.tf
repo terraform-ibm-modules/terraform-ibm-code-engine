@@ -207,8 +207,8 @@ module "secret" {
 locals {
   image_reference = var.app_image_reference != null ? var.app_image_reference : module.build.output_image
 
-  app_scale_cpu_limit = tonumber(regex("^([0-9.]+)", var.app_scale_cpu_memory)[0])
-  app_scale_memory_limit   = tonumber(regex("/ ([0-9.]+)", var.app_scale_cpu_memory)[0])
+  app_scale_cpu_limit    = tonumber(regex("^([0-9.]+)", var.app_scale_cpu_memory)[0])
+  app_scale_memory_limit = tonumber(regex("/ ([0-9.]+)", var.app_scale_cpu_memory)[0])
 }
 
 module "app" {
@@ -226,17 +226,17 @@ module "app" {
   # run_env_variables   = var.run_env_variables
   # run_service_account = var.run_service_account
   # run_volume_mounts   = var.run_volume_mounts
-  managed_domain_mappings = var.managed_domain_mappings
-  # scale_concurrency             = var.app.scale_concurrency
-  # scale_concurrency_target      = var.app.scale_concurrency_target
-  scale_cpu_limit = local.app_scale_cpu_limit
-  # scale_down_delay              = var.app.scale_down_delay
+  managed_domain_mappings       = var.managed_domain_mappings
+  scale_concurrency             = var.app_scale_concurrency
+  scale_concurrency_target      = var.app_scale_concurrency_target
+  scale_cpu_limit               = var.app_scale_cpu_limit != null ? var.app_scale_cpu_limit : local.app_scale_cpu_limit
+  scale_down_delay              = var.app_scale_down_delay
   scale_ephemeral_storage_limit = var.app_scale_ephemeral_storage_limit
   # scale_initial_instances       = var.app.scale_initial_instances
   # scale_max_instances           = var.app.scale_max_instances
-  scale_memory_limit = local.app_scale_memory_limit
+  scale_memory_limit = var.app_scale_memory_limit != null ? var.app_scale_memory_limit : local.app_scale_memory_limit
   # scale_min_instances           = var.app.scale_min_instances
-  # scale_request_timeout         = var.app.scale_request_timeout
+  scale_request_timeout = var.app_scale_request_timeout
 }
 
 ##############################################################################

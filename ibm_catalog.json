@@ -362,7 +362,9 @@
             {
               "key": "source_context_dir"
             },
-
+            {
+              "key": "build_name"
+            },
             {
               "key": "github_password"
             },
@@ -373,10 +375,24 @@
               "key": "output_image"
             },
             {
-              "key": "managed_domain_mappings"
+              "key": "container_registry_namespace"
             },
             {
-              "key": "build_name"
+              "key": "managed_domain_mappings",
+               "options": [
+                {
+                  "displayname": "Public",
+                  "value": "local_public"
+                },
+                {
+                  "displayname": "Private",
+                  "value": "local_private"
+                },
+                 {
+                  "displayname": "Project-Only",
+                  "value": "local"
+                }
+              ]
             },
             {
               "key": "app_scale_cpu_memory",
@@ -506,7 +522,8 @@
               "key": "app_name"
             },
             {
-              "key": "app_image_secret"
+              "key": "app_image_secret",
+              "hidden": true
             },
             {
               "key": "app_image_reference",
@@ -516,20 +533,34 @@
               "key": "app_image_port"
             },
             {
-              "key": "strategy_size"
+              "key": "app_scale_concurrency",
+              "hidden": true
             },
             {
-              "key": "strategy_spec_file"
+              "key": "app_scale_concurrency_target",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_request_timeout",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_down_delay",
+              "hidden": true
+            },
+            {
+              "key": "strategy_size",
+               "hidden": true
+            },
+            {
+              "key": "strategy_spec_file",
+               "hidden": true
             },
             {
               "key": "strategy_type"
             },
             {
               "key": "timeout"
-            },
-            {
-              "key": "container_registry_namespace",
-              "required": true
             },
             {
               "key": "domain_mappings"

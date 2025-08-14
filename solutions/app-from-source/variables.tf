@@ -145,7 +145,11 @@ variable "source_url" {
 }
 
 variable "strategy_size" {
-  description = "The size for the build, which determines the amount of resources used."
+  description = <<EOT
+The size for the build, which determines the amount of resources used. Build sizes are small, medium, large, xlarge, xxlarge.
+
+If 'strategy_size' is set to 'null' then default value is used - medium. The maximum length is 253 characters. The minimum length is 1 character. The value must match regular expression /[\\S]*/"
+EOT
   type        = string
   default     = null
 }
@@ -174,12 +178,12 @@ variable "container_registry_namespace" {
   default     = "ce-cr-namespace"
 
   validation {
-    condition = var.output_image != null || var.container_registry_namespace != null
+    condition     = var.output_image != null || var.container_registry_namespace != null
     error_message = "'container_registry_namespace' is required if output_image is not set."
   }
 
-   validation {
-    condition = var.output_image != null && var.container_registry_namespace != null
+  validation {
+    condition     = var.output_image != null && var.container_registry_namespace != null
     error_message = "Both 'output_image' and 'container_registry_namespace' cannot be set at the same time."
   }
 }
@@ -333,7 +337,7 @@ variable "app_name" {
 variable "app_image_reference" {
   description = "A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started)"
   type        = string
-  default = null
+  default     = null
   # default     = "icr.io/codeengine/helloworld"
 }
 
@@ -344,9 +348,9 @@ variable "app_image_secret" {
 }
 
 variable "app_scale_cpu_memory" {
-    description = "Define the amount of CPU and memory resources for each instance. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo)"
-    type        = string
-    default     = "1 vCPU / 4 GB"
+  description = "Define the amount of CPU and memory resources for each instance. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo)"
+  type        = string
+  default     = "1 vCPU / 4 GB"
 }
 
 variable "app_image_port" {
@@ -356,7 +360,7 @@ variable "app_image_port" {
 }
 
 variable "managed_domain_mappings" {
-  description = "Define which of the following values for the system-managed domain mappings to set up for the application: `local_public`, `local_private`, and `local`. See https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads#optionsvisibility"
+  description = "Define which of the following values for the system-managed domain mappings to set up for the application. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads#optionsvisibility)"
   type        = string
   default     = null
   validation {
@@ -379,13 +383,38 @@ variable "app_scale_memory_limit" {
 
 variable "app_scale_ephemeral_storage_limit" {
   description = <<EOT
-The amount of ephemeral storage to set for the instance of the app. 
-The units for specifying ephemeral storage are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements).
+The amount of ephemeral storage to set for the instance of the app.
+The units for specifying ephemeral storage are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements)
 
-The value must match regular expression /^([0-9.]+)([eEinumkKMGTPB]*)$/.
+
+The value must match regular expression '/^([0-9.]+)([eEinumkKMGTPB]*)$/'.
 EOT
   type        = string
   default     = "400M"
+}
+
+variable "app_scale_concurrency" {
+  description = "The maximum number of requests that can be processed concurrently per instance."
+  type        = number
+  default     = 100
+}
+
+variable "app_scale_concurrency_target" {
+  description = "The threshold of concurrent requests per instance at which one or more additional instances are created."
+  type        = number
+  default     = null
+}
+
+variable "app_scale_request_timeout" {
+  description = "The amount of time in seconds that is allowed for a running app to respond to a request."
+  type        = number
+  default     = 300
+}
+
+variable "app_scale_down_delay" {
+  description = "The amount of time in seconds that delays the scale-down behavior for an app instance."
+  type        = number
+  default     = 0
 }
 
 ##############################################################################
