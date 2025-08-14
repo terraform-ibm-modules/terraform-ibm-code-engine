@@ -379,13 +379,128 @@
               "key": "build_name"
             },
             {
-              "key": "app_scale_memory_limit"
+              "key": "app_scale_cpu_memory",
+              "options": [
+                {
+                  "displayname": "0.125 vCPU / 0.25 GB",
+                  "value": "0.125 vCPU / 0.25 GB"
+                },
+                {
+                  "displayname": "0.125 vCPU / 0.5 GB",
+                  "value": "0.125 vCPU / 0.5 GB"
+                },
+                {
+                  "displayname": "0.125 vCPU / 1 GB",
+                  "value": "0.125 vCPU / 1 GB"
+                },
+                {
+                  "displayname": "0.25 vCPU / 0.5 GB",
+                  "value": "0.25 vCPU / 0.5 GB"
+                },
+                {
+                  "displayname": "0.25 vCPU / 1 GB",
+                  "value": "0.25 vCPU / 1 GB"
+                },
+                {
+                  "displayname": "0.25 vCPU / 2 GB",
+                  "value": "0.25 vCPU / 2 GB"
+                },
+                {
+                  "displayname": "0.5 vCPU / 1 GB",
+                  "value": "0.5 vCPU / 1 GB"
+                },
+                {
+                  "displayname": "0.5 vCPU / 2 GB",
+                  "value": "0.5 vCPU / 2 GB"
+                },
+                {
+                  "displayname": "0.5 vCPU / 4 GB",
+                  "value": "0.5 vCPU / 4 GB"
+                },
+                {
+                  "displayname": "1 vCPU / 2 GB",
+                  "value": "1 vCPU / 2 GB"
+                },
+                {
+                  "displayname": "1 vCPU / 4 GB",
+                  "value": "1 vCPU / 4 GB"
+                },
+                {
+                  "displayname": "1 vCPU / 8 GB",
+                  "value": "1 vCPU / 8 GB"
+                },
+                {
+                  "displayname": "2 vCPU / 4 GB",
+                  "value": "2 vCPU / 4 GB"
+                },
+                {
+                  "displayname": "2 vCPU / 8 GB",
+                  "value": "2 vCPU / 8 GB"
+                },
+                {
+                  "displayname": "2 vCPU / 16 GB",
+                  "value": "2 vCPU / 16 GB"
+                },
+                {
+                  "displayname": "4 vCPU / 8 GB",
+                  "value": "4 vCPU / 8 GB"
+                },
+                {
+                  "displayname": "4 vCPU / 16 GB",
+                  "value": "4 vCPU / 16 GB"
+                },
+                {
+                  "displayname": "4 vCPU / 32 GB",
+                  "value": "4 vCPU / 32 GB"
+                },
+                {
+                  "displayname": "6 vCPU / 12 GB",
+                  "value": "6 vCPU / 12 GB"
+                },
+                {
+                  "displayname": "6 vCPU / 24 GB",
+                  "value": "6 vCPU / 24 GB"
+                },
+                {
+                  "displayname": "6 vCPU / 48 GB",
+                  "value": "6 vCPU / 48 GB"
+                },
+                {
+                  "displayname": "8 vCPU / 16 GB",
+                  "value": "8 vCPU / 16 GB"
+                },
+                {
+                  "displayname": "8 vCPU / 32 GB",
+                  "value": "8 vCPU / 32 GB"
+                },
+                {
+                  "displayname": "10 vCPU / 20 GB",
+                  "value": "10 vCPU / 20 GB"
+                },
+                {
+                  "displayname": "10 vCPU / 40 GB",
+                  "value": "10 vCPU / 40 GB"
+                },
+                {
+                  "displayname": "12 vCPU / 24 GB",
+                  "value": "12 vCPU / 24 GB"
+                },
+                {
+                  "displayname": "12 vCPU / 48 GB",
+                  "value": "12 vCPU / 48 GB"
+                }
+              ]
+            },
+            {
+              "key": "app_scale_memory_limit",
+              "hidden": true
             },
             {
               "key": "app_scale_ephemeral_storage_limit"
             },
             {
-              "key": "app_scale_cpu_limit"
+              "key": "app_scale_cpu_limit",
+              "hidden": true
             },
             {
               "key": "app_name"
@@ -394,7 +509,8 @@
               "key": "app_image_secret"
             },
             {
-              "key": "app_image_reference"
+              "key": "app_image_reference",
+              "hidden": true
             },
             {
               "key": "app_image_port"
