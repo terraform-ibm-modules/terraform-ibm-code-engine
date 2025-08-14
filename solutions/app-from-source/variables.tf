@@ -183,7 +183,7 @@ variable "container_registry_namespace" {
   }
 
   validation {
-   condition = (
+    condition = (
       (var.output_image != null && var.container_registry_namespace == null) ||
       (var.output_image == null && var.container_registry_namespace != null)
     )
