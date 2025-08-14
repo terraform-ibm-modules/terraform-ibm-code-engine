@@ -459,20 +459,20 @@
               "key": "build_name"
             },
             {
-              "key": "github_password"
-            },
-            {
-              "key": "github_username"
-            },
-            {
               "key": "output_image"
             },
             {
               "key": "container_registry_namespace"
             },
             {
+              "key": "github_password"
+            },
+            {
+              "key": "github_username"
+            },
+            {
               "key": "managed_domain_mappings",
-               "options": [
+              "options": [
                 {
                   "displayname": "Public",
                   "value": "local_public"
@@ -481,7 +481,7 @@
                   "displayname": "Private",
                   "value": "local_private"
                 },
-                 {
+                {
                   "displayname": "Project-Only",
                   "value": "local"
                 }
