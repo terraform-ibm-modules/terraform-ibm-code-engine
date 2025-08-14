@@ -70,7 +70,11 @@ variable "source_url" {
 }
 
 variable "strategy_size" {
-  description = "The size for the build, which determines the amount of resources used."
+  description = <<EOT
+The size for the build, which determines the amount of resources used. Build sizes are small, medium, large, xlarge, xxlarge.
+
+If 'strategy_size' is set to 'null' then default value is used - medium. The maximum length is 253 characters. The minimum length is 1 character. The value must match regular expression /[\\S]*/"
+EOT
   type        = string
   default     = null
 }
