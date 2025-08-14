@@ -183,8 +183,11 @@ variable "container_registry_namespace" {
   }
 
   validation {
-    condition     = var.output_image != null && var.container_registry_namespace != null
-    error_message = "Both 'output_image' and 'container_registry_namespace' cannot be set at the same time."
+   condition = (
+      (var.output_image != null && var.container_registry_namespace == null) ||
+      (var.output_image == null && var.container_registry_namespace != null)
+    )
+    error_message = "Exactly one of 'output_image' or 'container_registry_namespace' must be set (not both or neither)."
   }
 }
 
