@@ -139,7 +139,7 @@ variable "source_type" {
 }
 
 variable "source_url" {
-  description = "The URL of the code repository."
+  description = "The URL of the code repository. If the repository is private, you must also provide 'github_username' and 'github_password'."
   type        = string
   default     = "https://github.com/IBM/CodeEngine"
 }
@@ -169,17 +169,19 @@ variable "timeout" {
 }
 
 variable "container_registry_namespace" {
-  description = "The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Used only for builds that do not have output_image set."
+  description = "The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Must be set if 'output_image' is not set."
   type        = string
   default     = "ce-cr-namespace"
 
-  # validation {
-  #   condition = alltrue([
-  #     for build in values(var.builds) :
-  #     contains(keys(build), "output_image") && build.output_image != null
-  #   ]) || var.container_registry_namespace != null
-  #   error_message = "container_registry_namespace is required because at least one build is missing an output_image"
-  # }
+  validation {
+    condition = var.output_image != null || var.container_registry_namespace != null
+    error_message = "'container_registry_namespace' is required if output_image is not set."
+  }
+
+   validation {
+    condition = var.output_image != null && var.container_registry_namespace != null
+    error_message = "Both 'output_image' and 'container_registry_namespace' cannot be set at the same time."
+  }
 }
 
 ##############################################################################
@@ -238,8 +240,13 @@ variable "config_maps" {
 variable "github_password" {
   description = "GitHub personal access token used as a password when accessing private repositories."
   type        = string
-  # sensitive   = true
-  default = null
+  sensitive   = true
+  default     = null
+
+  validation {
+    condition     = (var.github_username == null && var.github_password == null) || (var.github_username != null && var.github_password != null)
+    error_message = "Either both 'github_password' and 'github_username' must be set, or neither."
+  }
 }
 
 variable "github_username" {
@@ -326,13 +333,20 @@ variable "app_name" {
 variable "app_image_reference" {
   description = "A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started)"
   type        = string
-  default     = "icr.io/codeengine/helloworld"
+  default = null
+  # default     = "icr.io/codeengine/helloworld"
 }
 
 variable "app_image_secret" {
   description = "The name of the access secret that is used for the image registry."
   type        = string
   default     = null
+}
+
+variable "app_scale_cpu_memory" {
+    description = "Define the amount of CPU and memory resources for each instance. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo)"
+    type        = string
+    default     = "1 vCPU / 4 GB"
 }
 
 variable "app_image_port" {
@@ -364,7 +378,12 @@ variable "app_scale_memory_limit" {
 }
 
 variable "app_scale_ephemeral_storage_limit" {
-  description = "The amount of ephemeral storage to set for the instance of the app."
+  description = <<EOT
+The amount of ephemeral storage to set for the instance of the app. 
+The units for specifying ephemeral storage are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements).
+
+The value must match regular expression /^([0-9.]+)([eEinumkKMGTPB]*)$/.
+EOT
   type        = string
   default     = "400M"
 }
