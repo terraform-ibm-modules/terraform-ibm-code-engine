@@ -192,8 +192,7 @@ variable "app_name" {
 variable "app_image_reference" {
   description = "A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started)"
   type        = string
-  default     = null
-  # default     = "icr.io/codeengine/helloworld"
+  default     = "icr.io/codeengine/helloworld"
 }
 
 variable "app_image_secret" {

@@ -127,6 +127,10 @@
               "required": true
             },
             {
+              "key": "app_image_reference",
+              "required": true
+            },
+            {
               "key": "region",
               "options": [
                 {
@@ -334,10 +338,6 @@
             },
             {
               "key": "app_image_secret",
-              "hidden": true
-            },
-            {
-              "key": "app_image_reference",
               "hidden": true
             },
             {
