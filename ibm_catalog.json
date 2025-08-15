@@ -102,177 +102,6 @@
               "key": "ibmcloud_api_key"
             },
             {
-              "key": "provider_visibility",
-              "hidden": true,
-              "options": [
-                {
-                  "displayname": "private",
-                  "value": "private"
-                },
-                {
-                  "displayname": "public",
-                  "value": "public"
-                },
-                {
-                  "displayname": "public-and-private",
-                  "value": "public-and-private"
-                }
-              ]
-            },
-            {
-              "key": "prefix",
-              "required": true
-            },
-            {
-              "key": "existing_resource_group_name",
-              "required": true,
-              "display_name": "resource_group",
-              "custom_config": {
-                "type": "resource_group",
-                "grouping": "deployment",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "identifier": "rg_name"
-                }
-              }
-            },
-            {
-              "key": "project_name"
-            },
-            {
-              "key": "region",
-              "options": [
-                {
-                  "displayname": "Dallas (us-south)",
-                  "value": "us-south"
-                },
-                {
-                  "displayname": "Frankfurt (eu-de)",
-                  "value": "eu-de"
-                },
-                {
-                  "displayname": "London (eu-gb)",
-                  "value": "eu-gb"
-                },
-                {
-                  "displayname": "Osaka (jp-osa)",
-                  "value": "jp-osa"
-                },
-                {
-                  "displayname": "Sao Paulo (br-sao)",
-                  "value": "br-sao"
-                },
-                {
-                  "displayname": "Spain (us-es)",
-                  "value": "us-es"
-                },
-                {
-                  "displayname": "Sydney (au-syd)",
-                  "value": "au-syd"
-                },
-                {
-                  "displayname": "Tokyo (jp-tok)",
-                  "value": "jp-tok"
-                },
-                {
-                  "displayname": "Toronto (ca-tor)",
-                  "value": "ca-tor"
-                },
-                {
-                  "displayname": "Washington DC (us-east)",
-                  "value": "us-east"
-                }
-              ]
-            },
-            {
-              "key": "cbr_rules",
-              "type": "array",
-              "custom_config": {
-                "type": "textarea",
-                "grouping": "deployment",
-                "original_grouping": "deployment"
-              },
-              "hidden": true
-            },
-            {
-              "key": "domain_mappings"
-            },
-            {
-              "key": "config_maps"
-            },
-            {
-              "key": "bindings"
-            }
-          ],
-          "terraform_version": "1.10.5"
-        },
-        {
-          "label": "Application from Source",
-          "name": "source",
-          "install_type": "fullstack",
-          "working_directory": "solutions/app-from-source",
-          "iam_permissions": [
-            {
-              "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Viewer"
-              ],
-              "service_name": "Resource group only",
-              "notes": "Viewer access is required in the resource group you want to provision in."
-            },
-            {
-              "role_crns": [
-                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
-              ],
-              "service_name": "codeengine"
-            },
-            {
-              "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Editor"
-              ],
-              "service_name": "codeengine"
-            }
-          ],
-          "architecture": {
-            "features": [
-              {
-                "title": " ",
-                "description": "Configured to launch an application on Code Engine from a source."
-              }
-            ],
-            "diagrams": [
-              {
-                "diagram": {
-                  "caption": "IBM Cloud Code Engine application solution.",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-project-da.svg",
-                  "type": "image/svg+xml"
-                },
-                "description": "This deployable architecture creates IBM Cloud Code Engine project"
-              }
-            ]
-          },
-          "configuration": [
-            {
-              "key": "ibmcloud_api_key"
-            },
-            {
-              "key": "provider_visibility",
-              "hidden": true,
-              "options": [
-                {
-                  "displayname": "private",
-                  "value": "private"
-                },
-                {
-                  "displayname": "public",
-                  "value": "public"
-                },
-                {
-                  "displayname": "public-and-private",
-                  "value": "public-and-private"
-                }
-              ]
-            },
-            {
               "key": "prefix",
               "required": true
             },
@@ -294,6 +123,10 @@
               "required": true
             },
             {
+              "key": "app_name",
+              "required": true
+            },
+            {
               "key": "region",
               "options": [
                 {
@@ -335,62 +168,6 @@
                 {
                   "displayname": "Washington DC (us-east)",
                   "value": "us-east"
-                }
-              ]
-            },
-            {
-              "key": "cbr_rules",
-              "type": "array",
-              "custom_config": {
-                "type": "textarea",
-                "grouping": "deployment",
-                "original_grouping": "deployment"
-              },
-              "hidden": true
-            },
-            {
-              "key": "source_type",
-              "hidden": true
-            },
-            {
-              "key": "source_url",
-              "required": true
-            },
-            {
-              "key": "source_revision"
-            },
-            {
-              "key": "source_context_dir"
-            },
-            {
-              "key": "build_name"
-            },
-            {
-              "key": "output_image"
-            },
-            {
-              "key": "container_registry_namespace"
-            },
-            {
-              "key": "github_password"
-            },
-            {
-              "key": "github_username"
-            },
-            {
-              "key": "managed_domain_mappings",
-              "options": [
-                {
-                  "displayname": "Public",
-                  "value": "local_public"
-                },
-                {
-                  "displayname": "Private",
-                  "value": "local_private"
-                },
-                {
-                  "displayname": "Project-Only",
-                  "value": "local"
                 }
               ]
             },
@@ -508,29 +285,36 @@
               ]
             },
             {
-              "key": "app_scale_memory_limit",
-              "hidden": true
-            },
-            {
               "key": "app_scale_ephemeral_storage_limit"
             },
             {
-              "key": "app_scale_cpu_limit",
-              "hidden": true
-            },
-            {
-              "key": "app_name"
-            },
-            {
-              "key": "app_image_secret",
-              "hidden": true
-            },
-            {
-              "key": "app_image_reference",
-              "hidden": true
-            },
-            {
               "key": "app_image_port"
+            },
+            {
+              "key": "managed_domain_mappings",
+              "options": [
+                {
+                  "displayname": "Public",
+                  "value": "local_public"
+                },
+                {
+                  "displayname": "Private",
+                  "value": "local_private"
+                },
+                {
+                  "displayname": "Project-Only",
+                  "value": "local"
+                }
+              ]
+            },
+            {
+              "key": "domain_mappings"
+            },
+            {
+              "key": "config_maps"
+            },
+            {
+              "key": "bindings"
             },
             {
               "key": "app_scale_concurrency",
@@ -549,15 +333,334 @@
               "hidden": true
             },
             {
-              "key": "strategy_size",
-               "hidden": true
+              "key": "app_image_secret",
+              "hidden": true
             },
             {
-              "key": "strategy_spec_file",
-               "hidden": true
+              "key": "app_image_reference",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_memory_limit",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_cpu_limit",
+              "hidden": true
+            },
+            {
+              "key": "provider_visibility",
+              "hidden": true,
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            },
+            {
+              "key": "cbr_rules",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              },
+              "hidden": true
+            }
+          ],
+          "terraform_version": "1.10.5"
+        },
+        {
+          "label": "Application from Source",
+          "name": "source",
+          "install_type": "fullstack",
+          "working_directory": "solutions/app-from-source",
+          "iam_permissions": [
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Viewer"
+              ],
+              "service_name": "Resource group only",
+              "notes": "Viewer access is required in the resource group you want to provision in."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+              ],
+              "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "codeengine"
+            }
+          ],
+          "architecture": {
+            "features": [
+              {
+                "title": " ",
+                "description": "Configured to launch an application on Code Engine from a source."
+              }
+            ],
+            "diagrams": [
+              {
+                "diagram": {
+                  "caption": "IBM Cloud Code Engine application solution.",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/reference-architecture/ce-project-da.svg",
+                  "type": "image/svg+xml"
+                },
+                "description": "This deployable architecture creates IBM Cloud Code Engine project"
+              }
+            ]
+          },
+          "configuration": [
+            {
+              "key": "ibmcloud_api_key"
+            },
+            {
+              "key": "prefix",
+              "required": true
+            },
+            {
+              "key": "existing_resource_group_name",
+              "required": true,
+              "display_name": "resource_group",
+              "custom_config": {
+                "type": "resource_group",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "identifier": "rg_name"
+                }
+              }
+            },
+            {
+              "key": "project_name",
+              "required": true
+            },
+            {
+              "key": "app_name",
+              "required": true
+            },
+            {
+              "key": "region",
+              "options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Osaka (jp-osa)",
+                  "value": "jp-osa"
+                },
+                {
+                  "displayname": "Sao Paulo (br-sao)",
+                  "value": "br-sao"
+                },
+                {
+                  "displayname": "Spain (us-es)",
+                  "value": "us-es"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                },
+                {
+                  "displayname": "Washington DC (us-east)",
+                  "value": "us-east"
+                }
+              ]
+            },
+
+            {
+              "key": "build_name"
+            },
+            {
+              "key": "source_url",
+              "required": true
+            },
+            {
+              "key": "source_revision"
+            },
+            {
+              "key": "source_context_dir"
             },
             {
               "key": "strategy_type"
+            },
+            {
+              "key": "output_image"
+            },
+            {
+              "key": "container_registry_namespace"
+            },
+            {
+              "key": "github_password"
+            },
+            {
+              "key": "github_username"
+            },
+            {
+              "key": "app_scale_cpu_memory",
+              "options": [
+                {
+                  "displayname": "0.125 vCPU / 0.25 GB",
+                  "value": "0.125 vCPU / 0.25 GB"
+                },
+                {
+                  "displayname": "0.125 vCPU / 0.5 GB",
+                  "value": "0.125 vCPU / 0.5 GB"
+                },
+                {
+                  "displayname": "0.125 vCPU / 1 GB",
+                  "value": "0.125 vCPU / 1 GB"
+                },
+                {
+                  "displayname": "0.25 vCPU / 0.5 GB",
+                  "value": "0.25 vCPU / 0.5 GB"
+                },
+                {
+                  "displayname": "0.25 vCPU / 1 GB",
+                  "value": "0.25 vCPU / 1 GB"
+                },
+                {
+                  "displayname": "0.25 vCPU / 2 GB",
+                  "value": "0.25 vCPU / 2 GB"
+                },
+                {
+                  "displayname": "0.5 vCPU / 1 GB",
+                  "value": "0.5 vCPU / 1 GB"
+                },
+                {
+                  "displayname": "0.5 vCPU / 2 GB",
+                  "value": "0.5 vCPU / 2 GB"
+                },
+                {
+                  "displayname": "0.5 vCPU / 4 GB",
+                  "value": "0.5 vCPU / 4 GB"
+                },
+                {
+                  "displayname": "1 vCPU / 2 GB",
+                  "value": "1 vCPU / 2 GB"
+                },
+                {
+                  "displayname": "1 vCPU / 4 GB",
+                  "value": "1 vCPU / 4 GB"
+                },
+                {
+                  "displayname": "1 vCPU / 8 GB",
+                  "value": "1 vCPU / 8 GB"
+                },
+                {
+                  "displayname": "2 vCPU / 4 GB",
+                  "value": "2 vCPU / 4 GB"
+                },
+                {
+                  "displayname": "2 vCPU / 8 GB",
+                  "value": "2 vCPU / 8 GB"
+                },
+                {
+                  "displayname": "2 vCPU / 16 GB",
+                  "value": "2 vCPU / 16 GB"
+                },
+                {
+                  "displayname": "4 vCPU / 8 GB",
+                  "value": "4 vCPU / 8 GB"
+                },
+                {
+                  "displayname": "4 vCPU / 16 GB",
+                  "value": "4 vCPU / 16 GB"
+                },
+                {
+                  "displayname": "4 vCPU / 32 GB",
+                  "value": "4 vCPU / 32 GB"
+                },
+                {
+                  "displayname": "6 vCPU / 12 GB",
+                  "value": "6 vCPU / 12 GB"
+                },
+                {
+                  "displayname": "6 vCPU / 24 GB",
+                  "value": "6 vCPU / 24 GB"
+                },
+                {
+                  "displayname": "6 vCPU / 48 GB",
+                  "value": "6 vCPU / 48 GB"
+                },
+                {
+                  "displayname": "8 vCPU / 16 GB",
+                  "value": "8 vCPU / 16 GB"
+                },
+                {
+                  "displayname": "8 vCPU / 32 GB",
+                  "value": "8 vCPU / 32 GB"
+                },
+                {
+                  "displayname": "10 vCPU / 20 GB",
+                  "value": "10 vCPU / 20 GB"
+                },
+                {
+                  "displayname": "10 vCPU / 40 GB",
+                  "value": "10 vCPU / 40 GB"
+                },
+                {
+                  "displayname": "12 vCPU / 24 GB",
+                  "value": "12 vCPU / 24 GB"
+                },
+                {
+                  "displayname": "12 vCPU / 48 GB",
+                  "value": "12 vCPU / 48 GB"
+                }
+              ]
+            },
+            {
+              "key": "app_scale_ephemeral_storage_limit"
+            },
+            {
+              "key": "app_image_port"
+            },
+            {
+              "key": "managed_domain_mappings",
+              "options": [
+                {
+                  "displayname": "Public",
+                  "value": "local_public"
+                },
+                {
+                  "displayname": "Private",
+                  "value": "local_private"
+                },
+                {
+                  "displayname": "Project-Only",
+                  "value": "local"
+                }
+              ]
             },
             {
               "key": "timeout"
@@ -570,6 +673,78 @@
             },
             {
               "key": "bindings"
+            },
+            {
+              "key": "source_type",
+              "hidden": true
+            },
+            {
+              "key": "strategy_spec_file",
+               "hidden": true
+            },
+            {
+              "key": "strategy_size",
+               "hidden": true
+            },
+            {
+              "key": "app_scale_concurrency",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_concurrency_target",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_request_timeout",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_down_delay",
+              "hidden": true
+            },
+            {
+              "key": "app_image_secret",
+              "hidden": true
+            },
+            {
+              "key": "app_image_reference",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_memory_limit",
+              "hidden": true
+            },
+            {
+              "key": "app_scale_cpu_limit",
+              "hidden": true
+            },
+            {
+              "key": "provider_visibility",
+              "hidden": true,
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            },
+            {
+              "key": "cbr_rules",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              },
+              "hidden": true
             }
           ],
           "terraform_version": "1.10.5"

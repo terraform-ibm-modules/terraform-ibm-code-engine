@@ -1,9 +1,22 @@
 module "code_engine" {
-  source           = "../app-from-source"
-  ibmcloud_api_key = var.ibmcloud_api_key
-  prefix           = var.prefix
+  source                            = "../app-from-source"
+  ibmcloud_api_key                  = var.ibmcloud_api_key
+  prefix                            = var.prefix
+  app_name                          = var.app_name
+  app_image_reference               = var.app_image_reference
+  app_image_secret                  = var.app_image_secret
+  app_scale_cpu_memory              = var.app_scale_cpu_memory
+  app_image_port                    = var.app_image_port
+  managed_domain_mappings           = var.managed_domain_mappings
+  app_scale_cpu_limit               = var.app_scale_cpu_limit
+  app_scale_memory_limit            = var.app_scale_memory_limit
+  app_scale_ephemeral_storage_limit = var.app_scale_ephemeral_storage_limit
+  app_scale_concurrency             = var.app_scale_concurrency
+  app_scale_concurrency_target      = var.app_scale_concurrency_target
+  app_scale_request_timeout         = var.app_scale_request_timeout
+  app_scale_down_delay              = var.app_scale_down_delay
   # app                          = var.app
-  secrets                      = var.secrets
+  # secrets                      = var.secrets
   config_maps                  = var.config_maps
   domain_mappings              = var.domain_mappings
   cbr_rules                    = var.cbr_rules
