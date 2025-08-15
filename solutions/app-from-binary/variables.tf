@@ -61,6 +61,7 @@ variable "existing_resource_group_name" {
 variable "project_name" {
   description = "The name of the project to add the IBM Cloud Code Engine. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<project_name>` format."
   type        = string
+  default     = "ce-project"
 }
 
 ##############################################################################
@@ -92,26 +93,26 @@ variable "config_maps" {
 ##############################################################################
 # Code Engine Secret
 ##############################################################################
-variable "secrets" {
-  description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#secrets)"
-  type = map(object({
-    format = string
-    data   = map(string)
-    # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
-    # service_access = optional(list(object({
-    #   resource_key = list(object({
-    #     id = optional(string)
-    #   }))
-    #   role = list(object({
-    #     crn = optional(string)
-    #   }))
-    #   service_instance = list(object({
-    #     id = optional(string)
-    #   }))
-    # })))
-  }))
-  default = {}
-}
+# variable "secrets" {
+#   description = "A map of the IBM Cloud Code Engine secrets to create. For example, `{ secret_name: {format: 'generic', data: {key_1: 'value_1' }}}`.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-inputs.md#secrets)"
+#   type = map(object({
+#     format = string
+#     data   = map(string)
+#     # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
+#     # service_access = optional(list(object({
+#     #   resource_key = list(object({
+#     #     id = optional(string)
+#     #   }))
+#     #   role = list(object({
+#     #     crn = optional(string)
+#     #   }))
+#     #   service_instance = list(object({
+#     #     id = optional(string)
+#     #   }))
+#     # })))
+#   }))
+#   default = {}
+# }
 
 variable "cbr_rules" {
   type = list(object({
@@ -137,49 +138,138 @@ variable "cbr_rules" {
 # Code Engine App
 ##############################################################################
 
-variable "app" {
-  description = "Details of code engine app to be created"
+# variable "app" {
+#   description = "Details of code engine app to be created"
 
-  type = object({
-    image_reference = optional(string)
-    image_secret    = optional(string)
-    name            = string
-    run_env_variables = optional(list(object({
-      type      = optional(string)
-      name      = optional(string)
-      value     = optional(string)
-      prefix    = optional(string)
-      key       = optional(string)
-      reference = optional(string)
-    })))
-    run_volume_mounts = optional(list(object({
-      mount_path = string
-      reference  = string
-      name       = optional(string)
-      type       = string
-    })))
-    image_port                    = optional(number)
-    managed_domain_mappings       = optional(string)
-    run_arguments                 = optional(list(string))
-    run_as_user                   = optional(number)
-    run_commands                  = optional(list(string))
-    run_service_account           = optional(string)
-    scale_concurrency             = optional(number)
-    scale_concurrency_target      = optional(number)
-    scale_cpu_limit               = optional(string)
-    scale_ephemeral_storage_limit = optional(string)
-    scale_initial_instances       = optional(number)
-    scale_max_instances           = optional(number)
-    scale_memory_limit            = optional(string)
-    scale_min_instances           = optional(number)
-    scale_request_timeout         = optional(number)
-    scale_down_delay              = optional(number)
-  })
+#   type = object({
+#     image_reference = optional(string)
+#     image_secret    = optional(string)
+#     name            = string
+#     run_env_variables = optional(list(object({
+#       type      = optional(string)
+#       name      = optional(string)
+#       value     = optional(string)
+#       prefix    = optional(string)
+#       key       = optional(string)
+#       reference = optional(string)
+#     })))
+#     run_volume_mounts = optional(list(object({
+#       mount_path = string
+#       reference  = string
+#       name       = optional(string)
+#       type       = string
+#     })))
+#     image_port                    = optional(number)
+#     managed_domain_mappings       = optional(string)
+#     run_arguments                 = optional(list(string))
+#     run_as_user                   = optional(number)
+#     run_commands                  = optional(list(string))
+#     run_service_account           = optional(string)
+#     scale_concurrency             = optional(number)
+#     scale_concurrency_target      = optional(number)
+#     scale_cpu_limit               = optional(string)
+#     scale_ephemeral_storage_limit = optional(string)
+#     scale_initial_instances       = optional(number)
+#     scale_max_instances           = optional(number)
+#     scale_memory_limit            = optional(string)
+#     scale_min_instances           = optional(number)
+#     scale_request_timeout         = optional(number)
+#     scale_down_delay              = optional(number)
+#   })
 
-  default = {
-    name = "application-ec"
-    image_reference : "icr.io/codeengine/helloworld"
+#   default = {
+#     name = "application-ec"
+#     image_reference : "icr.io/codeengine/helloworld"
+#   }
+# }
+
+variable "app_name" {
+  description = "The name of the application to be created and managed. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<app_name>` format. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads)"
+  type        = string
+  default     = "my-ce-app"
+}
+
+variable "app_image_reference" {
+  description = "A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started)"
+  type        = string
+  default     = null
+  # default     = "icr.io/codeengine/helloworld"
+}
+
+variable "app_image_secret" {
+  description = "The name of the access secret that is used for the image registry."
+  type        = string
+  default     = null
+}
+
+variable "app_scale_cpu_memory" {
+  description = "Define the amount of CPU and memory resources for each instance. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo)"
+  type        = string
+  default     = "1 vCPU / 4 GB"
+}
+
+variable "app_image_port" {
+  description = "The port which is used to connect to the port that is exposed by the container image."
+  type        = number
+  default     = 8080
+}
+
+variable "managed_domain_mappings" {
+  description = "Define which of the following values for the system-managed domain mappings to set up for the application. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads#optionsvisibility)"
+  type        = string
+  default     = "local_public"
+  validation {
+    condition     = var.managed_domain_mappings == null || can(regex("local_public|local_private|local", var.managed_domain_mappings))
+    error_message = "Valid values are 'local_public', 'local_private', or 'local'."
   }
+}
+
+variable "app_scale_cpu_limit" {
+  description = "The number of CPUs to set for the instance of the app."
+  type        = string
+  default     = "1"
+}
+
+variable "app_scale_memory_limit" {
+  description = "The amount of memory set for the instance of the app."
+  type        = string
+  default     = "4G"
+}
+
+variable "app_scale_ephemeral_storage_limit" {
+  description = <<EOT
+The amount of ephemeral storage to set for the instance of the app.
+The units for specifying ephemeral storage are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements)
+
+
+The value must match regular expression '/^([0-9.]+)([eEinumkKMGTPB]*)$/'.
+EOT
+  type        = string
+  default     = "400M"
+}
+
+variable "app_scale_concurrency" {
+  description = "The maximum number of requests that can be processed concurrently per instance."
+  type        = number
+  default     = 100
+}
+
+variable "app_scale_concurrency_target" {
+  description = "The threshold of concurrent requests per instance at which one or more additional instances are created."
+  type        = number
+  default     = null
+}
+
+variable "app_scale_request_timeout" {
+  description = "The amount of time in seconds that is allowed for a running app to respond to a request."
+  type        = number
+  default     = 300
+}
+
+variable "app_scale_down_delay" {
+  description = "The amount of time in seconds that delays the scale-down behavior for an app instance."
+  type        = number
+  default     = 0
 }
 
 ##############################################################################

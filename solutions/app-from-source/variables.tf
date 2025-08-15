@@ -262,7 +262,9 @@ variable "github_username" {
   default     = null
 }
 
-
+##############################################################################
+# CBR Rules
+##############################################################################
 variable "cbr_rules" {
   type = list(object({
     description = string
@@ -332,7 +334,7 @@ variable "cbr_rules" {
 # }
 
 variable "app_name" {
-  description = "The name of the application to be created and managed. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads)"
+  description = "The name of the application to be created and managed. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<app_name>` format. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-application-workloads)"
   type        = string
   default     = "my-ce-app"
 }
