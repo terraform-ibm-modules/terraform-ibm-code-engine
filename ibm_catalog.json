@@ -385,8 +385,107 @@
                 "original_grouping": "deployment"
               },
               "hidden": true
+            },
+            {
+              "key": "secrets_manager_region",
+              "required": true,
+              "virtual": true,
+              "default_value": "us-south",
+              "description": "The region to provision a new Secrets Manager instance in.",
+              "options": [
+                {
+                  "displayname": "Osaka (jp-osa)",
+                  "value": "jp-osa"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Madrid (eu-es)",
+                  "value": "eu-es"
+                },
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                },
+                {
+                  "displayname": "Washington DC (us-east)",
+                  "value": "us-east"
+                },
+                {
+                  "displayname": "Sao Paulo (br-sao)",
+                  "value": "br-sao"
+                }
+              ]
+            },
+            {
+              "key": "secrets_manager_service_plan",
+              "required": true,
+              "virtual": true,
+              "type": "string",
+              "options": [
+                {
+                  "displayname": "Standard",
+                  "value": "standard"
+                },
+                {
+                  "displayname": "Trial",
+                  "value": "trial"
+                }
+              ],
+              "default_value": "__NOT_SET__",
+              "description": "The pricing plan to use when provisioning a Secrets Manager instance. Possible values: `standard`, `trial`. You can create only one Trial instance of Secrets Manager per account. Before you can create a new Trial instance, you must delete the existing Trial instance and its reclamation. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui#upgrade-instance-standard)."
             }
           ],
+          "dependencies": [
+            {
+              "name": "deploy-arch-ibm-secrets-manager",
+              "description": "Create a new Secrets Manager instance.",
+              "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
+              "version": "v2.6.3",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "secrets_manager_region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "service_plan",
+                  "version_input": "secrets_manager_service_plan",
+                  "reference_version": true
+                }
+              ]
+            }
+          ],
+          "dependency_version_2": true,
           "terraform_version": "1.10.5"
         },
         {
