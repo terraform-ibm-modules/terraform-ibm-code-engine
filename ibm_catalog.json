@@ -1086,7 +1086,7 @@
           "label": "Application from Source Addons",
           "name": "addons",
           "install_type": "fullstack",
-          "working_directory": "solutions/app-from-source-addons",
+          "working_directory": "solutions/app-from-source-addon",
           "iam_permissions": [
             {
               "role_crns": [
