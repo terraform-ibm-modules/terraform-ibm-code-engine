@@ -24,18 +24,18 @@ variable "data" {
 }
 
 # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
-# variable "service_access" {
-#   description = "Properties for Service Access Secrets."
-#   type = list(object({
-#     resource_key = list(object({
-#       id = optional(string)
-#     }))
-#     role = list(object({
-#       crn = optional(string)
-#     }))
-#     service_instance = list(object({
-#       id = optional(string)
-#     }))
-#   }))
-#   default = []
-# }
+variable "service_access" {
+  description = "Properties for Service Access Secrets."
+  type = list(object({
+    resource_key = list(object({
+      id = optional(string)
+    }))
+    role = list(object({
+      crn = optional(string)
+    }))
+    service_instance = list(object({
+      id = optional(string)
+    }))
+  }))
+  default = []
+}
