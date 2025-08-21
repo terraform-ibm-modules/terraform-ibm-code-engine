@@ -234,7 +234,7 @@ variable "resource_key_role" {
 
 variable "ext_resource_keys" {
   default = [{
-    name                      = "resource-key-test-and"
+    name                      = "resource-key-test"
     # key_name                  = optional(string, null)
     # generate_hmac_credentials = optional(bool, false)
     role                      = "Writer"
@@ -242,27 +242,44 @@ variable "ext_resource_keys" {
   }]
 }
 
-# module "cos_access_secret" {
-#   source = "../../modules/secret"
-#   project_id = module.project.project_id
-#   name       = "cos_access_secret"
-#   format = "service_access"
-#   # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
-#   service_access = [
-#     {
-#       resource_key = [
-#         { id = module.cos.resource_keys["resource-key-test"].guid }
-#       ]
-#       role = [
-#         { crn = null }
-#       ]
-#       service_instance = [
-#         { id = module.cos.cos_instance_guid }
-#       ]
-#     }
-#   ]
-
+# locals {
+#   res_key_name = var.ext_resource_keys
 # }
+
+# parse COS details from the existing COS instance CRN
+module "existing_cos_crn_parser" {
+  count   = var.existing_cos_instance_crn != null ? 1 : 0
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.2.0"
+  crn     = var.existing_cos_instance_crn
+}
+locals {
+   cos_instance_guid                        = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser[0].service_instance : null
+}
+
+ 
+
+module "cos_access_secret" {
+  source = "../../modules/secret"
+  project_id = module.project.project_id
+  name       = "cos_access_secret"
+  format = "service_access"
+  # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
+  service_access = [
+    {
+      resource_key = [
+        { id = module.cos.resource_keys[var.ext_resource_keys[0].name].guid }
+      ]
+      role = [
+        { crn = null }
+      ]
+      service_instance = [
+        { id = local.cos_instance_guid }
+      ]
+    }
+  ]
+
+}
 
 ##############################################################################
 # Code Engine Apps
