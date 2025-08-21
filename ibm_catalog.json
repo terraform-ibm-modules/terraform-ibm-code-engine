@@ -1134,6 +1134,9 @@
             },
             {
               "key": "existing_cos_instance_crn"
+            },
+            {
+              "key": "ext_resource_keys"
             }
           ],
           "dependencies": [
