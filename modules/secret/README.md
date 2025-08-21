@@ -55,6 +55,7 @@ No modules.
 | <a name="input_format"></a> [format](#input\_format) | Specify the format of the secret. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the secret. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project where secret will be created. | `string` | n/a | yes |
+| <a name="input_service_access"></a> [service\_access](#input\_service\_access) | Properties for Service Access Secrets. | <pre>list(object({<br/>    resource_key = list(object({<br/>      id = optional(string)<br/>    }))<br/>    role = list(object({<br/>      crn = optional(string)<br/>    }))<br/>    service_instance = list(object({<br/>      id = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
 
 ### Outputs
 
