@@ -219,9 +219,14 @@ module "secret" {
 
 
 # data "ibm_resource_key" "cos_key" {
-#   name              = "my-cos-resource-key"
-#   resource_instance_id = data.ibm_resource_instance.cos_instance.id
+#   name              = "resource-key-test"
+#   resource_instance_id = "crn:v1:bluemix:public:cloud-object-storage:global:a/abac0df06b644a9cabc6e44f55b3880e:6fff2029-463f-4bfe-8953-7eb3f9a6404f::"
 # }
+
+data "ibm_resource_key" "cos_key" {
+  name              = var.ext_resource_keys[0].name
+  resource_instance_id = var.existing_cos_instance_crn
+}
 
 variable "resource_key_name" {
   default = "test-resource-key-and"
@@ -255,20 +260,35 @@ module "existing_cos_crn_parser" {
 }
 locals {
    cos_instance_guid                        = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser[0].service_instance : null
+  #  cos_instance_id                        = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser[0].id : null
 }
 
+output cos_instance_guid{
+  value = data.ibm_resource_key.cos_key
+  sensitive = true
+}
  
+ module "existing_key_crn_parser" {
+  count   = var.existing_cos_instance_crn != null ? 1 : 0
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.2.0"
+  crn     = data.ibm_resource_key.cos_key.crn
+}
 
+output key_id{
+  value = module.existing_key_crn_parser[0].service_instance
+  # sensitive = true
+}
 module "cos_access_secret" {
   source = "../../modules/secret"
   project_id = module.project.project_id
-  name       = "cos_access_secret"
+  name       = "cos-access-secret"
   format = "service_access"
   # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
   service_access = [
     {
       resource_key = [
-        { id = module.cos.resource_keys[var.ext_resource_keys[0].name].guid }
+        { id = module.existing_key_crn_parser[0].service_instance }
       ]
       role = [
         { crn = null }
