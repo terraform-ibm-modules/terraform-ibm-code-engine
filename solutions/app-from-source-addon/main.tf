@@ -245,6 +245,10 @@ variable "ext_resource_keys" {
     role                      = "Writer"
     # service_id_crn            = optional(string, null)
   }]
+  type = list(object({
+    name = string
+    role = string
+  }))
 }
 
 # locals {
