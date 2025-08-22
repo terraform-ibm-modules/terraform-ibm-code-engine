@@ -283,16 +283,36 @@ output key_id{
   value = module.existing_key_crn_parser[0].service_instance
   # sensitive = true
 }
-module "cos_access_secret" {
-  source = "../../modules/secret"
+
+
+# module "cos" {
+#   source                 = "terraform-ibm-modules/cos/ibm"
+#    version                    = "10.2.4"
+#   resource_group_id      = module.resource_group.resource_group_id
+#   region                 = var.region
+#   cos_instance_name      = "${var.prefix}-cos"
+#   cos_tags               = []
+#   bucket_name            = "${var.prefix}-bucket"
+#   retention_enabled      = false # disable retention for test environments - enable for stage/prod
+#   kms_encryption_enabled = false
+#   resource_keys = [{
+#     name                      = "resource-key-test"
+#     # key_name                  = optional(string, null)
+#     # generate_hmac_credentials = optional(bool, false)
+#     role                      = "Writer"
+#     # service_id_crn            = optional(string, null)
+#   }]
+# }
+
+module "secret_test" {
+  source     = "../../modules/secret"
   project_id = module.project.project_id
-  name       = "cos-access-secret"
-  format = "service_access"
-  # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
-  service_access = [
+  name       = "test-secret"
+  format     = "service_access"
+service_access = [
     {
       resource_key = [
-        { id = module.existing_key_crn_parser[0].service_instance }
+        { id = module.existing_key_crn_parser[0].resource }
       ]
       role = [
         { crn = null }
@@ -302,8 +322,30 @@ module "cos_access_secret" {
       ]
     }
   ]
-
+  
 }
+
+# module "cos_access_secret" {
+#   source = "../../modules/secret"
+#   project_id = module.project.project_id
+#   name       = "cos-access-secret"
+#   format = "service_access"
+#   # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
+#   service_access = [
+#     {
+#       resource_key = [
+#         { id = module.existing_key_crn_parser[0].resource }
+#       ]
+#       role = [
+#         { crn = null }
+#       ]
+#       service_instance = [
+#         { id = local.cos_instance_guid }
+#       ]
+#     }
+#   ]
+
+# }
 
 ##############################################################################
 # Code Engine Apps
@@ -356,4 +398,16 @@ module "binding" {
   components  = each.value.components
   project_id  = module.project.project_id
   prefix      = local.prefix
+}
+
+resource "ibm_code_engine_binding" "cos_binding" {
+  depends_on = [ module.secret_test ]
+  project_id  = module.project.project_id
+  secret_name = "test-secret"
+  prefix      = "MY_COS"  # Optional: injects env vars like MY_COS_APIKEY
+
+  component {
+    name          = module.app.name
+    resource_type = "app_v2"
+  }
 }
