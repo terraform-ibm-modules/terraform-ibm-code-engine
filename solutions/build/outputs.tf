@@ -23,18 +23,13 @@ output "secret" {
 }
 
 output "domain_mapping" {
-  description = "Configuration of the created code engine domain maping."
+  description = "Configuration of the created code engine domain mapping."
   value       = module.domain_mapping
 }
 
 output "build" {
   description = "Configuration of the created code engine build."
   value       = module.build
-}
-
-output "app" {
-  description = "Configuration of the created code engine app."
-  value       = module.app
 }
 
 output "binding" {
