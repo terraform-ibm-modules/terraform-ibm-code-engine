@@ -390,10 +390,10 @@
           "terraform_version": "1.10.5"
         },
         {
-          "label": "Application from Source",
-          "name": "source",
+          "label": "Build container image from source",
+          "name": "build",
           "install_type": "fullstack",
-          "working_directory": "solutions/app-from-source",
+          "working_directory": "solutions/build",
           "iam_permissions": [
             {
               "role_crns": [
@@ -459,10 +459,6 @@
               "required": true
             },
             {
-              "key": "app_name",
-              "required": true
-            },
-            {
               "key": "region",
               "options": [
                 {
@@ -507,7 +503,6 @@
                 }
               ]
             },
-
             {
               "key": "build_name"
             },
@@ -537,142 +532,6 @@
               "key": "github_username"
             },
             {
-              "key": "app_scale_cpu_memory",
-              "options": [
-                {
-                  "displayname": "0.125 vCPU / 0.25 GB",
-                  "value": "0.125 vCPU / 0.25 GB"
-                },
-                {
-                  "displayname": "0.125 vCPU / 0.5 GB",
-                  "value": "0.125 vCPU / 0.5 GB"
-                },
-                {
-                  "displayname": "0.125 vCPU / 1 GB",
-                  "value": "0.125 vCPU / 1 GB"
-                },
-                {
-                  "displayname": "0.25 vCPU / 0.5 GB",
-                  "value": "0.25 vCPU / 0.5 GB"
-                },
-                {
-                  "displayname": "0.25 vCPU / 1 GB",
-                  "value": "0.25 vCPU / 1 GB"
-                },
-                {
-                  "displayname": "0.25 vCPU / 2 GB",
-                  "value": "0.25 vCPU / 2 GB"
-                },
-                {
-                  "displayname": "0.5 vCPU / 1 GB",
-                  "value": "0.5 vCPU / 1 GB"
-                },
-                {
-                  "displayname": "0.5 vCPU / 2 GB",
-                  "value": "0.5 vCPU / 2 GB"
-                },
-                {
-                  "displayname": "0.5 vCPU / 4 GB",
-                  "value": "0.5 vCPU / 4 GB"
-                },
-                {
-                  "displayname": "1 vCPU / 2 GB",
-                  "value": "1 vCPU / 2 GB"
-                },
-                {
-                  "displayname": "1 vCPU / 4 GB",
-                  "value": "1 vCPU / 4 GB"
-                },
-                {
-                  "displayname": "1 vCPU / 8 GB",
-                  "value": "1 vCPU / 8 GB"
-                },
-                {
-                  "displayname": "2 vCPU / 4 GB",
-                  "value": "2 vCPU / 4 GB"
-                },
-                {
-                  "displayname": "2 vCPU / 8 GB",
-                  "value": "2 vCPU / 8 GB"
-                },
-                {
-                  "displayname": "2 vCPU / 16 GB",
-                  "value": "2 vCPU / 16 GB"
-                },
-                {
-                  "displayname": "4 vCPU / 8 GB",
-                  "value": "4 vCPU / 8 GB"
-                },
-                {
-                  "displayname": "4 vCPU / 16 GB",
-                  "value": "4 vCPU / 16 GB"
-                },
-                {
-                  "displayname": "4 vCPU / 32 GB",
-                  "value": "4 vCPU / 32 GB"
-                },
-                {
-                  "displayname": "6 vCPU / 12 GB",
-                  "value": "6 vCPU / 12 GB"
-                },
-                {
-                  "displayname": "6 vCPU / 24 GB",
-                  "value": "6 vCPU / 24 GB"
-                },
-                {
-                  "displayname": "6 vCPU / 48 GB",
-                  "value": "6 vCPU / 48 GB"
-                },
-                {
-                  "displayname": "8 vCPU / 16 GB",
-                  "value": "8 vCPU / 16 GB"
-                },
-                {
-                  "displayname": "8 vCPU / 32 GB",
-                  "value": "8 vCPU / 32 GB"
-                },
-                {
-                  "displayname": "10 vCPU / 20 GB",
-                  "value": "10 vCPU / 20 GB"
-                },
-                {
-                  "displayname": "10 vCPU / 40 GB",
-                  "value": "10 vCPU / 40 GB"
-                },
-                {
-                  "displayname": "12 vCPU / 24 GB",
-                  "value": "12 vCPU / 24 GB"
-                },
-                {
-                  "displayname": "12 vCPU / 48 GB",
-                  "value": "12 vCPU / 48 GB"
-                }
-              ]
-            },
-            {
-              "key": "app_scale_ephemeral_storage_limit"
-            },
-            {
-              "key": "app_image_port"
-            },
-            {
-              "key": "managed_domain_mappings",
-              "options": [
-                {
-                  "displayname": "Public",
-                  "value": "local_public"
-                },
-                {
-                  "displayname": "Private",
-                  "value": "local_private"
-                },
-                {
-                  "displayname": "Project-Only",
-                  "value": "local"
-                }
-              ]
-            },
-            {
               "key": "timeout"
             },
             {
@@ -693,42 +552,10 @@
             },
             {
               "key": "strategy_spec_file",
-               "hidden": true
+              "hidden": true
             },
             {
               "key": "strategy_size",
-               "hidden": true
-            },
-            {
-              "key": "app_scale_concurrency",
-              "hidden": true
-            },
-            {
-              "key": "app_scale_concurrency_target",
-              "hidden": true
-            },
-            {
-              "key": "app_scale_request_timeout",
-              "hidden": true
-            },
-            {
-              "key": "app_scale_down_delay",
-              "hidden": true
-            },
-            {
-              "key": "app_image_secret",
-              "hidden": true
-            },
-            {
-              "key": "app_image_reference",
-              "hidden": true
-            },
-            {
-              "key": "app_scale_memory_limit",
-              "hidden": true
-            },
-            {
-              "key": "app_scale_cpu_limit",
               "hidden": true
             },
             {
@@ -763,10 +590,10 @@
           "terraform_version": "1.10.5"
         },
         {
-          "label": "Application from Source Addons",
-          "name": "addons",
+          "label": "Quickstart",
+          "name": "quickstart",
           "install_type": "fullstack",
-          "working_directory": "solutions/app-from-source-addon",
+          "working_directory": "solutions/quickstart",
           "iam_permissions": [
             {
               "role_crns": [
@@ -880,7 +707,6 @@
                 }
               ]
             },
-
             {
               "key": "build_name"
             },
@@ -1066,11 +892,11 @@
             },
             {
               "key": "strategy_spec_file",
-               "hidden": true
+              "hidden": true
             },
             {
               "key": "strategy_size",
-               "hidden": true
+              "hidden": true
             },
             {
               "key": "app_scale_concurrency",
@@ -1133,53 +959,69 @@
               "hidden": true
             },
             {
-              "key": "existing_cos_instance_crn"
+              "key": "logs_routing_tenant_regions",
+              "type": "array",
+              "default_value": "[]",
+              "description": "To manage platform logs that are generated by IBM Cloud services in a region of IBM Cloud, you must create a tenant in each region that you operate. Pass a list of regions to create a tenant in. [Learn more](https://cloud.ibm.com/docs/logs-router?topic=logs-router-about-platform-logs).",
+              "required": true,
+              "custom_config": {
+                "type": "array",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              },
+              "virtual": true
             },
             {
-              "key": "ext_resource_keys"
+              "key": "logs_region",
+              "required": true,
+              "custom_config": {
+                "config_constraints": {
+                  "generationType": "2"
+                },
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "type": "vpc_region"
+              },
+              "virtual": true
             }
           ],
           "dependencies": [
             {
-              "name": "deploy-arch-ibm-cos",
-              "id": "68921490-2778-4930-ac6d-bae7be6cd958-global",
-              "description": "Enable to create an IBM Cloud Object Storage (COS) instance, where a bucket will be set up to store VPC flow logs as part of this deployment. ",
-              "flavors": [
-                "instance"
-              ],
+              "name": "deploy-arch-ibm-cloud-logs",
+              "description": "Configure IBM Cloud Logs instance to analyse the platform logs.",
               "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "id": "63d8ae58-fbf3-41ce-b844-0fb5b85882ab-global",
+              "version": "v1.6.11",
+              "optional": true,
+              "on_by_default": true,
               "input_mapping": [
-                {
-                  "dependency_input": "resource_group_name",
-                  "version_input": "existing_resource_group_name",
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "cos_instance_crn",
-                  "version_input": "existing_cos_instance_crn"
-                },
                 {
                   "dependency_input": "prefix",
                   "version_input": "prefix",
                   "reference_version": true
                 },
                 {
-                   "dependency_input": "resource_keys",
-                   "version_input": "ext_resource_keys",
-                   "reference_version": true
+                  "dependency_input": "region",
+                  "version_input": "logs_region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "logs_routing_tenant_regions",
+                  "version_input": "logs_routing_tenant_regions",
+                  "reference_version": true
                 }
-              ],
-              "optional": true,
-              "on_by_default": true,
-              "version": "v9.0.2"
+              ]
             }
           ],
-          "dependency_version_2": true,
           "terraform_version": "1.10.5"
         }
       ]
     }
   ]
 }
-
-
