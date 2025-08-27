@@ -176,7 +176,7 @@ No resources.
 | <a name="output_binding"></a> [binding](#output\_binding) | Configuration of the created code engine binding. |
 | <a name="output_build"></a> [build](#output\_build) | Configuration of the created code engine build. |
 | <a name="output_config_map"></a> [config\_map](#output\_config\_map) | Configuration of the created code engine config map. |
-| <a name="output_domain_mapping"></a> [domain\_mapping](#output\_domain\_mapping) | Configuration of the created code engine domain maping. |
+| <a name="output_domain_mapping"></a> [domain\_mapping](#output\_domain\_mapping) | Configuration of the created code engine domain mapping. |
 | <a name="output_job"></a> [job](#output\_job) | Configuration of the created code engine job. |
 | <a name="output_project_id"></a> [project\_id](#output\_project\_id) | ID of the created code engine project. |
 | <a name="output_secret"></a> [secret](#output\_secret) | Configuration of the created code engine secret. |
