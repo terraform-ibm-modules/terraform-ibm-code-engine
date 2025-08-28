@@ -1302,18 +1302,6 @@
               "key": "timeout"
             },
             {
-              "key": "domain_mappings",
-              "hidden": true
-            },
-            {
-              "key": "config_maps",
-              "hidden": true
-            },
-            {
-              "key": "bindings",
-              "hidden": true
-            },
-            {
               "key": "source_type",
               "hidden": true
             },
