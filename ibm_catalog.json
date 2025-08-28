@@ -328,18 +328,6 @@
               ]
             },
             {
-              "key": "domain_mappings",
-              "hidden": true
-            },
-            {
-              "key": "config_maps",
-              "hidden": true
-            },
-            {
-              "key": "bindings",
-              "hidden": true
-            },
-            {
               "key": "app_scale_concurrency",
               "hidden": true
             },
@@ -615,7 +603,7 @@
               ]
             }
           ],
-           "dependency_version_2": true,
+          "dependency_version_2": true,
           "terraform_version": "1.10.5"
         },
         {
@@ -763,18 +751,6 @@
             },
             {
               "key": "timeout"
-            },
-            {
-              "key": "domain_mappings",
-              "hidden": true
-            },
-            {
-              "key": "config_maps",
-              "hidden": true
-            },
-            {
-              "key": "bindings",
-              "hidden": true
             },
             {
               "key": "source_type",
@@ -1080,7 +1056,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-quickstart.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This deployable architecture creates IBM Cloud Code Engine project"
+                "description": "This deployable architecture creates IBM Cloud Code Engine project and application"
               }
             ]
           },
