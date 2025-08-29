@@ -21,8 +21,8 @@
         "solution"
       ],
       "short_description": "Provisions and configures serverless project on IBM Cloud Code Engine",
-      "long_description": "Creates a fully managed container runtime environment on [Serverless on IBM Cloud](https://www.ibm.com/products/code-engine), including configuration of the serverless project, applications, domain mappings, secrets, configmaps, and service bindings. It enables you to run containers, application code using IBM Cloud® Code Engine, with infrastructure managed for you.\n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
-      "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/README.md",
+      "long_description": "Creates a fully managed container runtime environment on [Serverless on IBM Cloud](https://www.ibm.com/products/code-engine), including configuration of the serverless project, applications, builds, and secrets.  It enables you to run containers, application code using IBM Cloud Code Engine, with infrastructure managed for you.\n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
+      "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/refactor_da/solutions/app-from-binary/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
       "provider_name": "IBM",
       "features": [
@@ -951,6 +951,13 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "container-registry"
             }
           ],
           "architecture": {
@@ -1360,6 +1367,13 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "container-registry"
             }
           ],
           "architecture": {
