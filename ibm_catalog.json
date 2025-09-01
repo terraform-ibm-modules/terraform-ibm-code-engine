@@ -97,7 +97,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-application.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This deployable architecture creates IBM Cloud Code Engine project"
+                "description": "This architecture organizes core IBM Cloud resources within a region to support cloud-native workloads. It includes a Code Engine project, an application, and a registry secret as foundational components.<br><br>Optional services such as Cloud Monitoring, Cloud Logs, Activity Tracker, App Configuration (distinct from Code Engine apps), and SCC Workload Protection can be added to enhance observability, configuration management, and security.<br><br>Designed for flexibility and ease of use, this setup enables rapid deployment and streamlined management of applications and services in IBM Cloud."
               }
             ]
           },
