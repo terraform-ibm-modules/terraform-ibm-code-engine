@@ -35,13 +35,13 @@
           "description": "Provides the option to create a [container registry namespace](https://cloud.ibm.com/docs/Registry?topic=Registry-getting-started) for storing images built by IBM Cloud Code Engine. The namespace serves as an isolated space for publishing and managing container images within your IBM Cloud account."
         },
         {
+          "title": "Security and Compliance Alignment",
+          "description": "Enables secure and auditable deployments within IBM Cloud Code Engine [projects](https://cloud.ibm.com/docs/codeengine?topic=codeengine-manage-project). This includes the creation of [secrets](https://cloud.ibm.com/docs/codeengine?topic=codeengine-secret) for securely storing credentials used to access container registries, as well as integration with [Activity Tracker Event Routing](https://cloud.ibm.com/docs/atracker?topic=atracker-getting-started) to support auditability and compliance monitoring."
+        },
+        {
           "title": "Observability Integration",
           "description": "Integrates with observability services to provide deeper visibility into application and platform behavior. This includes [Cloud Logs](https://www.ibm.com/products/cloud-logs) for collecting and visualizing logs and [Cloud Monitoring](https://www.ibm.com/products/cloud-monitoring) for performance metrics and usage insights."
         },
-        {
-          "title": "Security and Compliance Alignment",
-          "description": "Enables secure and auditable deployments within IBM Cloud Code Engine [projects](https://cloud.ibm.com/docs/codeengine?topic=codeengine-manage-project). This includes the creation of [secrets](https://cloud.ibm.com/docs/codeengine?topic=codeengine-secret) for securely storing credentials used to access container registries, as well as integration with [Activity Tracker Event Routing](https://cloud.ibm.com/docs/atracker?topic=atracker-getting-started) to support auditability and compliance monitoring."
-        }
       ],
       "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
       "flavors": [
@@ -83,7 +83,11 @@
             "features": [
               {
                 "title": " ",
-                "description": "Configured to launch an application on Code Engine from a binary container image."
+                "description": "Ideal for users with existing container images who want to quickly deploy applications without rebuilding."
+              },
+              {
+                "title": " ",
+                "description": "Enables fast, simple deployment by using pre-built images to speed up rollout."
               }
             ],
             "diagrams": [
@@ -628,7 +632,11 @@
             "features": [
               {
                 "title": " ",
-                "description": "Configured to build a container image from source code."
+                "description": "Ideal for users who want to build container images directly from source code and immediately run them."
+              },
+              {
+                "title": " ",
+                "description": "Provides an integrated build-and-run workflow for fast development and testing cycles."
               }
             ],
             "diagrams": [
@@ -1044,13 +1052,17 @@
             "features": [
               {
                 "title": " ",
-                "description": "Configured to build and launch an application on Code Engine from source."
+                "description": "Ideal for users who want an end-to-end flow that builds from source, runs the image, and deploys the application."
+              },
+              {
+                "title": " ",
+                "description": "Streamlines development with a single workflow for building, testing, and deploying applications quickly."
               }
             ],
             "diagrams": [
               {
                 "diagram": {
-                  "caption": "IBM Cloud Code Engine quicstart solution.",
+                  "caption": "IBM Cloud Code Engine quickstart solution.",
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-quickstart.svg",
                   "type": "image/svg+xml"
                 },
