@@ -1383,11 +1383,11 @@
             "diagrams": [
               {
                 "diagram": {
-                  "caption": "IBM Cloud Code Engine quickstart solution.",
+                  "caption": "IBM Cloud Code Engine QuickStart Topology",
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-quickstart.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This deployable architecture creates IBM Cloud Code Engine project and application"
+                "description": "This architecture defines a streamlined environment within an IBM Cloud region that includes a Code Engine project with associated builds, an application, and a registry secret. It supports secure building and running of containerized workloads.<br><br>The setup also includes an IBM Cloud Container Registry for reliable storage and management of container images.<br><br>Designed for simplicity and flexibility, this setup enables efficient build processes and container image management to support scalable, event-driven workloads on IBM Cloud."
               }
             ]
           },
