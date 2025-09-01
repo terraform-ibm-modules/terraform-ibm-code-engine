@@ -94,11 +94,11 @@
              "diagrams": [
               {
                 "diagram": {
-                  "caption": "Virtual Private Cloud topology",
+                  "caption": "IBM Cloud Code Engine Application Topology",
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-application.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture organizes core IBM Cloud resources within a region to support cloud-native workloads. It includes a Code Engine project, an application, and a registry secret as foundational components.<br><br>Optional services such as Cloud Monitoring, Cloud Logs, Activity Tracker, App Configuration (distinct from Code Engine apps), and SCC Workload Protection can be added to enhance observability, configuration management, and security.<br><br>Designed for flexibility and ease of use, this setup enables rapid deployment and streamlined management of applications and services in IBM Cloud."
+                "description": "This architecture provides a streamlined setup within an IBM Cloud region to deploy and manage serverless applications using Code Engine. It includes a Code Engine project, application, and registry secret as core components enabling secure container image management and seamless app deployment.<br><br>Optional integrations include observability tools like Cloud Monitoring and Cloud Logs for real-time insights into application performance and health. Additional services such as App Configuration (separate from Code Engine apps), SCC Workload Protection, and Activity Tracker enhance configuration management, security, and auditing.<br><br>Designed for simplicity and flexibility, this solution accelerates the deployment and operational management of scalable, event-driven applications on IBM Cloud."
               }
             ]
           },
@@ -643,11 +643,11 @@
             "diagrams": [
               {
                 "diagram": {
-                  "caption": "IBM Cloud Code Engine build solution.",
+                  "caption": "IBM Cloud Code Engine Build and Runtime Topology",
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-build.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This deployable architecture creates IBM Cloud Code Engine project"
+                "description": "This deployable architecture enables the building, running, and management of container images within an IBM Cloud region using IBM Cloud Code Engine. It provisions a Code Engine project with associated build configurations and registry secrets, along with access to IBM Cloud Container Registry for secure image storage and management.<br><br>Optional integrations include Cloud Monitoring and Cloud Logs for observability, while Activity Tracker, App Configuration, and SCC Workload Protection enhance security, auditing, and configuration management.<br><br>Designed for simplicity and flexibility, this solution accelerates the build, run, and operational management of scalable, event-driven workloads on IBM Cloud."
               }
             ]
           },
