@@ -27,12 +27,23 @@ locals {
   output_bucket_crn = module.cos_buckets.buckets[local.output_bucket_name].bucket_crn
 
   cos_key_name = "${local.prefix}-hmac-key"
+
+  cos_instance_guid = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser.service_instance : null
+  cos_account_id    = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser.account_id : null
+  
+}
+
+module "existing_cos_crn_parser" {
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.2.0"
+  crn     = var.existing_cos_instance_crn
 }
 
 module "cos" {
+  # count = var.existing_cos_instance_crn == null ? 1 : 0
   source  = "terraform-ibm-modules/cos/ibm"
   version = "10.2.13"
-
+  # create_cos_instance = var.existing_cos_instance_crn != null ? false : true
   resource_group_id = module.resource_group.resource_group_id
   region            = var.region
   cos_instance_name = "${local.prefix}cos"
@@ -46,7 +57,14 @@ module "cos" {
   }]
 
 }
-
+# {
+#                   "dependency_input": "prefix",
+#                   "value": [{
+#                     name                      : "key-name"
+#                     generate_hmac_credentials : true
+#                     role                      : "Writer"
+#                   }]
+#                 },
 
 module "cos_buckets" {
   source  = "terraform-ibm-modules/cos/ibm//modules/buckets"
@@ -56,21 +74,21 @@ module "cos_buckets" {
     {
       bucket_name            = local.taskstore_bucket_name
       kms_encryption_enabled = false
-      resource_instance_id   = module.cos.cos_instance_id
+      resource_instance_id   = var.existing_cos_instance_crn
       region_location        = var.region
       add_bucket_name_suffix = false
     },
     {
       bucket_name            = local.input_bucket_name
       kms_encryption_enabled = false
-      resource_instance_id   = module.cos.cos_instance_id
+      resource_instance_id   = var.existing_cos_instance_crn
       region_location        = var.region
       add_bucket_name_suffix = false
     },
     {
       bucket_name            = local.output_bucket_name
       kms_encryption_enabled = false
-      resource_instance_id   = module.cos.cos_instance_id
+      resource_instance_id   = var.existing_cos_instance_crn
       region_location        = var.region
       add_bucket_name_suffix = false
     },
@@ -190,7 +208,7 @@ resource "ibm_iam_authorization_policy" "codeengine_to_cos" {
   source_resource_instance_id = module.project.project_id
 
   target_service_name         = "cloud-object-storage"
-  target_resource_instance_id = module.cos.cos_instance_guid
+  target_resource_instance_id = local.cos_instance_guid
 
 
   roles = ["Notifications Manager"]
@@ -485,8 +503,8 @@ resource "null_resource" "fleet_cos_secret" {
       ibmcloud ce project select --name ${module.project.name}
       ibmcloud ce secret create --name ${local.fleet_cos_secret_name} \
       --format hmac \
-      --access-key-id ${module.cos.resource_keys[local.cos_key_name].credentials["cos_hmac_keys.access_key_id"]}  \
-      --secret-access-key ${module.cos.resource_keys[local.cos_key_name].credentials["cos_hmac_keys.secret_access_key"]}
+      --access-key-id ${var.resource_keys[local.cos_key_name].credentials["cos_hmac_keys.access_key_id"]}  \
+      --secret-access-key ${var.resource_keys[local.cos_key_name].credentials["cos_hmac_keys.secret_access_key"]}
     EOT
   }
 }
