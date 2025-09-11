@@ -21,7 +21,7 @@
         "solution"
       ],
       "short_description": "Provisions and configures serverless project on IBM Cloud Code Engine",
-      "long_description": "This solution enables the deployment and management of serverless workloads on [Serverless on IBM Cloud](https://www.ibm.com/products/code-engine), delivering a fully managed container runtime environment that abstracts infrastructure complexity. It provisions a Code Engine project with core components such as applications, builds, and registry secrets — supporting secure image creation, storage, and deployment workflows.<br><br>Each variation offers a tailored balance of control and automation, with deployment paths ranging from decoupled build pipelines to streamlined, end-to-end delivery flows. Optional integrations with IBM Cloud services — including Cloud Monitoring, Cloud Logs, Activity Tracker, SCC Workload Protection, and App Configuration — enhance observability, security, and compliance alignment.",
+      "long_description": "This solution enables the deployment and management of serverless workloads on [Serverless on IBM Cloud](https://www.ibm.com/products/code-engine), delivering a fully managed container runtime environment that abstracts infrastructure complexity. It provisions a Code Engine project with core components such as applications, builds, and registry secrets — supporting secure image creation, storage, and deployment workflows.<br><br>Each variation offers flexible deployment options — from separate build and run steps to fully automated, end-to-end workflows. Optional integrations with IBM Cloud services — including Cloud Monitoring, Cloud Logs, Activity Tracker, SCC Workload Protection, and App Configuration — enhance observability, security, and compliance alignment.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/refactor_da/solutions/app-from-binary/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/main/images/code-engine.svg",
       "provider_name": "IBM",
@@ -90,8 +90,7 @@
                 "description": "Enables fast, simple deployment by using pre-built images to speed up rollout."
               }
             ],
-
-             "diagrams": [
+            "diagrams": [
               {
                 "diagram": {
                   "caption": "IBM Cloud Code Engine Application Topology",
@@ -1705,6 +1704,383 @@
               "hidden": true
             }
           ],
+          "terraform_version": "1.10.5"
+        },
+        {
+          "label": "Fleets",
+          "name": "fleets",
+          "index": 4,
+          "install_type": "fullstack",
+          "working_directory": "solutions/fleets",
+          "iam_permissions": [
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Viewer"
+              ],
+              "service_name": "Resource group only",
+              "notes": "Viewer access is required in the resource group you want to provision in."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+              ],
+              "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "codeengine"
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "container-registry"
+            }
+          ],
+          "architecture": {
+            "features": [
+              {
+                "title": " ",
+                "description": "Ideal for users with existing container images who want to quickly deploy applications without rebuilding."
+              },
+              {
+                "title": " ",
+                "description": "Enables fast, simple deployment by using pre-built images to speed up rollout."
+              }
+            ],
+            "diagrams": [
+              {
+                "diagram": {
+                  "caption": "IBM Cloud Code Engine Application Topology",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-application.svg",
+                  "type": "image/svg+xml"
+                },
+                "description": "This architecture provides a streamlined setup within an IBM Cloud region to deploy and manage serverless applications using Code Engine. It includes a Code Engine project, application, and registry secret as core components enabling secure container image management and seamless app deployment.<br><br>Optional integrations include observability tools like Cloud Monitoring and Cloud Logs for real-time insights into application performance and health. Additional services such as App Configuration (separate from Code Engine apps), SCC Workload Protection, and Activity Tracker enhance configuration management, security, and auditing.<br><br>Designed for simplicity and flexibility, this solution accelerates the deployment and operational management of scalable, event-driven applications on IBM Cloud."
+              }
+            ]
+          },
+          "configuration": [
+            {
+              "key": "ibmcloud_api_key"
+            },
+            {
+              "key": "prefix",
+              "required": true
+            },
+            {
+              "key": "existing_resource_group_name",
+              "required": true,
+              "display_name": "resource_group",
+              "custom_config": {
+                "type": "resource_group",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "identifier": "rg_name"
+                }
+              }
+            },
+            {
+              "key": "project_name",
+              "required": true
+            },
+            {
+              "key": "region",
+              "options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Osaka (jp-osa)",
+                  "value": "jp-osa"
+                },
+                {
+                  "displayname": "Sao Paulo (br-sao)",
+                  "value": "br-sao"
+                },
+                {
+                  "displayname": "Spain (us-es)",
+                  "value": "us-es"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                },
+                {
+                  "displayname": "Washington DC (us-east)",
+                  "value": "us-east"
+                }
+              ]
+            },
+            {
+              "key": "provider_visibility",
+              "hidden": true,
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            },
+            {
+              "key": "cbr_rules",
+              "type": "array",
+              "custom_config": {
+                "type": "textarea",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              },
+              "hidden": true
+            },
+            {
+              "key": "existing_cos_instance_crn",
+              "virtual": true,
+              "required": true
+            },
+            {
+              "key": "existing_kms_instance_crn",
+              "virtual": true,
+              "required": true
+            },
+            {
+              "key": "region",
+              "required": true,
+              "custom_config": {
+                "config_constraints": {
+                  "generationType": "2"
+                },
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "type": "vpc_region"
+              },
+              "virtual": true
+            },
+            {
+              "key": "logs_routing_tenant_regions",
+              "type": "array",
+              "default_value": [],
+              "description": "To manage platform logs that are generated by IBM Cloud services in a region of IBM Cloud, you must create a tenant in each region that you operate. Pass a list of regions to create a tenant in. [Learn more](https://cloud.ibm.com/docs/logs-router?topic=logs-router-about-platform-logs).",
+              "required": true,
+              "virtual": true,
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "enable_platform_metrics",
+              "type": "boolean",
+              "default_value": false,
+              "description": "When set to `true`, the IBM Cloud Monitoring instance will be configured to collect platform metrics from the provided region. You can configure 1 instance only of the IBM Cloud Monitoring service per region to collect platform metrics in that location. Check with the account or service administrator if another monitoring instance has already been configured. You may not have permissions to see all monitoring instances in the region. [Learn more](https://cloud.ibm.com/docs/monitoring?topic=monitoring-platform_metrics_enabling).",
+              "required": true,
+              "virtual": true,
+              "options": [
+                {
+                  "displayname": "true",
+                  "value": "true"
+                },
+                {
+                  "displayname": "false",
+                  "value": "false"
+                }
+              ]
+            }
+          ],
+          "dependencies": [
+            {
+              "name": "deploy-arch-ibm-account-infra-base",
+              "description": "Cloud automation for Account Configuration organizes your IBM Cloud account with a ready-made set of resource groups by default and when you enable the \"with Account Settings\" option, it also applies baseline security and governance settings. ",
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "flavors": [
+                "resource-group-only",
+                "resource-groups-with-account-settings"
+              ],
+              "default_flavor": "resource-group-only",
+              "id": "63641cec-6093-4b4f-b7b0-98d2f4185cd6-global",
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_output": "workload_resource_group_name",
+                  "version_input": "existing_resource_group_name"
+                }
+              ],
+              "optional": true,
+              "on_by_default": false,
+              "version": "v3.0.7"
+            },
+            {
+              "name": "deploy-arch-ibm-cloud-logs",
+              "description": "Configure an IBM Cloud Logs instance to analyse the platform logs.",
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "id": "63d8ae58-fbf3-41ce-b844-0fb5b85882ab-global",
+              "version": "v1.6.11",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_cos_instance_crn",
+                  "version_input": "existing_cos_instance_crn",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_kms_instance_crn",
+                  "version_input": "existing_kms_instance_crn",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "logs_routing_tenant_regions",
+                  "version_input": "logs_routing_tenant_regions",
+                  "reference_version": true
+                }
+              ]
+            },
+            {
+              "name": "deploy-arch-ibm-cloud-monitoring",
+              "description": "Configure an IBM Cloud Monitoring instance to collect the platform metrics.",
+              "id": "73debdbf-894f-4c14-81c7-5ece3a70b67d-global",
+              "version": "v1.6.4",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "enable_platform_metrics",
+                  "version_input": "enable_platform_metrics",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_cos_instance_crn",
+                  "version_input": "existing_cos_instance_crn",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_kms_instance_crn",
+                  "version_input": "existing_kms_instance_crn",
+                  "reference_version": true
+                }
+              ]
+            },
+            {
+              "name": "deploy-arch-ibm-activity-tracker",
+              "description": "Configure Activity Tracker Event Routing to route the auditing events.",
+              "id": "918453c3-4f97-4583-8c4a-83ef12fc7916-global",
+              "version": "v1.2.12",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_cos_instance_crn",
+                  "version_input": "existing_cos_instance_crn",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_kms_instance_crn",
+                  "version_input": "existing_kms_instance_crn",
+                  "reference_version": true
+                }
+              ]
+            },
+            {
+              "name": "deploy-arch-ibm-scc-workload-protection",
+              "description": "Configure an IBM Cloud SCC Workload Protection instance to collect security and compliance metrics.",
+              "id": "4322cf44-2289-49aa-a719-dd79e39b14dc-global",
+              "version": "v1.11.1",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                }
+              ]
+            }
+          ],
+          "dependency_version_2": true,
           "terraform_version": "1.10.5"
         }
       ]
