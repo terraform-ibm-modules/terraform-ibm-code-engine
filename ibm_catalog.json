@@ -1946,13 +1946,12 @@
                 },
                 {
                   "dependency_output": "resource_keys",
-                  "version_input": "resource_keys",
-                  "reference_version": true
+                  "version_input": "resource_keys"
                 },
                 {
                   "dependency_input": "resource_keys",
                   "value": [{
-                     "name"                      : "key-name",
+                     "name"                      : "resource-hmac-key-name",
                      "generate_hmac_credentials" : true,
                      "role"                      : "Writer"
                    }]
