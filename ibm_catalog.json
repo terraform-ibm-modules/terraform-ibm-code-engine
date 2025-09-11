@@ -1628,6 +1628,39 @@
               "optional": false,
               "on_by_default": true,
               "version": "v10.2.1"
+            },
+            {
+              "name": "deploy-arch-ibm-cloud-logs",
+              "description": "Configure an IBM Cloud Logs instance to analyse the platform logs.",
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "id": "63d8ae58-fbf3-41ce-b844-0fb5b85882ab-global",
+              "version": "v1.6.11",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "existing_resource_group_name",
+                  "version_input": "existing_resource_group_name",
+                  "reference_version": true
+                },
+                {
+                  "dependency_output": "cloud_logs_ingress_private_endpoint",
+                  "version_input": "cloud_logs_ingress_private_endpoint"
+                }
+              ]
             }
           ],
           "dependency_version_2": true,

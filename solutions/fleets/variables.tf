@@ -103,7 +103,7 @@ variable "enable_logging" {
   description = "Whether to add support for cloud logs."
   type        = bool
   nullable    = false
-  default     = true
+  default     = false
 }
 
 variable "enable_monitoring" {
@@ -161,3 +161,16 @@ variable "monitoring_plan" {
   description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)"
   default     = "graduated-tier"
 }
+
+
+ variable "existing_cloud_logs_crn" {
+     type        = string
+       nullable    = true
+ }
+
+  variable "cloud_logs_ingress_private_endpoint" {
+     type        = string
+      default = null
+ }
+
+ 
