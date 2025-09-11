@@ -110,7 +110,7 @@ variable "enable_monitoring" {
   description = "Whether to add support for cloud monitoring."
   type        = bool
   nullable    = false
-  default     = true
+  default     = false
 }
 
 
@@ -162,6 +162,22 @@ variable "monitoring_plan" {
   default     = "graduated-tier"
 }
 
+ variable "existing_cloud_monitoring_crn" {
+     type        = string
+       nullable    = true
+ }
+
+
+ variable "cloud_monitoring_access_key" {
+     type        = string
+       nullable    = true
+ }
+
+
+
+########################################################################################################################
+# Cloud logs
+########################################################################################################################
 
  variable "existing_cloud_logs_crn" {
      type        = string
