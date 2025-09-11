@@ -1979,6 +1979,10 @@
                 {
                   "dependency_output": "cloud_logs_ingress_private_endpoint",
                   "version_input": "cloud_logs_ingress_private_endpoint"
+                },
+                {
+                  "dependency_output": "cloud_logs_crn",
+                  "version_input": "existing_cloud_logs_crn"
                 }
               ]
             }
