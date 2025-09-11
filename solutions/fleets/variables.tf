@@ -116,6 +116,13 @@ variable "enable_monitoring" {
 
 # cos
 
+
+variable "existing_cos_instance_crn" {
+  type        = string
+  nullable    = true
+  description = "The CRN of an existing Cloud Object Storage instance. If a CRN is not specified, a new instance of Cloud Object Storage is created."
+}
+
 variable "cos_plan" {
   description = "The plan to use when Object Storage instances are created. Possible values are `standard` or `cos-one-rate-plan`. Required if `create_cos_instance` is set to `true`. [Learn more](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-provision)."
   type        = string
@@ -133,6 +140,17 @@ variable "cos_location" {
   default     = "global"
 }
 
+# variable "cos_instance_id" {
+#   description = "The location for the Object Storage instance. Required if `create_cos_instance` is set to `true`."
+#   type        = string
+#   default     = "global"
+# }
+
+variable "resource_keys" {
+  description = "The definition of the resource keys to generate. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cos/tree/main/solutions/instance/DA-types.md#resource-keys)."
+  type = list(any)
+  
+}
 
 ########################################################################################################################
 # Cloud monitoring
