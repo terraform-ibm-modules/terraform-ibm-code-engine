@@ -324,9 +324,9 @@ resource "ibm_is_security_group_rule" "example" {
 
 locals {
   cloud_services = concat(
-    var.enable_logging ? [
+    var.existing_cloud_logs_crn != null ? [
       {
-        crn                          = module.cloud_logs[0].crn
+        crn                          = var.existing_cloud_logs_crn
         vpe_name                     = "${local.prefix}icl-vpegw"
         allow_dns_resolution_binding = false
       }
@@ -373,7 +373,17 @@ module "vpe_logging" {
 
 locals {
   icl_name = "${local.prefix}icl"
+  cloud_logs_guid  = var.existing_cloud_logs_crn != null ?  module.existing_cloud_logs_crn[0].service_instance : null
+
 }
+
+module "existing_cloud_logs_crn" {
+  count = var.existing_cloud_logs_crn != null ? 1 : 0
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.2.0"
+  crn     = var.existing_cloud_logs_crn
+}
+
 module "cloud_logs" {
   count             = var.enable_logging ? 1 : 0
   depends_on        = [module.cos_buckets]
@@ -402,21 +412,21 @@ module "cloud_logs" {
 }
 
 resource "ibm_iam_service_id" "logs_service_id" {
-  count       = var.enable_logging ? 1 : 0
+  count = var.existing_cloud_logs_crn != null ? 1 : 0
   name        = "${local.icl_name}-svc-id"
-  description = "Service ID to ingest into IBM Cloud Logs instance ${module.cloud_logs[0].name}"
+  description = "Service ID to ingest into IBM Cloud Logs instance"
 }
 
 # Create IAM Service Policy granting "Sender" role to this service ID on the Cloud Logs instance
 resource "ibm_iam_service_policy" "logs_policy" {
-  count          = var.enable_logging ? 1 : 0
+  count = var.existing_cloud_logs_crn != null ? 1 : 0
   iam_service_id = ibm_iam_service_id.logs_service_id[0].id
   roles          = ["Sender"]
   description    = "Policy for ServiceID to send logs to IBM Cloud Logs instance"
 
   resources {
     service              = "logs"
-    resource_instance_id = module.cloud_logs[0].guid # Cloud Logs instance GUID
+    resource_instance_id = local.cloud_logs_guid # Cloud Logs instance GUID
   }
 }
 
@@ -487,8 +497,8 @@ locals {
           pool_subnet_crn_1          = data.ibm_is_subnet.example.crn
           pool_security_group_crns_1 = data.ibm_is_security_group.example.crn
         },
-        var.enable_logging ? {
-          logging_ingress_endpoint = module.cloud_logs[0].ingress_private_endpoint
+        var.existing_cloud_logs_crn != null ? {
+          logging_ingress_endpoint = var.cloud_logs_ingress_private_endpoint
           logging_sender_api_key   = var.ibmcloud_api_key
           logging_level_agent      = "debug"
           logging_level_worker     = "debug"
