@@ -331,9 +331,9 @@ locals {
         allow_dns_resolution_binding = false
       }
     ] : [],
-    var.enable_monitoring ? [
+    var.existing_cloud_monitoring_crn != null ? [
       {
-        crn                          = module.cloud_monitoring[0].crn
+        crn                          = var.existing_cloud_monitoring_crn
         vpe_name                     = "${local.prefix}sysdig-vpegw"
         allow_dns_resolution_binding = false
       }
@@ -455,7 +455,7 @@ module "cloud_monitoring" {
   instance_name           = local.monitoring_name
   plan                    = var.monitoring_plan
   service_endpoints       = "public-and-private"
-  enable_platform_metrics = false
+  # enable_platform_metrics = false
   manager_key_name        = local.monitoring_key_name
 }
 
@@ -503,9 +503,9 @@ locals {
           logging_level_agent      = "debug"
           logging_level_worker     = "debug"
         } : {},
-        var.enable_monitoring ? {
+        var.existing_cloud_monitoring_crn != null ? {
           monitoring_ingestion_region = var.region
-          monitoring_ingestion_key    = module.cloud_monitoring[0].access_key
+          monitoring_ingestion_key    = var.cloud_monitoring_access_key
         } : {}
       )
     }

@@ -1665,6 +1665,53 @@
                   "version_input": "existing_cloud_logs_crn"
                 }
               ]
+            },
+            {
+              "name": "deploy-arch-ibm-cloud-monitoring",
+              "description": "Configure an IBM Cloud Monitoring instance to collect the platform metrics.",
+              "id": "73debdbf-894f-4c14-81c7-5ece3a70b67d-global",
+              "version": "v1.6.4",
+              "flavors": [
+                "fully-configurable"
+              ],
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "optional": true,
+              "on_by_default": true,
+              "input_mapping": [
+                {
+                  "dependency_input": "enable_platform_metrics",
+                  "version_input": "enable_platform_metrics",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "plan",
+                  "version_input": "monitoring_plan",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "resource_group_name",
+                  "version_input": "existing_resource_group_name",
+                  "reference_version": true
+                },
+                {
+                  "dependency_output": "cloud_monitoring_crn",
+                  "version_input": "existing_cloud_monitoring_crn"
+                },
+                {
+                  "dependency_output": "cloud_monitoring_access_key",
+                  "version_input": "cloud_monitoring_access_key"
+                }
+              ]
             }
           ],
           "dependency_version_2": true,
