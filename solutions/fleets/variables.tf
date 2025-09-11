@@ -146,11 +146,11 @@ variable "cos_location" {
 #   default     = "global"
 # }
 
-variable "resource_keys" {
-  description = "The definition of the resource keys to generate. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cos/tree/main/solutions/instance/DA-types.md#resource-keys)."
-  type = list(any)
-  default = [  ]
-}
+# variable "resource_keys" {
+#   description = "The definition of the resource keys to generate. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cos/tree/main/solutions/instance/DA-types.md#resource-keys)."
+#   type = list(any)
+#   default = [  ]
+# }
 
 ########################################################################################################################
 # Cloud monitoring

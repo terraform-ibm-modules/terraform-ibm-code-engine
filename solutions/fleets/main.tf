@@ -66,6 +66,16 @@ module "cos" {
 #                   }]
 #                 },
 
+resource "ibm_resource_key" "cos_hmac_key" {
+  name                 = local.cos_key_name
+  role                 = "Writer" # Or "Reader", "Manager", etc.
+  service_instance_id  = local.cos_instance_guid
+
+  parameters = jsonencode({
+    HMAC = true
+  })
+}
+
 module "cos_buckets" {
   source  = "terraform-ibm-modules/cos/ibm//modules/buckets"
   version = "10.2.13"
@@ -503,8 +513,8 @@ resource "null_resource" "fleet_cos_secret" {
       ibmcloud ce project select --name ${module.project.name}
       ibmcloud ce secret create --name ${local.fleet_cos_secret_name} \
       --format hmac \
-      --access-key-id ${var.resource_keys[local.cos_key_name].credentials["cos_hmac_keys.access_key_id"]}  \
-      --secret-access-key ${var.resource_keys[local.cos_key_name].credentials["cos_hmac_keys.secret_access_key"]}
+      --access-key-id ${ibm_resource_key.cos_hmac_key.credentials["cos_hmac_keys.access_key_id"]}  \
+      --secret-access-key ${ibm_resource_key.cos_hmac_key.credentials["cos_hmac_keys.secret_access_key"]}
     EOT
   }
 }
