@@ -71,9 +71,9 @@ resource "ibm_resource_key" "cos_hmac_key" {
   role                 = "Writer" # Or "Reader", "Manager", etc.
   resource_instance_id  = var.existing_cos_instance_crn
 
-  parameters = jsonencode({
-    HMAC = true
-  })
+  parameters = {
+    "HMAC" = true
+  }
 }
 
 module "cos_buckets" {
