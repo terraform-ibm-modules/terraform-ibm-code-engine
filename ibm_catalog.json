@@ -1623,18 +1623,6 @@
                 {
                   "version_input": "enable_vpc_flow_logs",
                   "value": false
-                },
-                {
-                  "dependency_output": "resource_keys",
-                  "version_input": "resource_keys"
-                },
-                {
-                  "dependency_input": "resource_keys",
-                  "value": [{
-                     "name"                      : "resource-hmac-key-name",
-                     "generate_hmac_credentials" : true,
-                     "role"                      : "Writer"
-                   }]
                 }
               ],
               "optional": false,
