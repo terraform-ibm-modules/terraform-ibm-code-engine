@@ -69,7 +69,7 @@ module "cos" {
 resource "ibm_resource_key" "cos_hmac_key" {
   name                 = local.cos_key_name
   role                 = "Writer" # Or "Reader", "Manager", etc.
-  service_instance_id  = local.cos_instance_guid
+  resource_instance_id  = var.existing_cos_instance_crn
 
   parameters = jsonencode({
     HMAC = true
