@@ -453,7 +453,7 @@ module "cloud_monitoring" {
   region            = var.region
   resource_group_id = module.resource_group.resource_group_id
   instance_name     = local.monitoring_name
-  plan              = var.monitoring_plan
+  plan              = var.cloud_monitoring_plan
   service_endpoints = "public-and-private"
   # enable_platform_metrics = false
   manager_key_name = local.monitoring_key_name
