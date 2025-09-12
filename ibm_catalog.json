@@ -1063,7 +1063,7 @@
               {
                 "diagram": {
                   "caption": "IBM Cloud Code Engine QuickStart Topology",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-quickstart.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-fleets.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture defines a streamlined environment within an IBM Cloud region that includes a Code Engine project with associated builds, an application, and a registry secret. It supports secure building and running of containerized workloads.<br><br>The setup also includes an IBM Cloud Container Registry for reliable storage and management of container images.<br><br>Designed for simplicity and flexibility, this setup enables efficient build processes and container image management to support scalable, event-driven workloads on IBM Cloud."
@@ -1607,10 +1607,35 @@
               }
             },
             {
-              "key": "cos_plan"
+              "key": "cos_plan",
+              "options": [
+                {
+                  "displayname": "standard",
+                  "value": "standard"
+                },
+                {
+                  "displayname": "One Rate",
+                  "value": "cos-one-rate-plan"
+                }
+              ]
             },
             {
-              "key": "monitoring_plan"
+              "key": "cloud_monitoring_plan",
+              "required": true,
+              "options": [
+                {
+                  "displayname": "Graduated tier",
+                  "value": "graduated-tier"
+                },
+                {
+                  "displayname": "Lite",
+                  "value": "lite"
+                },
+                {
+                  "displayname": "Graduated tier Sysdig Secure plus Monitor",
+                  "value": "graduated-tier-sysdig-secure-plus-monitor"
+                }
+              ]
             },
             {
               "key": "resource_tags"
@@ -1732,7 +1757,7 @@
                 },
                 {
                   "dependency_input": "plan",
-                  "version_input": "monitoring_plan",
+                  "version_input": "cloud_monitoring_plan",
                   "reference_version": true
                 },
                 {

@@ -156,7 +156,7 @@ variable "cos_location" {
 # Cloud monitoring
 ########################################################################################################################
 
-variable "monitoring_plan" {
+variable "cloud_monitoring_plan" {
   type        = string
   description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)"
   default     = "graduated-tier"
