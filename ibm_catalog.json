@@ -1545,8 +1545,37 @@
               "required": true
             },
             {
-              "key": "existing_kms_instance_crn",
+              "key": "existing_cloud_logs_crn",
+              "required": true
+            },
+            {
+              "key": "existing_cloud_monitoring_crn",
+              "required": true
+            },
+            {
+              "key": "enable_platform_metrics",
+              "type": "boolean",
+              "default_value": false,
+              "description": "When set to `true`, the IBM Cloud Monitoring instance will be configured to collect platform metrics from the provided region. You can configure 1 instance only of the IBM Cloud Monitoring service per region to collect platform metrics in that location. Check with the account or service administrator if another monitoring instance has already been configured. You may not have permissions to see all monitoring instances in the region. [Learn more](https://cloud.ibm.com/docs/monitoring?topic=monitoring-platform_metrics_enabling).",
+              "required": true,
               "virtual": true,
+              "options": [
+                {
+                  "displayname": "true",
+                  "value": "true"
+                },
+                {
+                  "displayname": "false",
+                  "value": "false"
+                }
+              ]
+            },
+            {
+              "key": "cloud_monitoring_access_key",
+              "required": true
+            },
+            {
+              "key": "cloud_logs_ingress_private_endpoint",
               "required": true
             },
             {
@@ -1578,22 +1607,25 @@
               }
             },
             {
-              "key": "enable_platform_metrics",
-              "type": "boolean",
-              "default_value": false,
-              "description": "When set to `true`, the IBM Cloud Monitoring instance will be configured to collect platform metrics from the provided region. You can configure 1 instance only of the IBM Cloud Monitoring service per region to collect platform metrics in that location. Check with the account or service administrator if another monitoring instance has already been configured. You may not have permissions to see all monitoring instances in the region. [Learn more](https://cloud.ibm.com/docs/monitoring?topic=monitoring-platform_metrics_enabling).",
-              "required": true,
-              "virtual": true,
-              "options": [
-                {
-                  "displayname": "true",
-                  "value": "true"
-                },
-                {
-                  "displayname": "false",
-                  "value": "false"
-                }
-              ]
+              "key": "cos_plan"
+            },
+            {
+              "key": "monitoring_plan"
+            },
+            {
+              "key": "resource_tags"
+            },
+            {
+              "key": "enable_monitoring",
+              "hidden": true
+            },
+            {
+              "key": "enable_logging",
+              "hidden": true
+            },
+            {
+              "key": "cos_location",
+              "hidden": true
             }
           ],
           "dependencies": [
@@ -1618,6 +1650,11 @@
                 {
                   "dependency_input": "prefix",
                   "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "plan",
+                  "version_input": "cos_plan",
                   "reference_version": true
                 },
                 {

@@ -162,16 +162,18 @@ variable "monitoring_plan" {
   default     = "graduated-tier"
 }
 
- variable "existing_cloud_monitoring_crn" {
-     type        = string
-       nullable    = true
- }
+variable "existing_cloud_monitoring_crn" {
+  type        = string
+  nullable    = true
+  description = "The CRN of existing cloud monitoring instance"
+}
 
 
- variable "cloud_monitoring_access_key" {
-     type        = string
-       nullable    = true
- }
+variable "cloud_monitoring_access_key" {
+  type        = string
+  nullable    = true
+  description = "The access key of existing cloud monitoring instance"
+}
 
 
 
@@ -179,14 +181,14 @@ variable "monitoring_plan" {
 # Cloud logs
 ########################################################################################################################
 
- variable "existing_cloud_logs_crn" {
-     type        = string
-       nullable    = true
- }
+variable "existing_cloud_logs_crn" {
+  type        = string
+  nullable    = true
+  description = "The CRN of the existing cloud logs instance"
+}
 
-  variable "cloud_logs_ingress_private_endpoint" {
-     type        = string
-      default = null
- }
-
- 
+variable "cloud_logs_ingress_private_endpoint" {
+  type        = string
+  default     = null
+  description = "The ingress private endpoint of the cloud logs instance"
+}
