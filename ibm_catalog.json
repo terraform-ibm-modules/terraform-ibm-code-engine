@@ -1755,10 +1755,10 @@
               {
                 "diagram": {
                   "caption": "IBM Cloud Code Engine Application Topology",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-application.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-code-engine/refs/heads/refactor_da/reference-architecture/deployment-architecture-fleets.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture provides a streamlined setup within an IBM Cloud region to deploy and manage serverless applications using Code Engine. It includes a Code Engine project, application, and registry secret as core components enabling secure container image management and seamless app deployment.<br><br>Optional integrations include observability tools like Cloud Monitoring and Cloud Logs for real-time insights into application performance and health. Additional services such as App Configuration (separate from Code Engine apps), SCC Workload Protection, and Activity Tracker enhance configuration management, security, and auditing.<br><br>Designed for simplicity and flexibility, this solution accelerates the deployment and operational management of scalable, event-driven applications on IBM Cloud."
+                "description": "This architecture deploys fleets."
               }
             ]
           },
