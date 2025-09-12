@@ -29,8 +29,8 @@ locals {
   cos_key_name = "${local.prefix}-hmac-key"
 
   cos_instance_guid = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser.service_instance : null
-  cos_account_id    = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser.account_id : null
-  
+  # cos_account_id    = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser.account_id : null
+
 }
 
 module "existing_cos_crn_parser" {
@@ -69,7 +69,7 @@ module "cos" {
 resource "ibm_resource_key" "cos_hmac_key" {
   name                 = local.cos_key_name
   role                 = "Writer" # Or "Reader", "Manager", etc.
-  resource_instance_id  = var.existing_cos_instance_crn
+  resource_instance_id = var.existing_cos_instance_crn
 
   parameters = {
     "HMAC" = true
@@ -372,13 +372,13 @@ module "vpe_logging" {
 ########################################################################################################################
 
 locals {
-  icl_name = "${local.prefix}icl"
-  cloud_logs_guid  = var.existing_cloud_logs_crn != null ?  module.existing_cloud_logs_crn[0].service_instance : null
+  icl_name        = "${local.prefix}icl"
+  cloud_logs_guid = var.existing_cloud_logs_crn != null ? module.existing_cloud_logs_crn[0].service_instance : null
 
 }
 
 module "existing_cloud_logs_crn" {
-  count = var.existing_cloud_logs_crn != null ? 1 : 0
+  count   = var.existing_cloud_logs_crn != null ? 1 : 0
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.2.0"
   crn     = var.existing_cloud_logs_crn
@@ -412,14 +412,14 @@ module "cloud_logs" {
 }
 
 resource "ibm_iam_service_id" "logs_service_id" {
-  count = var.existing_cloud_logs_crn != null ? 1 : 0
+  count       = var.existing_cloud_logs_crn != null ? 1 : 0
   name        = "${local.icl_name}-svc-id"
   description = "Service ID to ingest into IBM Cloud Logs instance"
 }
 
 # Create IAM Service Policy granting "Sender" role to this service ID on the Cloud Logs instance
 resource "ibm_iam_service_policy" "logs_policy" {
-  count = var.existing_cloud_logs_crn != null ? 1 : 0
+  count          = var.existing_cloud_logs_crn != null ? 1 : 0
   iam_service_id = ibm_iam_service_id.logs_service_id[0].id
   roles          = ["Sender"]
   description    = "Policy for ServiceID to send logs to IBM Cloud Logs instance"
@@ -447,16 +447,16 @@ locals {
 }
 
 module "cloud_monitoring" {
-  count                   = var.enable_monitoring ? 1 : 0
-  source                  = "terraform-ibm-modules/cloud-monitoring/ibm"
-  version                 = "1.7.1"
-  region                  = var.region
-  resource_group_id       = module.resource_group.resource_group_id
-  instance_name           = local.monitoring_name
-  plan                    = var.monitoring_plan
-  service_endpoints       = "public-and-private"
+  count             = var.enable_monitoring ? 1 : 0
+  source            = "terraform-ibm-modules/cloud-monitoring/ibm"
+  version           = "1.7.1"
+  region            = var.region
+  resource_group_id = module.resource_group.resource_group_id
+  instance_name     = local.monitoring_name
+  plan              = var.monitoring_plan
+  service_endpoints = "public-and-private"
   # enable_platform_metrics = false
-  manager_key_name        = local.monitoring_key_name
+  manager_key_name = local.monitoring_key_name
 }
 
 
