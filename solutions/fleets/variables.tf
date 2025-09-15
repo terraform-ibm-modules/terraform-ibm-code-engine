@@ -296,6 +296,7 @@ variable "existing_cloud_monitoring_crn" {
   type        = string
   nullable    = true
   description = "The CRN of existing cloud monitoring instance"
+  default = null
 }
 
 
@@ -303,6 +304,7 @@ variable "cloud_monitoring_access_key" {
   type        = string
   nullable    = true
   description = "The access key of existing cloud monitoring instance"
+    default = null
 }
 
 
@@ -315,6 +317,7 @@ variable "existing_cloud_logs_crn" {
   type        = string
   nullable    = true
   description = "The CRN of the existing cloud logs instance"
+  default=null
 }
 
 variable "cloud_logs_ingress_private_endpoint" {
