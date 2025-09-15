@@ -230,6 +230,7 @@ resource "ibm_iam_authorization_policy" "codeengine_to_cos" {
 ########################################################################################################################
 
 module "vpc" {
+  count = 0
   source            = "terraform-ibm-modules/landing-zone-vpc/ibm"
   version           = "8.2.0"
   resource_group_id = module.resource_group.resource_group_id
@@ -237,6 +238,7 @@ module "vpc" {
   name              = "vpc"
   prefix            = local.prefix
   tags              = var.resource_tags
+
 
   enable_vpc_flow_logs = false
 
@@ -257,30 +259,31 @@ module "vpc" {
     ]
   }
   clean_default_sg_acl = true
-  network_acls = [
-    {
-      name                         = "${local.prefix}acl"
-      add_ibm_cloud_internal_rules = true
-      add_vpc_connectivity_rules   = true
-      prepend_ibm_rules            = true
-      rules = [
-        {
-          name        = "allow-all-egress"
-          action      = "allow"
-          direction   = "outbound"
-          source      = "0.0.0.0/0"
-          destination = "0.0.0.0/0"
-        },
-        {
-          name        = "allow-all-ingress"
-          action      = "allow"
-          direction   = "inbound"
-          source      = "0.0.0.0/0"
-          destination = "0.0.0.0/0"
-        }
-      ]
-    }
-  ]
+  network_acls = var.network_acls
+  # network_acls = [
+  #   {
+  #     name                         = "${local.prefix}acl"
+  #     add_ibm_cloud_internal_rules = true
+  #     add_vpc_connectivity_rules   = true
+  #     prepend_ibm_rules            = true
+  #     rules = [
+  #       {
+  #         name        = "allow-all-egress"
+  #         action      = "allow"
+  #         direction   = "outbound"
+  #         source      = "0.0.0.0/0"
+  #         destination = "0.0.0.0/0"
+  #       },
+  #       {
+  #         name        = "allow-all-ingress"
+  #         action      = "allow"
+  #         direction   = "inbound"
+  #         source      = "0.0.0.0/0"
+  #         destination = "0.0.0.0/0"
+  #       }
+  #     ]
+  #   }
+  # ]
 }
 
 # data "ibm_is_vpc" "vpc" {
@@ -293,7 +296,8 @@ module "fleet_sg" {
   version = "2.7.0"
 
   security_group_name = "${local.prefix}sg"
-  vpc_id              = module.vpc.vpc_id
+  # vpc_id              = module.vpc.vpc_id
+  vpc_id = var.vpc_id
 
   security_group_rules = [
     # {
@@ -349,17 +353,20 @@ module "vpe_logging" {
   region            = var.region
   prefix            = "${local.prefix}log"
   resource_group_id = module.resource_group.resource_group_id
-  vpc_id            = module.vpc.vpc_id
-  vpc_name          = module.vpc.vpc_name
+  vpc_id            = var.vpc_id
+  vpc_name          = var.vpc_name
+  # vpc_id            = module.vpc.vpc_id
+  # vpc_name          = module.vpc.vpc_name
 
-  subnet_zone_list = [
-    {
-      id   = ([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0]
-      name = "${local.prefix}subnet"
-      zone = "zone-1"
-    }
-  ]
+  # subnet_zone_list = [
+  #   {
+  #     id   = ([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0]
+  #     name = "${local.prefix}subnet"
+  #     zone = "zone-1"
+  #   }
+  # ]
 
+  subnet_zone_list = [for subnet in var.subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
   security_group_ids = [module.fleet_sg.security_group_id]
 
   cloud_service_by_crn = local.cloud_services
@@ -536,7 +543,8 @@ data "ibm_is_security_group" "example" {
 }
 
 data "ibm_is_subnet" "example" {
-  identifier = ([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0]
+  # identifier = (([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0])
+  identifier = var.subnet_zone_list[0].id
 }
 
 module "secret" {
