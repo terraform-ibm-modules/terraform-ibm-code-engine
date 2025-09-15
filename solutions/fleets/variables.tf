@@ -181,8 +181,25 @@ variable "network_acls" {
   ]
 }
 
-
-
+variable "subnets" {
+  description = "Map of zones to subnet configurations"
+  type = map(list(object({
+    name           = string
+    cidr           = string
+    public_gateway = bool
+    acl_name       = string
+  })))
+  default = {
+    zone-1 = [
+      {
+        name           = "fleet-subnet-a"
+        cidr           = "10.10.10.0/24"
+        public_gateway = true
+        acl_name       = "fleets-allow-all-acl"
+      }
+    ]
+  }
+}
 variable "subnet_zone_list" {
   description = "List of subnets for the vpc. For each item in each array, a subnet will be created. Items can be either CIDR blocks or total ipv4 addresses. Public gateways will be enabled only in zones where a gateway has been created. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone-vpc/blob/main/solutions/fully-configurable/DA-types.md#subnets-)."
   type = object({
