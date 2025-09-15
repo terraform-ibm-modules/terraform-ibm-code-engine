@@ -114,6 +114,119 @@ variable "enable_monitoring" {
 }
 
 
+variable "network_acls" {
+  description = "List of network ACLs to create with VPC"
+  type = list(
+    object({
+      name                         = string
+      add_ibm_cloud_internal_rules = optional(bool)
+      add_vpc_connectivity_rules   = optional(bool)
+      prepend_ibm_rules            = optional(bool)
+      rules = list(
+        object({
+          name        = string
+          action      = string
+          destination = string
+          direction   = string
+          source      = string
+          tcp = optional(
+            object({
+              port_max        = optional(number)
+              port_min        = optional(number)
+              source_port_max = optional(number)
+              source_port_min = optional(number)
+            })
+          )
+          udp = optional(
+            object({
+              port_max        = optional(number)
+              port_min        = optional(number)
+              source_port_max = optional(number)
+              source_port_min = optional(number)
+            })
+          )
+          icmp = optional(
+            object({
+              type = optional(number)
+              code = optional(number)
+            })
+          )
+        })
+      )
+    })
+  )
+  default = [
+    {
+      name                         = "fleets-allow-all-acl"
+      add_ibm_cloud_internal_rules = true
+      add_vpc_connectivity_rules   = true
+      prepend_ibm_rules            = true
+      rules = [
+        {
+          name        = "allow-all-egress"
+          action      = "allow"
+          direction   = "outbound"
+          source      = "0.0.0.0/0"
+          destination = "0.0.0.0/0"
+        },
+        {
+          name        = "allow-all-ingress"
+          action      = "allow"
+          direction   = "inbound"
+          source      = "0.0.0.0/0"
+          destination = "0.0.0.0/0"
+        }
+      ]
+    }
+  ]
+}
+
+
+
+variable "subnet_zone_list" {
+  description = "List of subnets for the vpc. For each item in each array, a subnet will be created. Items can be either CIDR blocks or total ipv4 addresses. Public gateways will be enabled only in zones where a gateway has been created. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone-vpc/blob/main/solutions/fully-configurable/DA-types.md#subnets-)."
+  type = object({
+    zone-1 = list(object({
+      name           = string
+      public_gateway = optional(bool)
+      no_addr_prefix = optional(bool, false) # do not automatically add address prefix for subnet, overrides other conditions if set to true
+      subnet_tags    = optional(list(string), [])
+    }))
+    zone-2 = optional(list(object({
+      name           = string
+      cidr           = string
+      public_gateway = optional(bool)
+      acl_name       = string
+      no_addr_prefix = optional(bool, false) # do not automatically add address prefix for subnet, overrides other conditions if set to true
+      subnet_tags    = optional(list(string), [])
+    })))
+    zone-3 = optional(list(object({
+      name           = string
+      cidr           = string
+      public_gateway = optional(bool)
+      acl_name       = string
+      no_addr_prefix = optional(bool, false) # do not automatically add address prefix for subnet, overrides other conditions if set to true
+      subnet_tags    = optional(list(string), [])
+    })))
+  })
+
+  validation {
+    condition     = alltrue([for key, value in var.subnets : value != null ? length([for subnet in value : subnet.public_gateway if subnet.public_gateway]) > 1 ? false : true : true])
+    error_message = "var.subnets has more than one public gateway in a zone. Only one public gateway can be attached to a zone for the virtual private cloud."
+  }
+}
+
+
+variable "vpc_name" {
+  type        = string
+  nullable    = true
+}
+
+variable "vpc_id" {
+  type        = string
+  nullable    = true
+}
+
 # cos
 
 
