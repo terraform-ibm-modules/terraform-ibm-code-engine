@@ -366,7 +366,7 @@ module "vpe_logging" {
   #   }
   # ]
 
-  subnet_zone_list = [for subnet in var.subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
+  subnet_zone_list = [for subnet in var.ex_subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
   security_group_ids = [module.fleet_sg.security_group_id]
 
   cloud_service_by_crn = local.cloud_services

@@ -2170,7 +2170,7 @@
                 },
                 {
                   "dependency_output": "subnet_zone_list",
-                  "version_input": "subnet_zone_list"
+                  "version_input": "ex_subnet_zone_list"
                 },
                 {
                   "dependency_output": "vpc_id",
