@@ -2147,47 +2147,8 @@
                   "dependency_input": "region",
                   "version_input": "region",
                   "reference_version": true
-                },
-                {
-                  "dependency_input": "network_acls",
-                  "version_input": "network_acls",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "subnets",
-                  "version_input": "subnets",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "enable_vpc_flow_logs",
-                  "value": false,
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "clean_default_sg_acl",
-                  "value": true,
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "subnet_zone_list",
-                  "version_input": "subnet_zone_list"
-                },
-                {
-                  "dependency_output": "vpc_id",
-                  "version_input": "vpc_id"
-                },
-                {
-                  "dependency_output": "vpc_name",
-                  "version_input": "vpc_name"
-                },
-                {
-                  "dependency_input": "use_public_gateways",
-                   "value": {
-                    "zone-1" : true,
-                    "zone-2" : false,
-                    "zone-3" : false
-                  }
                 }
+               
               ]
             }
           ],
