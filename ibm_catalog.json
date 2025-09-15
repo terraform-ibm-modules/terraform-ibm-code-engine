@@ -2147,6 +2147,11 @@
                   "dependency_input": "region",
                   "version_input": "region",
                   "reference_version": true
+                },
+                {
+                  "dependency_input": "network_acls",
+                  "version_input": "network_acls",
+                  "reference_version": true
                 }
               ]
             }
