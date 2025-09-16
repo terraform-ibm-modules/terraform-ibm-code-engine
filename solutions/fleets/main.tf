@@ -358,6 +358,7 @@ module "vpe_logging" {
   # vpc_id            = module.vpc.vpc_id
   # vpc_name          = module.vpc.vpc_name
 
+
   # subnet_zone_list = [
   #   {
   #     id   = ([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0]
