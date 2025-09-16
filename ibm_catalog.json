@@ -2190,7 +2190,7 @@
                   "reference_version": true
                 },
                 {
-                  "dependency_output": "subnet_zone_list",
+                  "dependency_output": "subnet_detail_list",
                   "version_input": "ex_subnet_zone_list"
                 },
                 {
