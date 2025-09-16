@@ -501,7 +501,10 @@ locals {
       format = "generic"
       data = merge(
         {
-          pool_subnet_crn_1          = data.ibm_is_subnet.example.crn
+          for idx, subnet in var.ex_subnet_zone_list :
+          "pool_subnet_crn_${idx + 1}" => subnet.crn
+        },
+        {
           pool_security_group_crns_1 = data.ibm_is_security_group.example.crn
         },
         var.existing_cloud_logs_crn != null ? {
@@ -542,10 +545,13 @@ data "ibm_is_security_group" "example" {
   name       = "${local.prefix}sg"
 }
 
-data "ibm_is_subnet" "example" {
-  # identifier = (([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0])
-  identifier = var.ex_subnet_zone_list[0].id
-}
+# locals {
+#   identifiers = [for subnet in var.ex_subnet_zone_list : subnet.id]
+# }
+# data "ibm_is_subnet" "example" {
+#   # identifier = (([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0])
+#   identifier = local.identifiers[0]
+# }
 
 module "secret" {
   source     = "../../modules/secret"
