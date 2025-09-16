@@ -226,6 +226,7 @@ variable "ex_subnet_zone_list" {
       subnet_tags    = optional(list(string), [])
     })))
   })
+  default = null
 
   validation {
     condition     = alltrue([for key, value in var.ex_subnet_zone_list : value != null ? length([for subnet in value : subnet.public_gateway if subnet.public_gateway]) > 1 ? false : true : true])
@@ -237,11 +238,13 @@ variable "ex_subnet_zone_list" {
 variable "vpc_name" {
   type        = string
   nullable    = true
+  default = null
 }
 
 variable "vpc_id" {
   type        = string
   nullable    = true
+  default = null
 }
 
 # cos

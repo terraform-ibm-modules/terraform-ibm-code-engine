@@ -2002,6 +2002,21 @@
             {
               "key": "cos_location",
               "hidden": true
+            },
+            {
+              "key": "network_acls"
+            },
+            {
+              "key": "subnets"
+            },
+            {
+              "key": "ex_subnet_zone_list"
+            },
+            {
+              "key": "vpc_id"
+            },
+            {
+              "key": "vpc_name"
             }
           ],
           "dependencies": [
