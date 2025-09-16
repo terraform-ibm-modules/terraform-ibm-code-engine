@@ -203,16 +203,17 @@ variable "subnets" {
 variable "ex_subnet_zone_list" {
   description = "List of subnets for the vpc. For each item in each array, a subnet will be created. Items can be either CIDR blocks or total ipv4 addresses. Public gateways will be enabled only in zones where a gateway has been created. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone-vpc/blob/main/solutions/fully-configurable/DA-types.md#subnets-)."
   #
-  type = list(
-    object({
-      name = string
-      id   = string
-      zone = string
-      cidr = optional(string)
-      crn  = optional(string)
-    })
-  )
-  default = []
+  # type = list(
+  #   object({
+  #     name = string
+  #     id   = string
+  #     zone = string
+  #     cidr = optional(string)
+  #     crn  = optional(string)
+  #   })
+  # )
+  type = string
+  default = null
 
   # validation {
   #   condition     = alltrue([for key, value in var.ex_subnet_zone_list : value != null ? length([for subnet in value : subnet.public_gateway if subnet.public_gateway]) > 1 ? false : true : true])
