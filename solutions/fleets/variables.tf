@@ -210,11 +210,7 @@ variable "ex_subnet_zone_list" {
 #     name = string
 #     zone = string
 #   }))
- type = map(map(object({
-    cidr = string
-    crn  = string
-    id   = string
-  })))
+ type = any
   default = {}
 
   # validation {
