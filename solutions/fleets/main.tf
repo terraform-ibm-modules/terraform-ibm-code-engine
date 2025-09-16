@@ -230,7 +230,7 @@ resource "ibm_iam_authorization_policy" "codeengine_to_cos" {
 ########################################################################################################################
 
 module "vpc" {
-  count = 0
+  count             = 0
   source            = "terraform-ibm-modules/landing-zone-vpc/ibm"
   version           = "8.2.0"
   resource_group_id = module.resource_group.resource_group_id
@@ -259,7 +259,7 @@ module "vpc" {
     ]
   }
   clean_default_sg_acl = true
-  network_acls = var.network_acls
+  network_acls         = var.network_acls
   # network_acls = [
   #   {
   #     name                         = "${local.prefix}acl"
@@ -366,7 +366,7 @@ module "vpe_logging" {
   #   }
   # ]
 
-  subnet_zone_list = [for subnet in var.ex_subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
+  subnet_zone_list   = [for subnet in var.ex_subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
   security_group_ids = [module.fleet_sg.security_group_id]
 
   cloud_service_by_crn = local.cloud_services
@@ -544,7 +544,7 @@ data "ibm_is_security_group" "example" {
 
 data "ibm_is_subnet" "example" {
   # identifier = (([for s in module.vpc.vpc_data.subnets : s.id if s.name == "${local.prefix}-vpc-${local.prefix}subnet"])[0])
-  identifier = var.subnet_zone_list[0].id
+  identifier = var.ex_subnet_zone_list[0].id
 }
 
 module "secret" {

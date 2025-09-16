@@ -1684,7 +1684,13 @@
               "hidden": true
             },
             {
-              "key": "network_acls"
+              "key": "network_acls",
+              "type": "array",
+              "custom_config": {
+                "type": "code_editor",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              }
             },
             {
               "key": "subnets"
@@ -1878,9 +1884,9 @@
                 {
                   "dependency_input": "use_public_gateways",
                   "value": {
-                    "zone-1" : true,
-                    "zone-2" : false,
-                    "zone-3" : false
+                    "zone-1": true,
+                    "zone-2": false,
+                    "zone-3": false
                   },
                   "reference_version": true
                 }
