@@ -1893,15 +1893,18 @@
             },
             {
               "key": "existing_cos_instance_crn",
-              "required": true
+              "required": true,
+              "hidden": true
             },
             {
               "key": "existing_cloud_logs_crn",
-              "required": true
+              "required": true,
+              "hidden": true
             },
             {
               "key": "existing_cloud_monitoring_crn",
-              "required": true
+              "required": true,
+              "hidden": true
             },
             {
               "key": "enable_platform_metrics",
@@ -1923,11 +1926,13 @@
             },
             {
               "key": "cloud_monitoring_access_key",
-              "required": true
+              "required": true,
+              "hidden": true
             },
             {
               "key": "cloud_logs_ingress_private_endpoint",
-              "required": true
+              "required": true,
+              "hidden": true
             },
             {
               "key": "region",
@@ -2013,16 +2018,20 @@
               }
             },
             {
-              "key": "subnets"
+              "key": "subnets",
+              "hidden": true
             },
             {
-              "key": "ex_subnet_zone_list"
+              "key": "ex_subnet_zone_list",
+              "hidden": true
             },
             {
-              "key": "vpc_id"
+              "key": "vpc_id",
+              "hidden": true
             },
             {
-              "key": "vpc_name"
+              "key": "vpc_name",
+              "hidden": true
             }
           ],
           "dependencies": [
