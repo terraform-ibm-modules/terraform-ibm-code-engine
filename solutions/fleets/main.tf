@@ -376,7 +376,8 @@ module "vpe_logging" {
 }
 
 locals {
-  ex_subnet_zone_list = jsondecode(var.ex_subnet_zone_list)
+  # ex_subnet_zone_list = jsondecode(var.ex_subnet_zone_list)
+   ex_subnet_zone_list = var.ex_subnet_zone_list
 }
 ########################################################################################################################
 # Cloud logs
