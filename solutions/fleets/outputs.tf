@@ -7,6 +7,12 @@ output "resource_group_name" {
   value       = module.resource_group.resource_group_name
 }
 
+
+output "code_engine_project_name" {
+  description = "Name of the code engine project."
+  value       = module.project.name
+}
+
 # output "cos_buckets" {
 #   value = module.cos_buckets.buckets[local.taskstore_bucket_name].s3_endpoint_private
 # }

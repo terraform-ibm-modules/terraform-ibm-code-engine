@@ -113,132 +113,15 @@ variable "enable_monitoring" {
   default     = false
 }
 
+variable "vpc_zones" {
+  type        = number
+  description = "Number of VPC zones to use (must be 1, 2, or 3)"
+  default     = 1
 
-variable "network_acls" {
-  description = "List of network ACLs to create with VPC"
-  type = list(
-    object({
-      name                         = string
-      add_ibm_cloud_internal_rules = optional(bool)
-      add_vpc_connectivity_rules   = optional(bool)
-      prepend_ibm_rules            = optional(bool)
-      rules = list(
-        object({
-          name        = string
-          action      = string
-          destination = string
-          direction   = string
-          source      = string
-          tcp = optional(
-            object({
-              port_max        = optional(number)
-              port_min        = optional(number)
-              source_port_max = optional(number)
-              source_port_min = optional(number)
-            })
-          )
-          udp = optional(
-            object({
-              port_max        = optional(number)
-              port_min        = optional(number)
-              source_port_max = optional(number)
-              source_port_min = optional(number)
-            })
-          )
-          icmp = optional(
-            object({
-              type = optional(number)
-              code = optional(number)
-            })
-          )
-        })
-      )
-    })
-  )
-  default = [
-    {
-      name                         = "fleets-allow-all-acl"
-      add_ibm_cloud_internal_rules = true
-      add_vpc_connectivity_rules   = true
-      prepend_ibm_rules            = true
-      rules = [
-        {
-          name        = "allow-all-egress"
-          action      = "allow"
-          direction   = "outbound"
-          source      = "0.0.0.0/0"
-          destination = "0.0.0.0/0"
-        },
-        {
-          name        = "allow-all-ingress"
-          action      = "allow"
-          direction   = "inbound"
-          source      = "0.0.0.0/0"
-          destination = "0.0.0.0/0"
-        }
-      ]
-    }
-  ]
-}
-
-variable "subnets" {
-  description = "Map of zones to subnet configurations"
-  type = map(list(object({
-    name           = string
-    cidr           = string
-    public_gateway = bool
-    acl_name       = string
-  })))
-  default = {
-    zone-1 = [
-      {
-        name           = "fleet-subnet-a"
-        cidr           = "10.10.10.0/24"
-        public_gateway = true
-        acl_name       = "fleets-allow-all-acl"
-      }
-    ]
+  validation {
+    condition     = contains([1, 2, 3], var.vpc_zones)
+    error_message = "zones must be 1, 2, or 3 only."
   }
-}
-variable "ex_subnet_zone_list" {
-  description = "List of subnets for the vpc. For each item in each array, a subnet will be created. Items can be either CIDR blocks or total ipv4 addresses. Public gateways will be enabled only in zones where a gateway has been created. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone-vpc/blob/main/solutions/fully-configurable/DA-types.md#subnets-)."
-  #
-#  type = list(object({
-#     cidr = optional(string)
-#     crn  = string
-#     id   = string
-#     name = string
-#     zone = string
-#   }))
- type = any
-  default = {}
-
-  # validation {
-  #   condition     = alltrue([for key, value in var.ex_subnet_zone_list : value != null ? length([for subnet in value : subnet.public_gateway if subnet.public_gateway]) > 1 ? false : true : true])
-  #   error_message = "var.subnets has more than one public gateway in a zone. Only one public gateway can be attached to a zone for the virtual private cloud."
-  # }
-}
-
-
-variable "vpc_name" {
-  type     = string
-  nullable = true
-  default  = null
-}
-
-variable "vpc_id" {
-  type     = string
-  nullable = true
-  default  = null
-}
-
-# cos
-
-
-variable "existing_cos_instance_crn" {
-  type        = string
-  nullable    = true
-  description = "The CRN of an existing Cloud Object Storage instance. If a CRN is not specified, a new instance of Cloud Object Storage is created."
 }
 
 variable "cos_plan" {
@@ -258,18 +141,6 @@ variable "cos_location" {
   default     = "global"
 }
 
-# variable "cos_instance_id" {
-#   description = "The location for the Object Storage instance. Required if `create_cos_instance` is set to `true`."
-#   type        = string
-#   default     = "global"
-# }
-
-# variable "resource_keys" {
-#   description = "The definition of the resource keys to generate. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cos/tree/main/solutions/instance/DA-types.md#resource-keys)."
-#   type = list(any)
-#   default = [  ]
-# }
-
 ########################################################################################################################
 # Cloud monitoring
 ########################################################################################################################
@@ -278,38 +149,4 @@ variable "cloud_monitoring_plan" {
   type        = string
   description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)"
   default     = "graduated-tier"
-}
-
-variable "existing_cloud_monitoring_crn" {
-  type        = string
-  nullable    = true
-  description = "The CRN of existing cloud monitoring instance"
-  default     = null
-}
-
-
-variable "cloud_monitoring_access_key" {
-  type        = string
-  nullable    = true
-  description = "The access key of existing cloud monitoring instance"
-  default     = null
-}
-
-
-
-########################################################################################################################
-# Cloud logs
-########################################################################################################################
-
-variable "existing_cloud_logs_crn" {
-  type        = string
-  nullable    = true
-  description = "The CRN of the existing cloud logs instance"
-  default     = null
-}
-
-variable "cloud_logs_ingress_private_endpoint" {
-  type        = string
-  default     = null
-  description = "The ingress private endpoint of the cloud logs instance"
 }
