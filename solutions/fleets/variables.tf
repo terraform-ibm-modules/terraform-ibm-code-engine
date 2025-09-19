@@ -23,7 +23,7 @@ variable "prefix" {
   type        = string
   nullable    = true
   description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--'). Example: prod-0205-ce. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/prefix.md)."
-  default = "fleets-quickstart"
+  default     = "quickstart"
 
   validation {
     # - null and empty string is allowed
@@ -56,13 +56,13 @@ variable "region" {
 variable "existing_resource_group_name" {
   type        = string
   description = "The name of an existing resource group to provision the resources."
-  default     = "Default"
+  default     = null
 }
 
-variable "project_name" {
+variable "code_engine_project_name" {
   description = "The name of the project to add the IBM Cloud Code Engine. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<project_name>` format."
   type        = string
-  default     = "ce-project"
+  default     = "fleets-project"
 }
 
 variable "resource_tags" {
@@ -73,42 +73,11 @@ variable "resource_tags" {
 
 
 ##############################################################################
-# CBR Rules
-##############################################################################
-variable "cbr_rules" {
-  type = list(object({
-    description = string
-    account_id  = string
-    rule_contexts = list(object({
-      attributes = optional(list(object({
-        name  = string
-        value = string
-    }))) }))
-    enforcement_mode = string
-    operations = optional(list(object({
-      api_types = list(object({
-        api_type_id = string
-      }))
-    })))
-  }))
-  description = "The list of context-based restrictions rules to create.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-cbr_rules.md)"
-  default     = []
-}
-
-
-##############################################################################
 # vpc
 ##############################################################################
 
-variable "enable_logging" {
+variable "enable_cloud_logs" {
   description = "Whether to add support for cloud logs."
-  type        = bool
-  nullable    = false
-  default     = true
-}
-
-variable "enable_monitoring" {
-  description = "Whether to add support for cloud monitoring."
   type        = bool
   nullable    = false
   default     = true
@@ -135,13 +104,6 @@ variable "cos_plan" {
   }
 }
 
-
-variable "cos_location" {
-  description = "The location for the Object Storage instance. Required if `create_cos_instance` is set to `true`."
-  type        = string
-  default     = "global"
-}
-
 ########################################################################################################################
 # Cloud monitoring
 ########################################################################################################################
@@ -150,6 +112,16 @@ variable "cloud_monitoring_plan" {
   type        = string
   description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)"
   default     = "graduated-tier"
+
+  validation {
+    condition     = can(regex("^none$|^lite$|^graduated-tier$|^graduated-tier-sysdig-secure-plus-monitor$", var.cloud_monitoring_plan))
+    error_message = "The plan value must be one of the following: none, lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)."
+  }
+
+  validation {
+    condition     = (var.cloud_monitoring_plan != "graduated-tier-sysdig-secure-plus-monitor") || var.region == "eu-fr2"
+    error_message = "When cloud_monitoring_plan is graduated-tier-sysdig-secure-plus-monitor region should be set to eu-fr2."
+  }
 }
 
 variable "enable_platform_metrics" {
