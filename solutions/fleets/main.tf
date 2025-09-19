@@ -135,7 +135,7 @@ locals {
 
 
 resource "terraform_data" "create_pds" {
-  depends_on = [module.project, null_resource.fleet_cos_secret]
+  depends_on = [module.project, null_resource.fleet_cos_secret, module.cos_buckets]
   provisioner "local-exec" {
     interpreter = ["/bin/bash"]
     command     = "../../scripts/persistent_data_store.sh"
@@ -302,18 +302,18 @@ locals {
 }
 
 module "vpe_logging" {
-  count   = length(local.cloud_services) > 0 ? 1 : 0
-  source  = "terraform-ibm-modules/vpe-gateway/ibm"
-  version = "4.7.6"
-  region            = var.region
-  prefix            = "${local.prefix}log"
-  resource_group_id = module.resource_group.resource_group_id
-  vpc_id   = local.vpc_id
-  vpc_name = data.ibm_is_vpc.vpc.name
-  subnet_zone_list = [for subnet in module.vpc.subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
-  security_group_ids = [module.fleet_sg.security_group_id]
+  count                = length(local.cloud_services) > 0 ? 1 : 0
+  source               = "terraform-ibm-modules/vpe-gateway/ibm"
+  version              = "4.7.6"
+  region               = var.region
+  prefix               = "${local.prefix}log"
+  resource_group_id    = module.resource_group.resource_group_id
+  vpc_id               = local.vpc_id
+  vpc_name             = data.ibm_is_vpc.vpc.name
+  subnet_zone_list     = [for subnet in module.vpc.subnet_zone_list : { id = subnet.id, name = subnet.name, zone = subnet.zone, cidr = subnet.cidr }]
+  security_group_ids   = [module.fleet_sg.security_group_id]
   cloud_service_by_crn = local.cloud_services
-  service_endpoints = "private"
+  service_endpoints    = "private"
 }
 
 ########################################################################################################################
@@ -331,7 +331,7 @@ module "cloud_logs" {
   version           = "1.6.21"
   resource_group_id = module.resource_group.resource_group_id
   region            = var.region
-  instance_name = local.icl_name
+  instance_name     = local.icl_name
 }
 
 resource "ibm_iam_service_id" "logs_service_id" {
@@ -370,7 +370,7 @@ module "cloud_monitoring" {
   instance_name           = local.monitoring_name
   plan                    = var.cloud_monitoring_plan
   service_endpoints       = "public-and-private"
-  enable_platform_metrics = false
+  enable_platform_metrics = var.enable_platform_metrics
   manager_key_name        = local.monitoring_key_name
 }
 
