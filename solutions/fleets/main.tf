@@ -1,6 +1,6 @@
 locals {
-  prefix       = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
-  project_name = "${local.prefix}${var.project_name}"
+  prefix                   = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
+  code_engine_project_name = "${local.prefix}${var.code_engine_project_name}"
 }
 
 ########################################################################################################################
@@ -33,7 +33,7 @@ module "cos" {
   cos_instance_name   = "${local.prefix}cos"
   create_cos_bucket   = false
   cos_plan            = var.cos_plan
-  cos_location        = var.cos_location
+  cos_location        = "global"
   resource_keys = [{
     name                      = local.cos_key_name
     generate_hmac_credentials = true
@@ -153,12 +153,9 @@ resource "terraform_data" "create_pds" {
 resource "ibm_iam_authorization_policy" "codeengine_to_cos" {
   source_service_name         = "codeengine"
   source_resource_instance_id = module.project.project_id
-
   target_service_name         = "cloud-object-storage"
   target_resource_instance_id = module.cos.cos_instance_guid
-
-
-  roles = ["Notifications Manager"]
+  roles                       = ["Notifications Manager"]
 }
 
 ########################################################################################################################
@@ -284,14 +281,14 @@ resource "ibm_is_security_group_rule" "example" {
 
 locals {
   cloud_services = concat(
-    var.enable_logging ? [
+    var.enable_cloud_logs ? [
       {
         crn                          = module.cloud_logs[0].crn
         vpe_name                     = "${local.prefix}icl-vpegw"
         allow_dns_resolution_binding = false
       }
     ] : [],
-    var.enable_monitoring ? [
+    local.enable_cloud_monitoring ? [
       {
         crn                          = module.cloud_monitoring[0].crn
         vpe_name                     = "${local.prefix}sysdig-vpegw"
@@ -325,7 +322,7 @@ locals {
 }
 
 module "cloud_logs" {
-  count             = var.enable_logging ? 1 : 0
+  count             = var.enable_cloud_logs ? 1 : 0
   depends_on        = [module.cos_buckets]
   source            = "terraform-ibm-modules/cloud-logs/ibm"
   version           = "1.6.21"
@@ -335,14 +332,14 @@ module "cloud_logs" {
 }
 
 resource "ibm_iam_service_id" "logs_service_id" {
-  count       = var.enable_logging ? 1 : 0
+  count       = var.enable_cloud_logs ? 1 : 0
   name        = "${local.icl_name}-svc-id"
   description = "Service ID to ingest into IBM Cloud Logs instance ${module.cloud_logs[0].name}"
 }
 
 # Create IAM Service Policy granting "Sender" role to this service ID on the Cloud Logs instance
 resource "ibm_iam_service_policy" "logs_policy" {
-  count          = var.enable_logging ? 1 : 0
+  count          = var.enable_cloud_logs ? 1 : 0
   iam_service_id = ibm_iam_service_id.logs_service_id[0].id
   roles          = ["Sender"]
   description    = "Policy for ServiceID to send logs to IBM Cloud Logs instance"
@@ -357,12 +354,13 @@ resource "ibm_iam_service_policy" "logs_policy" {
 # Cloud monitoring
 ########################################################################################################################
 locals {
-  monitoring_name     = "${local.prefix}-sysdig"
-  monitoring_key_name = "${local.prefix}-sysdig-key"
+  enable_cloud_monitoring = var.cloud_monitoring_plan == "none" ? false : true
+  monitoring_name         = "${local.prefix}-sysdig"
+  monitoring_key_name     = "${local.prefix}-sysdig-key"
 }
 
 module "cloud_monitoring" {
-  count                   = var.enable_monitoring ? 1 : 0
+  count                   = local.enable_cloud_monitoring ? 1 : 0
   source                  = "terraform-ibm-modules/cloud-monitoring/ibm"
   version                 = "1.7.1"
   region                  = var.region
@@ -381,9 +379,8 @@ module "cloud_monitoring" {
 
 module "project" {
   source            = "../../modules/project"
-  name              = local.project_name
+  name              = local.code_engine_project_name
   resource_group_id = module.resource_group.resource_group_id
-  cbr_rules         = var.cbr_rules
 }
 
 ##############################################################################
@@ -415,13 +412,13 @@ locals {
         {
           pool_security_group_crns_1 = data.ibm_is_security_group.example.crn
         },
-        var.enable_logging ? {
+        var.enable_cloud_logs ? {
           logging_ingress_endpoint = module.cloud_logs[0].ingress_private_endpoint
           logging_sender_api_key   = var.ibmcloud_api_key
           logging_level_agent      = "debug"
           logging_level_worker     = "debug"
         } : {},
-        var.enable_monitoring ? {
+        local.enable_cloud_monitoring ? {
           monitoring_ingestion_region = var.region
           monitoring_ingestion_key    = module.cloud_monitoring[0].access_key
         } : {}

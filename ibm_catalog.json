@@ -1474,7 +1474,14 @@
             },
             {
               "key": "prefix",
-              "required": true
+              "required": true,
+              "value_constraints": [
+                {
+                  "type": "regex",
+                  "description": "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--').",
+                  "value": "^[a-z][-a-z0-9]*[a-z0-9]$"
+                }
+              ]
             },
             {
               "key": "existing_resource_group_name",
@@ -1490,53 +1497,8 @@
               }
             },
             {
-              "key": "project_name",
+              "key": "code_engine_project_name",
               "required": true
-            },
-            {
-              "key": "region",
-              "options": [
-                {
-                  "displayname": "Dallas (us-south)",
-                  "value": "us-south"
-                },
-                {
-                  "displayname": "Frankfurt (eu-de)",
-                  "value": "eu-de"
-                },
-                {
-                  "displayname": "London (eu-gb)",
-                  "value": "eu-gb"
-                },
-                {
-                  "displayname": "Osaka (jp-osa)",
-                  "value": "jp-osa"
-                },
-                {
-                  "displayname": "Sao Paulo (br-sao)",
-                  "value": "br-sao"
-                },
-                {
-                  "displayname": "Spain (us-es)",
-                  "value": "us-es"
-                },
-                {
-                  "displayname": "Sydney (au-syd)",
-                  "value": "au-syd"
-                },
-                {
-                  "displayname": "Tokyo (jp-tok)",
-                  "value": "jp-tok"
-                },
-                {
-                  "displayname": "Toronto (ca-tor)",
-                  "value": "ca-tor"
-                },
-                {
-                  "displayname": "Washington DC (us-east)",
-                  "value": "us-east"
-                }
-              ]
             },
             {
               "key": "vpc_zones",
@@ -1586,13 +1548,10 @@
               }
             },
             {
-              "key": "cos_location"
-            },
-            {
               "key": "cos_plan",
               "options": [
                 {
-                  "displayname": "standard",
+                  "displayname": "Standard",
                   "value": "standard"
                 },
                 {
@@ -1602,11 +1561,12 @@
               ]
             },
             {
-              "key": "enable_monitoring"
-            },
-            {
               "key": "cloud_monitoring_plan",
               "options": [
+                {
+                  "displayname": "None",
+                  "value": "none"
+                },
                 {
                   "displayname": "Graduated tier",
                   "value": "graduated-tier"
@@ -1625,10 +1585,17 @@
               "key": "enable_platform_metrics"
             },
             {
-              "key": "enable_logging"
+              "key": "enable_cloud_logs"
             },
             {
-              "key": "resource_tags"
+              "key": "resource_tags",
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              }
             }
           ],
           "dependency_version_2": true,
