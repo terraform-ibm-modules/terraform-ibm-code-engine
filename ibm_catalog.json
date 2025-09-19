@@ -1574,9 +1574,6 @@
               ]
             },
             {
-              "key": "enable_platform_metrics"
-            },
-            {
               "key": "region",
               "required": true,
               "custom_config": {
@@ -1587,6 +1584,9 @@
                 "original_grouping": "deployment",
                 "type": "vpc_region"
               }
+            },
+            {
+              "key": "cos_location"
             },
             {
               "key": "cos_plan",
@@ -1600,6 +1600,9 @@
                   "value": "cos-one-rate-plan"
                 }
               ]
+            },
+            {
+              "key": "enable_monitoring"
             },
             {
               "key": "cloud_monitoring_plan",
@@ -1619,16 +1622,13 @@
               ]
             },
             {
-              "key": "resource_tags"
-            },
-            {
-              "key": "enable_monitoring"
+              "key": "enable_platform_metrics"
             },
             {
               "key": "enable_logging"
             },
             {
-              "key": "cos_location"
+              "key": "resource_tags"
             }
           ],
           "dependency_version_2": true,
