@@ -692,11 +692,6 @@
               "hidden": true
             },
             {
-              "key": "existing_cos_instance_crn",
-              "virtual": true,
-              "required": true
-            },
-            {
               "key": "existing_kms_instance_crn",
               "virtual": true,
               "required": true
@@ -1864,6 +1859,23 @@
               ]
             },
             {
+              "key": "vpc_zones",
+              "options": [
+                {
+                  "displayname": "1",
+                  "value": 1
+                },
+                {
+                  "displayname": "2",
+                  "value": 2
+                },
+                {
+                  "displayname": "3",
+                  "value": 3
+                }
+              ]
+            },
+            {
               "key": "provider_visibility",
               "hidden": true,
               "options": [
@@ -1892,21 +1904,6 @@
               "hidden": true
             },
             {
-              "key": "existing_cos_instance_crn",
-              "required": true,
-              "hidden": true
-            },
-            {
-              "key": "existing_cloud_logs_crn",
-              "required": true,
-              "hidden": true
-            },
-            {
-              "key": "existing_cloud_monitoring_crn",
-              "required": true,
-              "hidden": true
-            },
-            {
               "key": "enable_platform_metrics",
               "type": "boolean",
               "default_value": false,
@@ -1923,16 +1920,6 @@
                   "value": "false"
                 }
               ]
-            },
-            {
-              "key": "cloud_monitoring_access_key",
-              "required": true,
-              "hidden": true
-            },
-            {
-              "key": "cloud_logs_ingress_private_endpoint",
-              "required": true,
-              "hidden": true
             },
             {
               "key": "region",
@@ -1997,229 +1984,13 @@
               "key": "resource_tags"
             },
             {
-              "key": "enable_monitoring",
-              "hidden": true
+              "key": "enable_monitoring"
             },
             {
-              "key": "enable_logging",
-              "hidden": true
+              "key": "enable_logging"
             },
             {
-              "key": "cos_location",
-              "hidden": true
-            },
-            {
-              "key": "network_acls",
-              "type": "array",
-              "custom_config": {
-                "type": "code_editor",
-                "grouping": "deployment",
-                "original_grouping": "deployment"
-              }
-            },
-            {
-              "key": "subnets",
-              "hidden": true
-            },
-            {
-              "key": "ex_subnet_zone_list",
-              "hidden": true
-            },
-            {
-              "key": "vpc_id",
-              "hidden": true
-            },
-            {
-              "key": "vpc_name",
-              "hidden": true
-            }
-          ],
-          "dependencies": [
-            {
-              "name": "deploy-arch-ibm-cos",
-              "id": "68921490-2778-4930-ac6d-bae7be6cd958-global",
-              "description": "Sets up an Object Storage instance to store fleet tasks. ",
-              "flavors": [
-                "instance"
-              ],
-              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
-              "input_mapping": [
-                {
-                  "dependency_input": "existing_resource_group_name",
-                  "version_input": "existing_resource_group_name",
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "cos_instance_crn",
-                  "version_input": "existing_cos_instance_crn"
-                },
-                {
-                  "dependency_input": "prefix",
-                  "version_input": "prefix",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "plan",
-                  "version_input": "cos_plan",
-                  "reference_version": true
-                },
-                {
-                  "version_input": "enable_vpc_flow_logs",
-                  "value": false
-                }
-              ],
-              "optional": false,
-              "on_by_default": true,
-              "version": "v10.2.1"
-            },
-            {
-              "name": "deploy-arch-ibm-cloud-logs",
-              "description": "Configure an IBM Cloud Logs instance to analyse the platform logs.",
-              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
-              "flavors": [
-                "fully-configurable"
-              ],
-              "id": "63d8ae58-fbf3-41ce-b844-0fb5b85882ab-global",
-              "version": "v1.6.11",
-              "optional": true,
-              "on_by_default": true,
-              "input_mapping": [
-                {
-                  "dependency_input": "prefix",
-                  "version_input": "prefix",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "region",
-                  "version_input": "region",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "existing_resource_group_name",
-                  "version_input": "existing_resource_group_name",
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "cloud_logs_ingress_private_endpoint",
-                  "version_input": "cloud_logs_ingress_private_endpoint"
-                },
-                {
-                  "dependency_output": "cloud_logs_crn",
-                  "version_input": "existing_cloud_logs_crn"
-                }
-              ]
-            },
-            {
-              "name": "deploy-arch-ibm-cloud-monitoring",
-              "description": "Configure an IBM Cloud Monitoring instance to collect the platform metrics.",
-              "id": "73debdbf-894f-4c14-81c7-5ece3a70b67d-global",
-              "version": "v1.6.4",
-              "flavors": [
-                "fully-configurable"
-              ],
-              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
-              "optional": true,
-              "on_by_default": true,
-              "input_mapping": [
-                {
-                  "dependency_input": "enable_platform_metrics",
-                  "version_input": "enable_platform_metrics",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "prefix",
-                  "version_input": "prefix",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "region",
-                  "version_input": "region",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "plan",
-                  "version_input": "cloud_monitoring_plan",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "resource_group_name",
-                  "version_input": "existing_resource_group_name",
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "cloud_monitoring_crn",
-                  "version_input": "existing_cloud_monitoring_crn"
-                },
-                {
-                  "dependency_output": "cloud_monitoring_access_key",
-                  "version_input": "cloud_monitoring_access_key"
-                }
-              ]
-            },
-            {
-              "name": "deploy-arch-ibm-slz-vpc",
-              "description": " Defines the VPC instance and subnets where Virtual Server Instance will be created. ",
-              "id": "9fc0fa64-27af-4fed-9dce-47b3640ba739-global",
-              "version": "v8.2.1",
-              "flavors": [
-                "fully-configurable"
-              ],
-              "catalog_id": "1082e7d2-5e2f-0a11-a3bc-f88a8e1931fc",
-              "optional": false,
-              "on_by_default": true,
-              "input_mapping": [
-                {
-                  "dependency_input": "prefix",
-                  "version_input": "prefix",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "region",
-                  "version_input": "region",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "network_acls",
-                  "version_input": "network_acls",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "subnets",
-                  "version_input": "subnets",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "enable_vpc_flow_logs",
-                  "value": false,
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "clean_default_sg_acl",
-                  "value": true,
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "subnet_detail_list",
-                  "version_input": "ex_subnet_zone_list"
-                },
-                {
-                  "dependency_output": "vpc_id",
-                  "version_input": "vpc_id"
-                },
-                {
-                  "dependency_output": "vpc_name",
-                  "version_input": "vpc_name"
-                },
-                {
-                  "dependency_input": "use_public_gateways",
-                  "value": {
-                    "zone-1": true,
-                    "zone-2": false,
-                    "zone-3": false
-                  },
-                  "reference_version": true
-                }
-              ]
+              "key": "cos_location"
             }
           ],
           "dependency_version_2": true,
