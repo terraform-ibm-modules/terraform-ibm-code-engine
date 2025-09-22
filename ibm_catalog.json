@@ -1397,22 +1397,19 @@
             },
             {
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::serviceRole:Writer"
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
-              "service_name": "codeengine"
-            },
-            {
-              "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Editor"
-              ],
-              "service_name": "codeengine"
+              "service_name": "codeengine",
+              "notes": "Required for creating code engine."
             },
             {
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::serviceRole:Writer",
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
-              "service_name": "container-registry"
+              "service_name": "container-registry",
+              "notes": "Required for creating container registry namespaces."
             },
             {
               "service_name": "is",

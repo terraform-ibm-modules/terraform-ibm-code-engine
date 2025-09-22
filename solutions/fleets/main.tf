@@ -329,6 +329,7 @@ module "cloud_logs" {
   resource_group_id = module.resource_group.resource_group_id
   region            = var.region
   instance_name     = local.icl_name
+  resource_tags     = var.resource_tags
 }
 
 resource "ibm_iam_service_id" "logs_service_id" {
@@ -355,8 +356,8 @@ resource "ibm_iam_service_policy" "logs_policy" {
 ########################################################################################################################
 locals {
   enable_cloud_monitoring = var.cloud_monitoring_plan == "none" ? false : true
-  monitoring_name         = "${local.prefix}-sysdig"
-  monitoring_key_name     = "${local.prefix}-sysdig-key"
+  monitoring_name         = "${local.prefix}sysdig"
+  monitoring_key_name     = "${local.prefix}sysdig-key"
 }
 
 module "cloud_monitoring" {
@@ -370,6 +371,7 @@ module "cloud_monitoring" {
   service_endpoints       = "public-and-private"
   enable_platform_metrics = false
   manager_key_name        = local.monitoring_key_name
+  resource_tags           = var.resource_tags
 }
 
 
@@ -395,7 +397,7 @@ locals {
       "data" = {
         password = var.ibmcloud_api_key,
         username = "iamapikey",
-        server   = "us.icr.io"
+        server   = local.container_registry
       }
     }
   }
@@ -459,4 +461,29 @@ module "secret" {
   format     = each.value.format
   # Issue with provider, service_access is not supported at the moment. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
   # service_access = each.value.service_access
+}
+
+##############################################################################
+# Container Registry
+##############################################################################
+locals {
+  registry_region_result = data.external.container_registry_region.result
+  registry               = lookup(local.registry_region_result, "registry", null)
+  container_registry     = local.registry != null ? "private.${local.registry}" : null
+  registry_region_error  = lookup(local.registry_region_result, "error", null)
+
+  # This will cause Terraform to fail if "error" is present in the external script output executed as a part of container_registry_region
+  # tflint-ignore: terraform_unused_declarations
+  fail_if_registry_region_error = local.registry_region_error != null ? tobool("Registry region script failed: ${local.registry_region_error}") : null
+}
+
+# get the container registry endpoint according to the region
+data "external" "container_registry_region" {
+  program = ["bash", "../../scripts/get-cr-region.sh"]
+
+  query = {
+    RESOURCE_GROUP_ID = module.resource_group.resource_group_id
+    REGION            = var.region
+    IBMCLOUD_API_KEY  = var.ibmcloud_api_key
+  }
 }
