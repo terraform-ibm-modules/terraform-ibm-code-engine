@@ -71,3 +71,13 @@ output "next_step_primary_url" {
   value       = "https://github.com/IBM/CodeEngine/blob/main/beta/serverless-fleets/README.md#launch-a-fleet"
   description = "primary url"
 }
+
+output "next_step_secondary_label" {
+  value       = "Go to Code Engine Project"
+  description = "Primary label"
+}
+
+output "next_step_secondary_url" {
+  value       = "https://cloud.ibm.com/containers/serverless/project/${var.region}/${module.project.id}/overview"
+  description = "primary url"
+}
