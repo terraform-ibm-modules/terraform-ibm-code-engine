@@ -34,12 +34,12 @@ output "cloud_logs_crn" {
 
 output "cloud_monitoring_crn" {
   description = "CRN of the cloud monitoring instance."
-  value       = local.enable_cloud_monitoring ? module.cloud_monitoring.crn : null
+  value       = local.enable_cloud_monitoring ? module.cloud_monitoring[0].crn : null
 }
 
 output "cloud_monitoring_name" {
   description = "Name of the cloud monitoring instance."
-  value       = local.enable_cloud_monitoring ? module.cloud_monitoring.name : null
+  value       = local.enable_cloud_monitoring ? module.cloud_monitoring[0].name : null
 }
 
 output "cloud_object_storage_crn" {
