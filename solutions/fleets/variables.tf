@@ -55,7 +55,7 @@ variable "region" {
 
 variable "existing_resource_group_name" {
   type        = string
-  description = "The name of an existing resource group to provision the resources."
+  description = "The name of an existing resource group to provision the resources. If not provided the default resource group will be used."
   default     = null
 }
 
@@ -122,10 +122,4 @@ variable "cloud_monitoring_plan" {
     condition     = (var.cloud_monitoring_plan != "graduated-tier-sysdig-secure-plus-monitor") || var.region == "eu-fr2"
     error_message = "When cloud_monitoring_plan is graduated-tier-sysdig-secure-plus-monitor region should be set to eu-fr2."
   }
-}
-
-variable "enable_platform_metrics" {
-  type        = bool
-  description = "Receive platform metrics in the provisioned IBM Cloud Monitoring instance. Only 1 instance in a given region can be enabled for platform metrics."
-  default     = false
 }
