@@ -19,7 +19,7 @@ output "code_engine_project_id" {
 
 output "tasks_state_store_name" {
   description = "Name of the task state store."
-  value       = local.bucket_store_map[local.bucket_store_map]
+  value       = local.bucket_store_map[local.taskstore_bucket_name]
 }
 
 output "cloud_logs_name" {
