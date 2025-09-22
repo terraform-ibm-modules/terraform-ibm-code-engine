@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "name": "deploy-arch-ibm-code-engine",
+      "name": "deploy-arch-landing-zone-code-engine",
       "label": "Landing zone for serverless workloads with IBM Code Engine",
       "product_kind": "solution",
       "tags": [
