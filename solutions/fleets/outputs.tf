@@ -81,3 +81,4 @@ output "next_step_secondary_url" {
   value       = "https://cloud.ibm.com/containers/serverless/project/${var.region}/${module.project.id}/overview"
   description = "primary url"
 }
+
