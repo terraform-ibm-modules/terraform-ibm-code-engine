@@ -37,7 +37,7 @@ output "cloud_monitoring_crn" {
   value       = local.enable_cloud_monitoring ? module.cloud_monitoring.crn : null
 }
 
-output "cloud_monitoring_crn" {
+output "cloud_monitoring_name" {
   description = "Name of the cloud monitoring instance."
   value       = local.enable_cloud_monitoring ? module.cloud_monitoring.name : null
 }
