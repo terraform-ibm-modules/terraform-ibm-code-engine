@@ -58,19 +58,16 @@ output "vpc_name" {
 }
 
 output "next_steps_text" {
-  value       = "Now, visit the Code Engine project URL to verify secrets, network configurations, and ensure readiness for workload deployment."
+  value       = "Now, visit the documentation to learn how to run a serverless fleet using Code Engine."
   description = "Next steps text"
 }
 
 output "next_step_primary_label" {
-  value       = "Go to Code Engine Project"
+  value       = "Learn how to run a serverless fleet"
   description = "Primary label"
 }
 
 output "next_step_primary_url" {
-  value       = "https://cloud.ibm.com/containers/serverless/project/${var.region}/${module.project.id}/overview"
+  value       = "https://github.com/IBM/CodeEngine/blob/main/beta/serverless-fleets/README.md#launch-a-fleet"
   description = "primary url"
 }
-
-
-
