@@ -1478,12 +1478,12 @@
               "value_constraints": [
                 {
                   "type": "regex",
-                  "description": "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-').",
+                  "description": "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-') ",
                   "value": "^[a-z][-a-z0-9]*[a-z0-9]$"
                 },
                 {
                   "type": "regex",
-                  "description": "Prefix cannot contain consecutive hyphens ('--').",
+                  "description": "and cannot contain consecutive hyphens ('--').",
                   "value": "^(?!.*--).*$"
                 }
               ]
@@ -1585,9 +1585,6 @@
                   "value": "graduated-tier-sysdig-secure-plus-monitor"
                 }
               ]
-            },
-            {
-              "key": "enable_platform_metrics"
             },
             {
               "key": "enable_cloud_logs"
