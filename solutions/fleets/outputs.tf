@@ -24,27 +24,37 @@ output "tasks_state_store_name" {
 
 output "cloud_logs_name" {
   description = "Name of the cloud logs instance."
-  value       = module.cloud_logs.name
+  value       = var.enable_cloud_logs ? module.cloud_logs[0].name : null
 }
 
 output "cloud_logs_crn" {
   description = "CRN of the cloud logs instance."
-  value       = module.cloud_logs.crn
+  value       = var.enable_cloud_logs ? module.cloud_logs[0].crn : null
 }
 
-output "cloud_monitoring__crn" {
+output "cloud_monitoring_crn" {
   description = "CRN of the cloud monitoring instance."
-  value       = module.cloud_monitoring.crn
+  value       = local.enable_cloud_monitoring ? module.cloud_monitoring.crn : null
 }
 
 output "cloud_monitoring_crn" {
   description = "Name of the cloud monitoring instance."
-  value       = module.cloud_monitoring.name
+  value       = local.enable_cloud_monitoring ? module.cloud_monitoring.name : null
 }
 
 output "cloud_object_storage_crn" {
   description = "Name of the cloud object storage instance."
   value       = module.cos.cos_instance_name
+}
+
+output "vpc_crn" {
+  description = "CRN of the VPC."
+  value       = module.vpc.vpc_crn
+}
+
+output "vpc_name" {
+  description = "Name of the VPC."
+  value       = module.vpc.vpc_name
 }
 
 output "next_steps_text" {
@@ -63,4 +73,4 @@ output "next_step_primary_url" {
 }
 
 
-    
+
