@@ -252,7 +252,7 @@
               "value_constraints": [
                 {
                   "type": "regex",
-                  "description": "The value provided for 'managed_domain_mappings' is not valid.",
+                  "description": "The value provided for 'managed_domain_mappings' is not valid. Valid values are 'local_public', 'local_private', or 'local'.",
                   "value": "^__NULL__$|^local_public$|^local_private$|^local$"
                 }
               ]
