@@ -38,6 +38,6 @@ output "binding" {
 }
 
 output "domain_mapping" {
-  description = "Configuration of the created code engine domain maping."
+  description = "Configuration of the created code engine domain mapping."
   value       = module.domain_mapping
 }

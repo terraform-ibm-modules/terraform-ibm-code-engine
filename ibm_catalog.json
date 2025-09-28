@@ -145,7 +145,14 @@
             },
             {
               "key": "prefix",
-              "required": true
+              "required": true,
+              "value_constraints": [
+                {
+                  "type": "regex",
+                  "description": "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--'). It should not exceed 16 characters.",
+                  "value": "^$|^__NULL__$|^[a-z](?!.*--)(?:[a-z0-9-]{0,14}[a-z0-9])?$"
+                }
+              ]
             },
             {
               "key": "existing_resource_group_name",
@@ -243,7 +250,14 @@
               "key": "image_port"
             },
             {
-              "key": "managed_domain_mappings"
+              "key": "managed_domain_mappings",
+              "value_constraints": [
+                {
+                  "type": "regex",
+                  "description": "The value provided for 'managed_domain_mappings' is not valid. Valid values are 'local_public', 'local_private', or 'local'.",
+                  "value": "^__NULL__$|^local_public$|^local_private$|^local$"
+                }
+              ]
             },
             {
               "key": "run_arguments"
@@ -379,7 +393,14 @@
             },
             {
               "key": "prefix",
-              "required": true
+              "required": true,
+              "value_constraints": [
+                {
+                  "type": "regex",
+                  "description": "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--'). It should not exceed 16 characters.",
+                  "value": "^$|^__NULL__$|^[a-z](?!.*--)(?:[a-z0-9-]{0,14}[a-z0-9])?$"
+                }
+              ]
             },
             {
               "key": "existing_resource_group_name",
