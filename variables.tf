@@ -204,6 +204,6 @@ variable "cbr_rules" {
   default     = []
   validation {
     condition     = length(var.cbr_rules) <= 1
-    error_message = "There should only be one rule."
+    error_message = "Only one CBR rule is allowed."
   }
 }
