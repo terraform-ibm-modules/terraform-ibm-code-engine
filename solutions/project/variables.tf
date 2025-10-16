@@ -166,8 +166,4 @@ variable "cbr_rules" {
   }))
   description = "The list of context-based restrictions rules to create.[Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/blob/main/solutions/project/DA-cbr_rules.md)"
   default     = []
-  validation {
-    condition     = length(var.cbr_rules) <= 1
-    error_message = "There should only be one rule."
-  }
 }
