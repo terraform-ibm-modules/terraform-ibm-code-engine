@@ -145,17 +145,20 @@ variable "secrets" {
 variable "builds" {
   description = "A map of code engine builds to be created. Requires 'ibmcloud_api_key' to be set for authentication and execution."
   type = map(object({
-    output_image       = string
-    output_secret      = string # pragma: allowlist secret
-    source_url         = string
-    strategy_type      = string
-    source_context_dir = optional(string)
-    source_revision    = optional(string)
-    source_secret      = optional(string)
-    source_type        = optional(string)
-    strategy_size      = optional(string)
-    strategy_spec_file = optional(string)
-    timeout            = optional(number)
+    output_image                 = optional(string)
+    output_secret                = optional(string) # pragma: allowlist secret
+    source_url                   = string
+    strategy_type                = optional(string)
+    source_context_dir           = optional(string)
+    source_revision              = optional(string)
+    source_secret                = optional(string)
+    source_type                  = optional(string)
+    strategy_size                = optional(string)
+    strategy_spec_file           = optional(string)
+    timeout                      = optional(number)
+    region                       = optional(string)
+    container_registry_namespace = optional(string)
+    prefix                       = optional(string)
   }))
   default = {}
 }

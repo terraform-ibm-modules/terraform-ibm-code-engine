@@ -45,7 +45,7 @@ fi
 # ibm cloud login
 ibmcloud_login
 
-# selecet the right code engine project
+# select the right code engine project
 ibmcloud ce project select -n "${CE_PROJECT_NAME}"
 
 # check the image build status

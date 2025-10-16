@@ -21,6 +21,7 @@ import (
 const resourceGroup = "geretain-test-resources"
 const appsExampleDir = "examples/apps"
 const jobsExampleDir = "examples/jobs"
+const buildExampleDir = "examples/build"
 const appsSolutionsDir = "solutions/apps"
 const projectSolutionsDir = "solutions/project"
 
@@ -108,7 +109,43 @@ func TestRunAppsExamplesInSchematics(t *testing.T) {
 	assert.Nil(t, err, "This should not have errored")
 }
 
-func TestRunJobsExample(t *testing.T) {
+func TestRunBuildExamplesInSchematics(t *testing.T) {
+	t.Parallel()
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing:        t,
+		TemplateFolder: buildExampleDir,
+		Prefix:         "ce-build",
+		TarIncludePatterns: []string{
+			"*.tf",
+			buildExampleDir + "/*.tf",
+			"modules/app/*.tf",
+			"modules/binding/*.tf",
+			"modules/config_map/*.tf",
+			"modules/project/*.tf",
+			"modules/secret/*.tf",
+			"modules/build/*.tf",
+			"modules/build/scripts/build-run.sh",
+			"modules/domain_mapping/*.tf",
+			"modules/job/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 60,
+	})
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
+		{Name: "prefix", Value: options.Prefix + "-b", DataType: "string"},
+		{Name: "region", Value: options.Region, DataType: "string"},
+	}
+
+	err := options.RunSchematicTest()
+	assert.Nil(t, err, "This should not have errored")
+}
+
+func TestRunBuildExample(t *testing.T) {
 
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
