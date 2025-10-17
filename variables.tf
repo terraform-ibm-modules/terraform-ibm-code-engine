@@ -200,7 +200,7 @@ variable "cbr_rules" {
       }))
     })))
   }))
-  description = "The list of context-based restrictions rules to create."
+  description = "The context-based restrictions rule to create. Only one rule is allowed."
   default     = []
   validation {
     condition     = length(var.cbr_rules) <= 1
