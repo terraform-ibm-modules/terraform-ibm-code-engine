@@ -2,12 +2,12 @@ module github.com/terraform-ibm-modules/terraform-ibm-code-engine
 
 go 1.24.0
 
-toolchain go1.25.2
+toolchain go1.25.3
 
 require (
 	github.com/gruntwork-io/terratest v0.51.0
 	github.com/stretchr/testify v1.11.1
-	github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper v1.60.12
+	github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper v1.60.14
 )
 
 require (
