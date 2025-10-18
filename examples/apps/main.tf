@@ -43,7 +43,7 @@ module "secrets_manager_public_cert_engine" {
   depends_on = [ibm_resource_instance.secrets_manager]
   count      = var.existing_sm_instance_guid == null ? 1 : 0
   source     = "terraform-ibm-modules/secrets-manager-public-cert-engine/ibm"
-  version    = "1.2.4"
+  version    = "1.2.5"
   providers = {
     ibm              = ibm.ibm-sm
     ibm.secret-store = ibm.ibm-sm
@@ -127,7 +127,7 @@ resource "ibm_is_subnet" "testacc_subnet" {
 
 module "cbr_vpc_zone" {
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.33.5"
+  version          = "1.33.6"
   name             = "${var.prefix}-VPC-network-zone"
   zone_description = "CBR Network zone representing VPC"
   account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
@@ -139,7 +139,7 @@ module "cbr_vpc_zone" {
 
 module "cbr_zone_schematics" {
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.33.5"
+  version          = "1.33.6"
   name             = "${var.prefix}-schematics-zone"
   zone_description = "CBR Network zone containing Schematics"
   account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
