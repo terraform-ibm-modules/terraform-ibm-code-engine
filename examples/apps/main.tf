@@ -43,7 +43,7 @@ module "secrets_manager_public_cert_engine" {
   depends_on = [ibm_resource_instance.secrets_manager]
   count      = var.existing_sm_instance_guid == null ? 1 : 0
   source     = "terraform-ibm-modules/secrets-manager-public-cert-engine/ibm"
-  version    = "1.2.5"
+  version    = "1.3.0"
   providers = {
     ibm              = ibm.ibm-sm
     ibm.secret-store = ibm.ibm-sm
