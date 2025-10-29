@@ -314,7 +314,7 @@
               }
             }
           ],
-          "terraform_version": "1.10.5"
+          "terraform_version": "1.12.2"
         },
         {
           "label": "New Code Engine project",
@@ -480,7 +480,7 @@
               "key": "secrets"
             }
           ],
-          "terraform_version": "1.10.5"
+          "terraform_version": "1.12.2"
         }
       ]
     }
