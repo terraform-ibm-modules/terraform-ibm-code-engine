@@ -25,8 +25,8 @@ This module provisions the IBM Cloud Code Engine fully managed and serverless pl
     * [project](./modules/project)
     * [secret](./modules/secret)
 * [Examples](./examples)
-    * [Apps example](./examples/apps)
-    * [Jobs example](./examples/jobs)
+    * <div style="display: inline-block;"><a href="./examples/apps">Apps example</a></div> <div style="display: inline-block; vertical-align: middle;"><a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=ce-apps-example&repository=github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/apps" target="_blank"><img src="https://cloud.ibm.com/media/docs/images/icons/Deploy_to_cloud.svg" alt="Deploy to IBM Cloud button"></a></div>
+    * <div style="display: inline-block;"><a href="./examples/jobs">Jobs example</a></div> <div style="display: inline-block; vertical-align: middle;"><a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=ce-jobs-example&repository=github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/jobs" target="_blank"><img src="https://cloud.ibm.com/media/docs/images/icons/Deploy_to_cloud.svg" alt="Deploy to IBM Cloud button"></a></div>
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
