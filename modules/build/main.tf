@@ -50,8 +50,11 @@ resource "terraform_data" "run_build" {
 ##############################################################################
 
 locals {
+  # Determine if we need to create the container registry namespace or not
   create_cr_namespace = var.output_image == null && var.container_registry_namespace != null ? true : false
-  image_container     = local.create_cr_namespace ? "${module.cr_endpoint[0].container_registry_endpoint_private}/${module.cr_namespace[0].namespace_name}" : null
+  # Determine the container image reference based on whether we create the namespace or not
+  image_container     = local.create_cr_namespace ? "${module.cr_endpoint.container_registry_endpoint_private}/${module.cr_namespace[0].namespace_name}" : null
+  # Determine the final image reference to use: either the newly created image or the user-provided output_image
   output_image        = local.create_cr_namespace ? "${local.image_container}/${var.name}" : var.output_image
 }
 
@@ -64,7 +67,6 @@ module "cr_namespace" {
 }
 
 module "cr_endpoint" {
-  count   = local.create_cr_namespace ? 1 : 0
   source  = "terraform-ibm-modules/container-registry/ibm//modules/endpoint"
   version = "2.1.0"
   region  = var.region
@@ -82,7 +84,7 @@ module "secret" {
   data = {
     password = var.container_registry_api_key != null ? var.container_registry_api_key : var.ibmcloud_api_key,
     username = "iamapikey",
-    server   = module.cr_endpoint[0].container_registry_endpoint_private
+    server   = module.cr_endpoint.container_registry_endpoint_private
   }
   format = "registry"
 }
