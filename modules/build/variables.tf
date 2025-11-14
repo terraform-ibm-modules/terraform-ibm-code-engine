@@ -68,6 +68,16 @@ variable "source_type" {
   description = "Specifies the type of source to determine if your build source is in a repository or based on local source code. If the value is `local`, then 'source_secret' input must be omitted."
   type        = string
   default     = null
+
+  validation {
+    condition = contains(["git", "local"], var.source_type)
+    error_message = "'source_type' can be 'git' or 'local' only"
+  }
+
+  validation {
+    condition = var.source_type != "local" || var.source_secret == null
+    error_message = "If 'source_type' is 'local', 'source_secret' must not be provided."
+  }
 }
 
 variable "source_url" {
@@ -105,7 +115,7 @@ variable "timeout" {
 ##############################################################################
 
 variable "container_registry_namespace" {
-  description = "The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Must be set if 'output_image' is not set."
+  description = "The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Must be set if 'output_image' is not set. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<container_registry_namespace>` format."
   type        = string
   default     = null
 
@@ -119,7 +129,11 @@ variable "container_registry_namespace" {
 }
 
 variable "output_secret" {
-  description = "The secret that is required to access the IBM Cloud Container Registry. Make sure that the secret is granted with push permissions towards the specified container registry namespace. If not provided, it will be created using the value of 'container_registry_api_key'; if that is not set, 'ibmcloud_api_key' will be used instead."
+  description = <<EOT
+The name of the Code Engine secret that contains an API key to access the IBM Cloud Container Registry.  
+The API key stored in this secret must have push permissions for the specified container registry namespace.  
+If this secret is not provided, a Code Engine secret named `<prefix>-<registry-access-secret>` will be created automatically. Its value will be taken from 'container_registry_api_key' if set, otherwise from 'ibmcloud_api_key'.
+EOT
   type        = string
   default     = null
 
