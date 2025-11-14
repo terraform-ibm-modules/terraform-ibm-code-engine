@@ -62,7 +62,7 @@ func setupAppsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing:        t,
 		TemplateFolder: appsExampleDir,
-		Prefix:         "ce-apps",
+		Prefix:         prefix,
 		TarIncludePatterns: []string{
 			"*.tf",
 			appsExampleDir + "/*.tf",
@@ -119,7 +119,7 @@ func TestRunUpgradeAppsExamplesInSchematics(t *testing.T) {
 }
 
 func TestRunJobsExample(t *testing.T) {
-	t.Parallel()
+
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
@@ -127,7 +127,7 @@ func TestRunJobsExample(t *testing.T) {
 }
 
 func TestRunJobsUpgradeExample(t *testing.T) {
-	t.Parallel()
+
 	options := setupJobsExampleOptions(t, "ce-jobs-upg", jobsExampleDir)
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
@@ -173,7 +173,7 @@ func TestRunBuildExampleInSchematics(t *testing.T) {
 }
 
 func TestRunBuildExample(t *testing.T) {
-	t.Parallel()
+
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
 		TerraformDir:  buildExampleDir,
