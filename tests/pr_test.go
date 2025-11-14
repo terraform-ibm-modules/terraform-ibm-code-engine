@@ -16,6 +16,7 @@ import (
 const resourceGroup = "geretain-test-resources"
 const appsExampleDir = "examples/apps"
 const jobsExampleDir = "examples/jobs"
+const buildExampleDir = "examples/build"
 
 // Define a struct with fields that match the structure of the YAML data
 const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
@@ -118,7 +119,7 @@ func TestRunUpgradeAppsExamplesInSchematics(t *testing.T) {
 }
 
 func TestRunJobsExample(t *testing.T) {
-
+	t.Parallel()
 	options := setupJobsExampleOptions(t, "ce-jobs", jobsExampleDir)
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
@@ -126,11 +127,66 @@ func TestRunJobsExample(t *testing.T) {
 }
 
 func TestRunJobsUpgradeExample(t *testing.T) {
-
+	t.Parallel()
 	options := setupJobsExampleOptions(t, "ce-jobs-upg", jobsExampleDir)
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
 	}
+}
+
+func TestRunBuildExampleInSchematics(t *testing.T) {
+	t.Parallel()
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing:        t,
+		TemplateFolder: buildExampleDir,
+		Prefix:         "ce-b-shem",
+		TarIncludePatterns: []string{
+			"*.tf",
+			buildExampleDir + "/*.tf",
+			"modules/app/*.tf",
+			"modules/binding/*.tf",
+			"modules/config_map/*.tf",
+			"modules/project/*.tf",
+			"modules/secret/*.tf",
+			"modules/build/*.tf",
+			"modules/build/scripts/build-run.sh",
+			"modules/domain_mapping/*.tf",
+			"modules/job/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 60,
+	})
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
+		{Name: "prefix", Value: options.Prefix + "-b", DataType: "string"},
+		{Name: "region", Value: options.Region, DataType: "string"},
+	}
+
+	err := options.RunSchematicTest()
+	assert.Nil(t, err, "This should not have errored")
+}
+
+func TestRunBuildExample(t *testing.T) {
+	t.Parallel()
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  buildExampleDir,
+		Prefix:        "ce-build",
+		ResourceGroup: resourceGroup,
+	})
+	options.TerraformVars = map[string]interface{}{
+		"resource_group":   resourceGroup,
+		"prefix":           options.Prefix,
+		"ibmcloud_api_key": options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"],
+	}
+
+	output, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
 }
