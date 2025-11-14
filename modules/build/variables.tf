@@ -70,7 +70,7 @@ variable "source_type" {
   default     = null
 
   validation {
-    condition     = contains(["git", "local"], var.source_type)
+    condition     = var.source_type == null ? true : contains(["git", "local"], var.source_type)
     error_message = "'source_type' can be 'git' or 'local' only"
   }
 
