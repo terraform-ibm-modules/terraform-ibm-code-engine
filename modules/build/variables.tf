@@ -70,12 +70,12 @@ variable "source_type" {
   default     = null
 
   validation {
-    condition = contains(["git", "local"], var.source_type)
+    condition     = contains(["git", "local"], var.source_type)
     error_message = "'source_type' can be 'git' or 'local' only"
   }
 
   validation {
-    condition = var.source_type != "local" || var.source_secret == null
+    condition     = var.source_type != "local" || var.source_secret == null
     error_message = "If 'source_type' is 'local', 'source_secret' must not be provided."
   }
 }
@@ -130,8 +130,8 @@ variable "container_registry_namespace" {
 
 variable "output_secret" {
   description = <<EOT
-The name of the Code Engine secret that contains an API key to access the IBM Cloud Container Registry.  
-The API key stored in this secret must have push permissions for the specified container registry namespace.  
+The name of the Code Engine secret that contains an API key to access the IBM Cloud Container Registry.
+The API key stored in this secret must have push permissions for the specified container registry namespace.
 If this secret is not provided, a Code Engine secret named `<prefix>-<registry-access-secret>` will be created automatically. Its value will be taken from 'container_registry_api_key' if set, otherwise from 'ibmcloud_api_key'.
 EOT
   type        = string

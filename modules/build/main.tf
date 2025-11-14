@@ -53,9 +53,9 @@ locals {
   # Determine if we need to create the container registry namespace or not
   create_cr_namespace = var.output_image == null && var.container_registry_namespace != null ? true : false
   # Determine the container image reference based on whether we create the namespace or not
-  image_container     = local.create_cr_namespace ? "${module.cr_endpoint.container_registry_endpoint_private}/${module.cr_namespace[0].namespace_name}" : null
+  image_container = local.create_cr_namespace ? "${module.cr_endpoint.container_registry_endpoint_private}/${module.cr_namespace[0].namespace_name}" : null
   # Determine the final image reference to use: either the newly created image or the user-provided output_image
-  output_image        = local.create_cr_namespace ? "${local.image_container}/${var.name}" : var.output_image
+  output_image = local.create_cr_namespace ? "${local.image_container}/${var.name}" : var.output_image
 }
 
 module "cr_namespace" {
