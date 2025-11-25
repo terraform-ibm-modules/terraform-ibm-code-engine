@@ -4,11 +4,15 @@
 # Create Code Engine build
 ##############################################################################
 
+locals {
+  prefix = var.prefix != null ? (trimspace(var.prefix) != "" ? "${var.prefix}-" : "") : ""
+}
+
 resource "ibm_code_engine_build" "ce_build" {
   project_id         = var.project_id
   name               = var.name
-  output_image       = var.output_image
-  output_secret      = var.output_secret
+  output_image       = local.output_image
+  output_secret      = var.output_secret != null ? var.output_secret : module.secret[0].name
   source_url         = var.source_url
   source_context_dir = var.source_context_dir
   source_revision    = var.source_revision
@@ -38,4 +42,49 @@ resource "terraform_data" "run_build" {
       BUILD_NAME        = ibm_code_engine_build.ce_build.name
     }
   }
+}
+
+
+##############################################################################
+# Container Registry
+##############################################################################
+
+locals {
+  # Determine if we need to create the container registry namespace or not
+  create_cr_namespace = var.output_image == null && var.container_registry_namespace != null ? true : false
+  # Determine the container image reference based on whether we create the namespace or not
+  image_container = local.create_cr_namespace ? "${module.cr_endpoint.container_registry_endpoint_private}/${module.cr_namespace[0].namespace_name}" : null
+  # Determine the final image reference to use: either the newly created image or the user-provided output_image
+  output_image = local.create_cr_namespace ? "${local.image_container}/${var.name}" : var.output_image
+}
+
+module "cr_namespace" {
+  count             = local.create_cr_namespace ? 1 : 0
+  source            = "terraform-ibm-modules/container-registry/ibm"
+  version           = "2.1.0"
+  namespace_name    = "${local.prefix}${var.container_registry_namespace}"
+  resource_group_id = var.existing_resource_group_id
+}
+
+module "cr_endpoint" {
+  source  = "terraform-ibm-modules/container-registry/ibm//modules/endpoint"
+  version = "2.1.0"
+  region  = var.region
+}
+
+##############################################################################
+# Code Engine Secret
+##############################################################################
+
+module "secret" {
+  count      = var.output_secret == null ? 1 : 0
+  source     = "../../modules/secret"
+  project_id = var.project_id
+  name       = "${local.prefix}registry-access-secret"
+  data = {
+    password = var.container_registry_api_key != null ? var.container_registry_api_key : var.ibmcloud_api_key,
+    username = "iamapikey",
+    server   = module.cr_endpoint.container_registry_endpoint_private
+  }
+  format = "registry"
 }

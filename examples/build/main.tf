@@ -11,21 +11,20 @@ module "resource_group" {
 }
 
 ########################################################################################################################
-# Secrets Manager resources
+# Code Engine instance
 ########################################################################################################################
 
-data "ibm_sm_public_certificate" "public_certificate" {
-  # depends_on  = [resource.ibm_sm_public_certificate.secrets_manager_public_certificate]
-  instance_id = var.existing_sm_instance_guid
-  region      = var.existing_sm_instance_region
-  secret_id   = var.existing_cert_secret_id
-}
-
-
-module "namespace" {
-  source            = "terraform-ibm-modules/container-registry/ibm"
-  version           = "2.3.5"
-  namespace_name    = "${var.prefix}-namespace"
+module "code_engine" {
+  source            = "../.."
+  ibmcloud_api_key  = var.ibmcloud_api_key
   resource_group_id = module.resource_group.resource_group_id
-  images_per_repo   = 1
+  project_name      = "${var.prefix}-project"
+  builds = {
+    "${var.prefix}-build1" = {
+      source_url                   = "https://github.com/IBM/CodeEngine"
+      container_registry_namespace = "cr-ce"
+      prefix                       = var.prefix
+      region                       = var.region
+    }
+  }
 }
