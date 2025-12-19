@@ -51,7 +51,7 @@ Currently, IBM provider supports basic functionalities, such as create/delete/up
 Known limitations are:
 - No support to create/delete/update code engine functions. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5230
 - No support to create/delete/update code engine subscriptions. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5231
-- Apply twice keeps on showing changes for `ibm_code_engine_app` and `ibm_code_engine_job` terraform resource https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
+- Apply twice keeps on showing changes for `ibm_code_engine_app` and `ibm_code_engine_job` terraform resource https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719 https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5212
 - CLI/API service binding implementation/interface is different from terraform implementation. For example, CLI or UI code engine has a support to create access secret, service credential and all bindings automatically, while `code_engine_binding_instance` terraform resource requires that access secret exists before the binding is created. The second discrepancy between implementations is that terraform `code_engine_binding_instance` terraform resource requires `prefix` while using CLI or UI `prefix` is an optional parameter. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5229
 - Visibility for application can not be set. While CLI uses `--visibility=private` flag to set the visibility, terraform provider doesn't support it. https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5228
 - Apply twice throws an error for `ibm_code_engine_secret` terraform resource https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5232
