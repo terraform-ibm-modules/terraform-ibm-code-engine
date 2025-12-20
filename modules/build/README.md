@@ -42,8 +42,8 @@ You need the following permissions to run this module.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cr_endpoint"></a> [cr\_endpoint](#module\_cr\_endpoint) | terraform-ibm-modules/container-registry/ibm//modules/endpoint | 2.4.2 |
-| <a name="module_cr_namespace"></a> [cr\_namespace](#module\_cr\_namespace) | terraform-ibm-modules/container-registry/ibm | 2.4.2 |
+| <a name="module_cr_endpoint"></a> [cr\_endpoint](#module\_cr\_endpoint) | terraform-ibm-modules/container-registry/ibm//modules/endpoint | 2.4.3 |
+| <a name="module_cr_namespace"></a> [cr\_namespace](#module\_cr\_namespace) | terraform-ibm-modules/container-registry/ibm | 2.4.3 |
 | <a name="module_secret"></a> [secret](#module\_secret) | ../../modules/secret | n/a |
 
 ### Resources
