@@ -43,7 +43,7 @@ module "secrets_manager_public_cert_engine" {
   depends_on = [ibm_resource_instance.secrets_manager]
   count      = var.existing_sm_instance_guid == null ? 1 : 0
   source     = "terraform-ibm-modules/secrets-manager-public-cert-engine/ibm"
-  version    = "1.6.4"
+  version    = "1.6.5"
   providers = {
     ibm              = ibm.ibm-sm
     ibm.secret-store = ibm.ibm-sm
@@ -63,7 +63,7 @@ module "secrets_manager_public_cert_engine" {
 module "secrets_manager_group" {
   count                    = var.existing_cert_secret_id == null ? 1 : 0
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
-  version                  = "1.3.31"
+  version                  = "1.3.32"
   region                   = local.sm_region
   secrets_manager_guid     = local.sm_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"
