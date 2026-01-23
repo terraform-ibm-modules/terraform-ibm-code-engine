@@ -15,7 +15,7 @@ module "resource_group" {
 ########################################################################################################################
 
 module "code_engine" {
-  source            = "../.."
+  source            = "git::https://github.com/terraform-ibm-modules/terraform-ibm-code-engine.git?ref=bin-install"
   ibmcloud_api_key  = var.ibmcloud_api_key
   resource_group_id = module.resource_group.resource_group_id
   project_name      = "${var.prefix}-project"
