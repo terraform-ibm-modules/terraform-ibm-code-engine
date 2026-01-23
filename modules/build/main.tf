@@ -5,7 +5,8 @@
 ##############################################################################
 
 locals {
-  prefix = var.prefix != null ? (trimspace(var.prefix) != "" ? "${var.prefix}-" : "") : ""
+  prefix        = var.prefix != null ? (trimspace(var.prefix) != "" ? "${var.prefix}-" : "") : ""
+  binaries_path = "/tmp"
 }
 
 resource "ibm_code_engine_build" "ce_build" {
@@ -28,12 +29,23 @@ data "ibm_code_engine_project" "code_engine_project" {
   project_id = var.project_id
 }
 
+resource "terraform_data" "install_required_binaries" {
+  count = var.install_required_binaries ? 1 : 0
+  triggers_replace = {
+    script_hash = filesha256("${path.module}/scripts/install-binaries.sh")
+  }
+  provisioner "local-exec" {
+    command     = "${path.module}/scripts/install-binaries.sh ${local.binaries_path}"
+    interpreter = ["/bin/bash", "-c"]
+  }
+}
+
 resource "terraform_data" "run_build" {
-  depends_on = [ibm_code_engine_build.ce_build]
+  depends_on = [terraform_data.install_required_binaries, ibm_code_engine_build.ce_build]
 
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
-    command     = "${path.module}/scripts/build-run.sh"
+    command     = "${path.module}/scripts/build-run.sh ${local.binaries_path}"
     environment = {
       IBMCLOUD_API_KEY  = var.ibmcloud_api_key
       RESOURCE_GROUP_ID = var.existing_resource_group_id

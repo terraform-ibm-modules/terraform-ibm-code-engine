@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+export PATH=$PATH:${1:-"/tmp"}
 
 # Log in to IBM Cloud
 function ibmcloud_login() {
