@@ -158,7 +158,7 @@ module "cbr_zone_schematics" {
 
 module "code_engine" {
   depends_on        = [resource.ibm_sm_public_certificate.secrets_manager_public_certificate]
-  source            = "../.."
+  source            = "git::https://github.com/terraform-ibm-modules/terraform-ibm-code-engine.git?ref=bin-install"
   resource_group_id = module.resource_group.resource_group_id
   project_name      = "${var.prefix}-project"
   cbr_rules = [
