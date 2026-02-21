@@ -58,7 +58,22 @@ fi
 # Ensure the build status is 'succeeded' before continuing.
 # This is required because the application deployment depends on a completed build run.
 echo "Submitting build: $BUILD_NAME"
-run_build_name=$(ibmcloud ce buildrun submit --build "$BUILD_NAME" --output json | jq -r '.name')
+
+submit_output=$(ibmcloud ce buildrun submit --build "$BUILD_NAME" --output json 2>&1)
+exit_code=$?
+
+if [[ $exit_code -ne 0 ]]; then
+    if echo "$submit_output" | grep -q "The storage quota limit of the IBM Container Registry has been exceeded."; then
+        echo "ERROR: IBM Container Registry quota exceeded."
+        exit 1
+    else
+        # Let other errors fail normally
+        echo "$submit_output"
+        exit $exit_code
+    fi
+fi
+
+run_build_name=$(echo "$submit_output" | jq -r '.name')
 
 echo "Waiting for build run $run_build_name to complete..."
 retries=0
