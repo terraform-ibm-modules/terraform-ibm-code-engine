@@ -59,8 +59,8 @@ fi
 # This is required because the application deployment depends on a completed build run.
 echo "Submitting build: $BUILD_NAME"
 
-submit_output=$(ibmcloud ce buildrun submit --build "$BUILD_NAME" --output json) || {
-  echo "Build submission failed"
+submit_output=$(ibmcloud ce buildrun submit --build "$BUILD_NAME" --output json 2>&1) || {
+  echo "$submit_output"
   exit 1
 }
 
