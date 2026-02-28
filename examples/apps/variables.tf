@@ -28,7 +28,7 @@ variable "resource_group" {
 
 variable "resource_tags" {
   type        = list(string)
-  description = "Optional list of tags to be added to created resources"
+  description = "Add user resource tags to the Code Engine instance to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)."
   default     = []
 }
 
