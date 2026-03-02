@@ -77,7 +77,7 @@ while true; do
     if [[ "$status" == "succeeded" ]]; then
         echo "Build $BUILD_NAME succeeded"
         break
-    elif [[ "$status" == "Failed" || "$status" == "Error" ]]; then
+    elif [[ "$status" == "Failed" || "$status" == "failed" || "$status" == "Error" ]]; then
         echo "Error: Build $BUILD_NAME has status '{$status}'"
         exit 1
     fi
