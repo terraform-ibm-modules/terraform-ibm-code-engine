@@ -51,6 +51,7 @@ You need the following permissions to run this module.
 | Name | Type |
 |------|------|
 | [ibm_code_engine_build.ce_build](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_build) | resource |
+| [terraform_data.install_required_binaries](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [terraform_data.run_build](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [ibm_code_engine_project.code_engine_project](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/code_engine_project) | data source |
 
@@ -62,6 +63,7 @@ You need the following permissions to run this module.
 | <a name="input_container_registry_namespace"></a> [container\_registry\_namespace](#input\_container\_registry\_namespace) | The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Must be set if 'output\_image' is not set. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<container_registry_namespace>` format. | `string` | `null` | no |
 | <a name="input_existing_resource_group_id"></a> [existing\_resource\_group\_id](#input\_existing\_resource\_group\_id) | The ID of an existing resource group where build will be provisioned. This must be the same resource group in which the code engine project was created. | `string` | n/a | yes |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The IBM Cloud API key. | `string` | n/a | yes |
+| <a name="input_install_required_binaries"></a> [install\_required\_binaries](#input\_install\_required\_binaries) | When set to true, a script will run to check if `jq`, the `ibmcloud` CLI, and the `code-engine` plugin exist on the runtime and if not attempt to download them from the public internet and install them to /tmp. Set to false to skip running this script. | `bool` | `true` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the build. | `string` | n/a | yes |
 | <a name="input_output_image"></a> [output\_image](#input\_output\_image) | A container image can be identified by a container image reference with the following structure: registry / namespace / repository:tag. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-getting-started).<br/><br/>If not provided, the value will be derived from the 'container\_registry\_namespace' input variable, which must not be null in that case. | `string` | `null` | no |
 | <a name="input_output_secret"></a> [output\_secret](#input\_output\_secret) | The name of the Code Engine secret that contains an API key to access the IBM Cloud Container Registry.<br/>The API key stored in this secret must have push permissions for the specified container registry namespace.<br/>If this secret is not provided, a Code Engine secret named `<prefix>-<registry-access-secret>` will be created automatically. Its value will be taken from 'container\_registry\_api\_key' if set, otherwise from 'ibmcloud\_api\_key'. | `string` | `null` | no |
