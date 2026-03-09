@@ -168,7 +168,7 @@ func TestRunBuildExampleInSchematics(t *testing.T) {
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
 		{Name: "prefix", Value: options.Prefix + "-b", DataType: "string"},
-		{Name: "region", Value: options.Region, DataType: "string"},
+		{Name: "region", Value: "eu-gb", DataType: "string"},
 	}
 
 	err := options.RunSchematicTest()
