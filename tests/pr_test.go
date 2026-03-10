@@ -34,6 +34,19 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+var validRegions = []string{
+	"us-south",
+	"us-east",
+	"ca-tor",
+	"eu-de",
+	"eu-gb",
+	"eu-es",
+	"jp-tok",
+	"jp-osa",
+	"au-syd",
+	"br-sao",
+}
+
 func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:       t,
@@ -164,11 +177,14 @@ func TestRunBuildExampleInSchematics(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 	})
+
+	region := validRegions[common.CryptoIntn(len(validRegions))]
+
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group", Value: options.ResourceGroup, DataType: "string"},
 		{Name: "prefix", Value: options.Prefix + "-b", DataType: "string"},
-		{Name: "region", Value: "eu-gb", DataType: "string"},
+		{Name: "region", Value: region, DataType: "string"},
 	}
 
 	err := options.RunSchematicTest()
