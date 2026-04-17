@@ -36,14 +36,14 @@ You need the following permissions to run this module.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.0, <2.0.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.0, < 3.0.0 |
 
 ### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cr_endpoint"></a> [cr\_endpoint](#module\_cr\_endpoint) | terraform-ibm-modules/container-registry/ibm//modules/endpoint | 2.6.13 |
-| <a name="module_cr_namespace"></a> [cr\_namespace](#module\_cr\_namespace) | terraform-ibm-modules/container-registry/ibm | 2.6.13 |
+| <a name="module_cr_endpoint"></a> [cr\_endpoint](#module\_cr\_endpoint) | terraform-ibm-modules/container-registry/ibm//modules/endpoint | 2.7.0 |
+| <a name="module_cr_namespace"></a> [cr\_namespace](#module\_cr\_namespace) | terraform-ibm-modules/container-registry/ibm | 2.7.0 |
 | <a name="module_secret"></a> [secret](#module\_secret) | ../../modules/secret | n/a |
 
 ### Resources
