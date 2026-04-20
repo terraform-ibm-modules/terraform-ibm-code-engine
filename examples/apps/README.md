@@ -13,8 +13,7 @@ An end-to-end apps example that will provision the following:
 - Code Engine TLS Secret
 - Code Engine Domain Mapping
 - Secrets Manager Resources (Public Engine, Group, Public Certificate)
-- A Virtual Private Cloud (VPC).
-- A context-based restriction (CBR) rule to allow Code Engine to be accessible from VPC and Schematics.
+- A context-based restriction (CBR) rule to allow Code Engine to be accessible from Schematics.
 
 <!-- BEGIN SCHEMATICS DEPLOY TIP HOOK -->
 :information_source: Ctrl/Cmd+Click or right-click on the Schematics deploy button to open in a new tab
