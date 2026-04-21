@@ -55,7 +55,6 @@ variable "apps" {
     run_volume_mounts = optional(list(object({
       mount_path = string
       reference  = string
-      name       = optional(string)
       type       = string
     })))
     image_port                    = optional(number)
@@ -95,7 +94,6 @@ variable "jobs" {
     run_volume_mounts = optional(list(object({
       mount_path = string
       reference  = string
-      name       = optional(string)
       type       = string
     })))
     run_arguments                 = optional(list(string))
