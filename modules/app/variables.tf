@@ -41,7 +41,6 @@ variable "run_volume_mounts" {
   type = list(object({
     mount_path = string
     reference  = string
-    name       = optional(string)
     type       = string
   }))
   default = []
