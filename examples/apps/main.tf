@@ -105,37 +105,8 @@ data "ibm_iam_account_settings" "iam_account_settings" {
 }
 
 ##############################################################################
-# VPC
-##############################################################################
-resource "ibm_is_vpc" "example_vpc" {
-  name           = "${var.prefix}-vpc"
-  resource_group = module.resource_group.resource_group_id
-  tags           = var.resource_tags
-}
-
-resource "ibm_is_subnet" "testacc_subnet" {
-  name                     = "${var.prefix}-subnet"
-  vpc                      = ibm_is_vpc.example_vpc.id
-  zone                     = "${var.region}-1"
-  total_ipv4_address_count = 256
-  resource_group           = module.resource_group.resource_group_id
-}
-
-##############################################################################
 # Create CBR Zone
 ##############################################################################
-
-module "cbr_vpc_zone" {
-  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.36.0"
-  name             = "${var.prefix}-VPC-network-zone"
-  zone_description = "CBR Network zone representing VPC"
-  account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
-  addresses = [{
-    type  = "vpc",
-    value = ibm_is_vpc.example_vpc.crn
-  }]
-}
 
 module "cbr_zone_schematics" {
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
@@ -169,20 +140,10 @@ module "code_engine" {
       rule_contexts = [{
         attributes = [
           {
-            "name" : "endpointType",
-            "value" : "public"
-          },
-          {
             name  = "networkZoneId"
-            value = module.cbr_vpc_zone.zone_id
-        }]
-        },
-        {
-          attributes = [
-            {
-              name  = "networkZoneId"
-              value = module.cbr_zone_schematics.zone_id
-          }]
+            value = module.cbr_zone_schematics.zone_id
+          }
+        ]
       }]
       operations = [{
         api_types = [{
