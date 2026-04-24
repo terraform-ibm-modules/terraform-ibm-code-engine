@@ -15,22 +15,39 @@ This module provisions the IBM Cloud Code Engine fully managed and serverless pl
 <!-- Below content is automatically populated via pre-commit hook -->
 <!-- BEGIN OVERVIEW HOOK -->
 ## Overview
-* [terraform-ibm-code-engine](#terraform-ibm-code-engine)
-* [Submodules](./modules)
-    * [app](./modules/app)
-    * [binding](./modules/binding)
-    * [build](./modules/build)
-    * [config_map](./modules/config_map)
-    * [domain_mapping](./modules/domain_mapping)
-    * [job](./modules/job)
-    * [project](./modules/project)
-    * [secret](./modules/secret)
-* [Examples](./examples)
-:information_source: Ctrl/Cmd+Click or right-click on the Schematics deploy button to open in a new tab
-    * <a href="./examples/apps">Apps example</a> <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-apps-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/apps"><img src="https://img.shields.io/badge/Deploy%20with IBM%20Cloud%20Schematics-0f62fe?logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
-    * <a href="./examples/build">Build example</a> <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-build-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/build"><img src="https://img.shields.io/badge/Deploy%20with IBM%20Cloud%20Schematics-0f62fe?logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
-    * <a href="./examples/jobs">Jobs example</a> <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-jobs-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/jobs"><img src="https://img.shields.io/badge/Deploy%20with IBM%20Cloud%20Schematics-0f62fe?logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
-* [Contributing](#contributing)
+<ul>
+  <li><a href="#terraform-ibm-code-engine">terraform-ibm-code-engine</a></li>
+  <li><a href="./modules">Submodules</a>
+    <ul>
+      <li><a href="./modules/app">app</a></li>
+      <li><a href="./modules/binding">binding</a></li>
+      <li><a href="./modules/build">build</a></li>
+      <li><a href="./modules/config_map">config_map</a></li>
+      <li><a href="./modules/domain_mapping">domain_mapping</a></li>
+      <li><a href="./modules/job">job</a></li>
+      <li><a href="./modules/project">project</a></li>
+      <li><a href="./modules/secret">secret</a></li>
+    </ul>
+  </li>
+  <li><a href="./examples">Examples</a>
+    <ul>
+      <li>
+        <a href="./examples/apps">Apps example</a>
+        <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-apps-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/apps"><img src="https://img.shields.io/badge/Deploy%20with%20IBM%20Cloud%20Schematics-0f62fe?style=flat&logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
+      </li>
+      <li>
+        <a href="./examples/build">Build example</a>
+        <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-build-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/build"><img src="https://img.shields.io/badge/Deploy%20with%20IBM%20Cloud%20Schematics-0f62fe?style=flat&logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
+      </li>
+      <li>
+        <a href="./examples/jobs">Jobs example</a>
+        <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-jobs-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/jobs"><img src="https://img.shields.io/badge/Deploy%20with%20IBM%20Cloud%20Schematics-0f62fe?style=flat&logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
+      </li>
+    </ul>
+    ℹ️ Ctrl/Cmd+Click or right-click on the Schematics deploy button to open in a new tab.
+  </li>
+  <li><a href="#contributing">Contributing</a></li>
+</ul>
 <!-- END OVERVIEW HOOK -->
 
 
