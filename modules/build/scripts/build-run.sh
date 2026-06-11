@@ -57,10 +57,32 @@ ibmcloud_login
 # select the right code engine project
 ibmcloud ce project select -n "${CE_PROJECT_NAME}"
 
-# check the image build status
+# Wait for build to be ready with retry logic
+echo "Waiting for build '${BUILD_NAME}' to be ready..."
+max_wait_attempts=30
+wait_interval=2
+attempt=0
+
+while [ $attempt -lt $max_wait_attempts ]; do
+  image_build_status=$(ibmcloud ce build get --name "${BUILD_NAME}" -o json 2>/dev/null | jq -r '.status // empty')
+  
+  if [[ "$image_build_status" == "ready" ]]; then
+    echo "Build is ready"
+    break
+  elif [[ -z "$image_build_status" ]]; then
+    echo "Attempt $((attempt + 1))/$max_wait_attempts: Build status not yet available, waiting ${wait_interval}s..."
+  else
+    echo "Attempt $((attempt + 1))/$max_wait_attempts: Build status is '${image_build_status}', waiting ${wait_interval}s..."
+  fi
+  
+  sleep $wait_interval
+  attempt=$((attempt + 1))
+done
+
+# Final check
 image_build_status=$(ibmcloud ce build get --name "${BUILD_NAME}" -o json | jq -r '.status')
 if [[ "$image_build_status" != "ready" ]]; then
-  echo "Error: Image build '${BUILD_NAME}' has status: ${image_build_status}"
+  echo "Error: Image build '${BUILD_NAME}' has status: ${image_build_status} after waiting"
   exit 1
 fi
 
