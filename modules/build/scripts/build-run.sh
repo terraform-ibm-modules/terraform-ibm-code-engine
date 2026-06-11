@@ -13,7 +13,14 @@ function ibmcloud_login() {
         sleep 3
     done
     printf "\nLogin complete\n"
+
+    # Explicitly target the region to ensure it persists for Code Engine commands
+    # This is critical for pipeline environments where region context may not persist after login
+    printf "\n#### TARGETING REGION ####\n"
+    ibmcloud target -r "${REGION}"
+    printf "Region targeted: %s\n\n" "${REGION}"
 }
+
 
 # max wait time = 60 × 10s = 10 minutes
 MAX_RETRIES=60
