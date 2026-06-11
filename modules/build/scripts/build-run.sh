@@ -17,7 +17,7 @@ function ibmcloud_login() {
     # Explicitly target the region to ensure it persists for Code Engine commands
     # This is critical for pipeline environments where region context may not persist after login
     printf "\n#### TARGETING REGION ####\n"
-    ibmcloud target -r "${REGION}"
+    ibmcloud target -r "${REGION}" -g "${RESOURCE_GROUP_ID}"
     printf "Region targeted: %s\n\n" "${REGION}"
 }
 
