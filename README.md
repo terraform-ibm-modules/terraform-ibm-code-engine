@@ -17,30 +17,30 @@ This module provisions the IBM Cloud Code Engine fully managed and serverless pl
 ## Overview
 <ul>
   <li><a href="#terraform-ibm-code-engine">terraform-ibm-code-engine</a></li>
-  <li><a href="./modules">Submodules</a>
+  <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules">Submodules</a>
     <ul>
-      <li><a href="./modules/app">app</a></li>
-      <li><a href="./modules/binding">binding</a></li>
-      <li><a href="./modules/build">build</a></li>
-      <li><a href="./modules/config_map">config_map</a></li>
-      <li><a href="./modules/domain_mapping">domain_mapping</a></li>
-      <li><a href="./modules/job">job</a></li>
-      <li><a href="./modules/project">project</a></li>
-      <li><a href="./modules/secret">secret</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/app">app</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/binding">binding</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/build">build</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/config_map">config_map</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/domain_mapping">domain_mapping</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/job">job</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/project">project</a></li>
+      <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/modules/secret">secret</a></li>
     </ul>
   </li>
-  <li><a href="./examples">Examples</a>
+  <li><a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples">Examples</a>
     <ul>
       <li>
-        <a href="./examples/apps">Apps example</a>
+        <a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/apps">Apps example</a>
         <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-apps-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/apps"><img src="https://img.shields.io/badge/Deploy%20with%20IBM%20Cloud%20Schematics-0f62fe?style=flat&logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
       </li>
       <li>
-        <a href="./examples/build">Build example</a>
+        <a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/build">Build example</a>
         <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-build-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/build"><img src="https://img.shields.io/badge/Deploy%20with%20IBM%20Cloud%20Schematics-0f62fe?style=flat&logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
       </li>
       <li>
-        <a href="./examples/jobs">Jobs example</a>
+        <a href="https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/jobs">Jobs example</a>
         <a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=code-engine-jobs-example&repository=https://github.com/terraform-ibm-modules/terraform-ibm-code-engine/tree/main/examples/jobs"><img src="https://img.shields.io/badge/Deploy%20with%20IBM%20Cloud%20Schematics-0f62fe?style=flat&logo=ibm&logoColor=white&labelColor=0f62fe" alt="Deploy with IBM Cloud Schematics" style="height: 16px; vertical-align: text-bottom; margin-left: 5px;"></a>
       </li>
     </ul>
