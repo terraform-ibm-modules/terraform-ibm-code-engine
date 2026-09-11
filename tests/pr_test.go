@@ -49,6 +49,12 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 			"module.code_engine.module.job[\"" + options.Prefix + "-job-2\"].ibm_code_engine_job.ce_job",
 		},
 	}
+
+	options.IgnoreDestroys = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.build[\"" + options.Prefix + "-build\"].terraform_data.install_required_binaries[0]",
+		},
+	}
 	options.TerraformVars = map[string]interface{}{
 		"resource_group":   resourceGroup,
 		"prefix":           options.Prefix,
