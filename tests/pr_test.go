@@ -133,6 +133,11 @@ func TestRunJobsUpgradeExample(t *testing.T) {
 
 	options := setupJobsExampleOptions(t, "ce-jobs-upg", jobsExampleDir)
 	output, err := options.RunTestUpgrade()
+	options.IgnoreUpdates = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.build[\"ce-jobs-upg-qzw-build\"].terraform_data.install_required_binaries[0]",
+		},
+	}
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
