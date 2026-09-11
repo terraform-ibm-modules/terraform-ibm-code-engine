@@ -49,6 +49,12 @@ func setupJobsExampleOptions(t *testing.T, prefix string, terraformDir string) *
 			"module.code_engine.module.job[\"" + options.Prefix + "-job-2\"].ibm_code_engine_job.ce_job",
 		},
 	}
+
+	options.IgnoreDestroys = testhelper.Exemptions{
+		List: []string{
+			"module.code_engine.module.build[\"" + options.Prefix + "-build\"].terraform_data.install_required_binaries[0]",
+		},
+	}
 	options.TerraformVars = map[string]interface{}{
 		"resource_group":   resourceGroup,
 		"prefix":           options.Prefix,
@@ -133,11 +139,6 @@ func TestRunJobsUpgradeExample(t *testing.T) {
 
 	options := setupJobsExampleOptions(t, "ce-jobs-upg", jobsExampleDir)
 	output, err := options.RunTestUpgrade()
-	options.IgnoreUpdates = testhelper.Exemptions{
-		List: []string{
-			"module.code_engine.module.build[\"ce-jobs-upg-qzw-build\"].terraform_data.install_required_binaries[0]",
-		},
-	}
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
