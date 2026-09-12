@@ -63,7 +63,7 @@ module "secrets_manager_public_cert_engine" {
 module "secrets_manager_group" {
   count                    = var.existing_cert_secret_id == null ? 1 : 0
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
-  version                  = "1.5.5"
+  version                  = "1.5.6"
   region                   = local.sm_region
   secrets_manager_guid     = local.sm_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"
@@ -110,7 +110,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {
 
 module "cbr_zone_schematics" {
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.36.8"
+  version          = "1.36.9"
   name             = "${var.prefix}-schematics-zone"
   zone_description = "CBR Network zone containing Schematics"
   account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
