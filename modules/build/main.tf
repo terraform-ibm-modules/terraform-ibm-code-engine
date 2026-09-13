@@ -73,14 +73,14 @@ locals {
 module "cr_namespace" {
   count             = local.create_cr_namespace ? 1 : 0
   source            = "terraform-ibm-modules/container-registry/ibm"
-  version           = "2.8.7"
+  version           = "2.8.8"
   namespace_name    = "${local.prefix}${var.container_registry_namespace}"
   resource_group_id = var.existing_resource_group_id
 }
 
 module "cr_endpoint" {
   source  = "terraform-ibm-modules/container-registry/ibm//modules/endpoint"
-  version = "2.8.7"
+  version = "2.8.8"
   region  = var.region
 }
 
