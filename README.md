@@ -150,14 +150,14 @@ You need the following permissions to run this module.
 ### Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.0, < 3.0.0 |
 
 ### Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_app"></a> [app](#module\_app) | ./modules/app | n/a |
 | <a name="module_binding"></a> [binding](#module\_binding) | ./modules/binding | n/a |
 | <a name="module_build"></a> [build](#module\_build) | ./modules/build | n/a |
@@ -174,7 +174,7 @@ No resources.
 ### Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_apps"></a> [apps](#input\_apps) | A map of code engine apps to be created. | <pre>map(object({<br/>    image_reference = string<br/>    image_secret    = optional(string)<br/>    run_env_variables = optional(list(object({<br/>      type      = optional(string)<br/>      name      = optional(string)<br/>      value     = optional(string)<br/>      prefix    = optional(string)<br/>      key       = optional(string)<br/>      reference = optional(string)<br/>    })))<br/>    run_volume_mounts = optional(list(object({<br/>      mount_path = string<br/>      reference  = string<br/>      type       = string<br/>    })))<br/>    image_port                    = optional(number)<br/>    managed_domain_mappings       = optional(string)<br/>    run_arguments                 = optional(list(string))<br/>    run_as_user                   = optional(number)<br/>    run_commands                  = optional(list(string))<br/>    run_service_account           = optional(string)<br/>    scale_concurrency             = optional(number)<br/>    scale_concurrency_target      = optional(number)<br/>    scale_cpu_limit               = optional(string)<br/>    scale_ephemeral_storage_limit = optional(string)<br/>    scale_initial_instances       = optional(number)<br/>    scale_max_instances           = optional(number)<br/>    scale_memory_limit            = optional(string)<br/>    scale_min_instances           = optional(number)<br/>    scale_request_timeout         = optional(number)<br/>    scale_down_delay              = optional(number)<br/>  }))</pre> | `{}` | no |
 | <a name="input_bindings"></a> [bindings](#input\_bindings) | A map of code engine bindings to be created. | <pre>map(object({<br/>    secret_name = string<br/>    components = list(object({<br/>      name          = string<br/>      resource_type = string<br/>    }))<br/>  }))</pre> | `{}` | no |
 | <a name="input_builds"></a> [builds](#input\_builds) | A map of code engine builds to be created. Requires 'ibmcloud\_api\_key' to be set for authentication and execution. | <pre>map(object({<br/>    output_image                 = optional(string)<br/>    output_secret                = optional(string) # pragma: allowlist secret<br/>    source_url                   = string<br/>    strategy_type                = optional(string)<br/>    source_context_dir           = optional(string)<br/>    source_revision              = optional(string)<br/>    source_secret                = optional(string)<br/>    source_type                  = optional(string)<br/>    strategy_size                = optional(string)<br/>    strategy_spec_file           = optional(string)<br/>    timeout                      = optional(number)<br/>    region                       = optional(string)<br/>    container_registry_namespace = optional(string)<br/>    prefix                       = optional(string)<br/>  }))</pre> | `{}` | no |
@@ -191,7 +191,7 @@ No resources.
 ### Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_app"></a> [app](#output\_app) | Configuration of the created code engine app. |
 | <a name="output_binding"></a> [binding](#output\_binding) | Configuration of the created code engine binding. |
 | <a name="output_build"></a> [build](#output\_build) | Configuration of the created code engine build. |
