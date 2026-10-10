@@ -37,7 +37,7 @@ You need the following permissions to run this module.
 ### Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.0, < 3.0.0 |
 
@@ -48,13 +48,13 @@ No modules.
 ### Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [ibm_code_engine_job.ce_job](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_job) | resource |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_image_reference"></a> [image\_reference](#input\_image\_reference) | The name of the image that is used for this job. | `string` | n/a | yes |
 | <a name="input_image_secret"></a> [image\_secret](#input\_image\_secret) | The name of the image registry access secret. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the job. | `string` | n/a | yes |
@@ -76,7 +76,7 @@ No modules.
 ### Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine job. |
 | <a name="output_job_id"></a> [job\_id](#output\_job\_id) | The ID of the created code engine job. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the created code engine job. |

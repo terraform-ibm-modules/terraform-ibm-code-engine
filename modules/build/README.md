@@ -34,14 +34,14 @@ You need the following permissions to run this module.
 ### Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.0, < 3.0.0 |
 
 ### Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_cr_endpoint"></a> [cr\_endpoint](#module\_cr\_endpoint) | terraform-ibm-modules/container-registry/ibm//modules/endpoint | 2.8.9 |
 | <a name="module_cr_namespace"></a> [cr\_namespace](#module\_cr\_namespace) | terraform-ibm-modules/container-registry/ibm | 2.8.9 |
 | <a name="module_secret"></a> [secret](#module\_secret) | ../../modules/secret | n/a |
@@ -49,7 +49,7 @@ You need the following permissions to run this module.
 ### Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [ibm_code_engine_build.ce_build](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/code_engine_build) | resource |
 | [terraform_data.install_required_binaries](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [terraform_data.run_build](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
@@ -58,7 +58,7 @@ You need the following permissions to run this module.
 ### Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_container_registry_api_key"></a> [container\_registry\_api\_key](#input\_container\_registry\_api\_key) | The API key for the container registry in the target account. This is only used if 'output\_secret' is not set and a new registry secret needs to be created. If not provided, the IBM Cloud API key (ibmcloud\_api\_key) will be used instead. | `string` | `null` | no |
 | <a name="input_container_registry_namespace"></a> [container\_registry\_namespace](#input\_container\_registry\_namespace) | The name of the namespace to create in IBM Cloud Container Registry for organizing container images. Must be set if 'output\_image' is not set. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<container_registry_namespace>` format. | `string` | `null` | no |
 | <a name="input_existing_resource_group_id"></a> [existing\_resource\_group\_id](#input\_existing\_resource\_group\_id) | The ID of an existing resource group where build will be provisioned. This must be the same resource group in which the code engine project was created. | `string` | n/a | yes |
@@ -83,7 +83,7 @@ You need the following permissions to run this module.
 ### Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_build_id"></a> [build\_id](#output\_build\_id) | The ID of the created code engine build. |
 | <a name="output_id"></a> [id](#output\_id) | The unique identifier of the created code engine build. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the created code engine build. |
